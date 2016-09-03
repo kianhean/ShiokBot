@@ -14,9 +14,9 @@ setup(
     version='0.0.1',
     description='ShiokBot Code',
     long_description=readme,
-    author='xxxx',
-    author_email='xxxxx',
-    url='xxxx',
+    author='Kian Hean YingLing',
+    author_email='xxx',
+    url='xxx',
     license=license,
     packages=find_packages(exclude=('tests', 'docs'))
 )
