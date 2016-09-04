@@ -1,1 +1,1 @@
-bot: python manage.py bot/core.py
+web: python manage.py bot/core.py
