@@ -7,7 +7,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 import requests
 import json
-import pprint
+import os
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -79,13 +79,24 @@ def main():
     dp.add_error_handler(error)
 
     # Start the Bot
+    """
+    #DEV
     updater.start_polling()
 
     # Run the bot until the you presses Ctrl-C or the process receives SIGINT,
     # SIGTERM or SIGABRT. This should be used most of the time, since
     # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
+    """
 
+    TOKEN = "231443961:AAEwNQmrWUDYzDNC9hEmeyRgUPr61ruDqS0"
+    PORT = int(os.environ.get('PORT', '5000'))
+    updater = Updater(TOKEN)
+    updater.start_webhook(listen="0.0.0.0",
+                          port=PORT,
+                          url_path=TOKEN)
+    updater.bot.setWebhook("https://shiokbot.herokuapp.com/" + TOKEN)
+    updater.idle()
 
 if __name__ == '__main__':
     main()
