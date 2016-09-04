@@ -1,1 +1,1 @@
-web: python manage.py bot/core.py
+web: python3 --pythonpath bot.core
