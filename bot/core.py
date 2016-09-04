@@ -89,13 +89,12 @@ def main():
     updater.idle()
     """
 
-    TOKEN = "231443961:AAEwNQmrWUDYzDNC9hEmeyRgUPr61ruDqS0"
+    _path = "AAEwNQmrWUDYzDNC9hEmeyRgUPr61ruDqS0"
     PORT = int(os.environ.get('PORT', '5000'))
-    updater = Updater(TOKEN)
     updater.start_webhook(listen="0.0.0.0",
                           port=PORT,
-                          url_path=TOKEN)
-    updater.bot.setWebhook("https://shiokbot.herokuapp.com/" + TOKEN)
+                          url_path=_path)
+    updater.bot.setWebhook("https://shiokbot.herokuapp.com/" + _path)
     updater.idle()
 
 if __name__ == '__main__':
