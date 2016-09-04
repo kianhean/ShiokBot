@@ -19,7 +19,8 @@ logger = logging.getLogger(__name__)
 def psi3hour(bot, update):
 
     # Make the HTTP request.
-    headers = {'api-key': 'zK5ZrvAN6v4GLUsWGpjgUFJs6Ztj17n6'}
+    DATAGOV = str(os.environ.get('DATAGOV'))
+    headers = {'api-key': DATAGOV}
     r = requests.get('https://api.data.gov.sg/v1/environment/psi', headers=headers)
 
     # Load data into Dictionary and get reading
@@ -35,7 +36,8 @@ def psi3hour(bot, update):
 
 
 def weathernow(bot, update):
-    headers = {'api-key': 'zK5ZrvAN6v4GLUsWGpjgUFJs6Ztj17n6'}
+    DATAGOV = str(os.environ.get('DATAGOV'))
+    headers = {'api-key': DATAGOV}
     r = requests.get('https://api.data.gov.sg/v1/environment/24-hour-weather-forecast', headers=headers)
 
     # Load data into Dictionary and get reading
@@ -64,7 +66,8 @@ def error(bot, update, error):
 
 def main():
     # Create the EventHandler and pass it your bot's token.
-    updater = Updater("231443961:AAEwNQmrWUDYzDNC9hEmeyRgUPr61ruDqS0")
+    TELEGRAM = str(os.environ.get('TELEGRAM'))
+    updater = Updater(TELEGRAM)
 
     # Get the dispatcher to register handlers
     dp = updater.dispatcher
@@ -89,12 +92,11 @@ def main():
     updater.idle()
     """
 
-    _path = "AAEwNQmrWUDYzDNC9hEmeyRgUPr61ruDqS0"
     PORT = int(os.environ.get('PORT', '5000'))
     updater.start_webhook(listen="0.0.0.0",
                           port=PORT,
-                          url_path=_path)
-    updater.bot.setWebhook("https://shiokbot.herokuapp.com/" + _path)
+                          url_path=TELEGRAM)
+    updater.bot.setWebhook("https://shiokbot.herokuapp.com/" + TELEGRAM)
     updater.idle()
 
 if __name__ == '__main__':
