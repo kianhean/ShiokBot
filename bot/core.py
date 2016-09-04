@@ -52,18 +52,18 @@ def weathernow(bot, update):
 
     # Create Response
     final_string = "In General the weather for next looks like " + forecast + " with a high of " + str(h_) + \
-    "°C and a low of " + str(l_) + "°C\n\nForecast Next 12 Hrs\n"
+    "°C and a low of " + str(l_) + "°C\n\nForecast Next 12 Hrs\n\n"
 
     # Add 12 hr cast
     nowcast = data['items'][0]['periods'][0]['regions']
     for key in sorted(nowcast):
-        final_string  =  final_string + (str(key) + " " + str(nowcast[key]) + "\n")
+        final_string  =  final_string + (str(key) + " - " + str(nowcast[key]) + "\n")
     final_string = final_string + "\nForecast Tomorrow\n\n"
 
     # Add 24 hr cast
     nowcast = data['items'][0]['periods'][1]['regions']
     for key in sorted(nowcast):
-        final_string  =  final_string + (str(key) + " " + str(nowcast[key]) + "\n")
+        final_string  =  final_string + (str(key) + " - " + str(nowcast[key]) + "\n")
 
     bot.sendMessage(update.message.chat_id, text=final_string)
 
