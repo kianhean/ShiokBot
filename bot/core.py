@@ -51,7 +51,7 @@ def weathernow(bot, update):
     l_ = data['items'][0]['general']['temperature']['low']
 
     # Create Response
-    final_string = "In General the weather looks like " + forecast + " with a high of " + str(h_) + \
+    final_string = "In General the weather will be looking like " + forecast + " with a high of " + str(h_) + \
     "°C and a low of " + str(l_) + "°C\n\nForecast Next 12 Hrs\n\n"
 
     # Add 12 hr cast
