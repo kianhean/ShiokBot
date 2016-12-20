@@ -32,7 +32,13 @@ def traffic(bot, update, args):
     # Load data into Dictionary and get reading
     data = json.loads(r.text)
 
-    location = str(args[0])
+    if len(args) == 0:
+        final_string = 'Please enter either traffic Woodlands or traffic Tuas'
+        bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+        return
+    else:
+        location = str(args[0])
+
     if location == 'Tuas':
         target_ = '4703' # Tuas
     elif location == 'Woodlands':
