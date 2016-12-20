@@ -27,7 +27,7 @@ def traffic_tuas(bot, update):
     # Make the HTTP request.
     DATAGOV = str(os.environ.get('DATAGOV'))
     headers = {'api-key': DATAGOV}
-    r = requests.get('https://api.data.gov.sg/v1/environment/psi', headers=headers)
+    r = requests.get('https://api.data.gov.sg/v1/transport/traffic-images', headers=headers)
 
     # Load data into Dictionary and get reading
     data = json.loads(r.text)
