@@ -18,11 +18,11 @@ logger = logging.getLogger(__name__)
 """Response
 weather - Get Latest Weather Report
 psi - Get Latest PSI Report
-traffic_tuas - Get Latest Tuas Traffic Image
+traffic LOCATION - Get Latest Woodlands/Tuas Traffic Image. Example traffic Tuas
 """
 
 
-def traffic_tuas(bot, update):
+def traffic(bot, update, args):
 
     # Make the HTTP request.
     DATAGOV = str(os.environ.get('DATAGOV'))
@@ -31,19 +31,25 @@ def traffic_tuas(bot, update):
 
     # Load data into Dictionary and get reading
     data = json.loads(r.text)
-    target_ = '4703' # Tuas
-    #target_ = '2701' # Woodlands
+
+    location = str(args[0])
+    if location == 'Tuas':
+        target_ = '4703' # Tuas
+    elif location == 'Woodlands':
+        target_ = '2701' # Woodlands
+    else:
+        update.message.reply_text('Sorry for now only understooded either Tuas or Woodlands!')
+        return
 
     # Get required data
     for data_ in data['items'][0]['cameras']:
-        if (data_['camera_id']) == target_: # Woodlands
+        if (data_['camera_id']) == target_:
             img_url = data_['image']
             timestampp = data_['timestamp'][:19].replace("T"," ")
 
     # Create Response
-    final_string = "The Tuas Checkpoint Situation at " + timestampp + " is like that la \n\n"
+    final_string = "The " + location + " Checkpoint Situation at " + timestampp + " is like that la \n\n"
     final_string = final_string + '<a href="' +img_url+ '">Traffic Image!</a>'
-    #bot.sendPhoto(update.message.chat_id, caption=final_string, photo=img_url)
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
@@ -120,7 +126,7 @@ def main():
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("psi", psi3hour))
     dp.add_handler(CommandHandler("weather", weathernow))
-    dp.add_handler(CommandHandler("traffic_tuas", traffic_tuas))
+    dp.add_handler(CommandHandler("traffic", traffic, pass_args=True))
 
     # log all errors
     dp.add_error_handler(error)
