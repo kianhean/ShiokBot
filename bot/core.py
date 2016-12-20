@@ -42,7 +42,9 @@ def traffic_tuas(bot, update):
 
     # Create Response
     final_string = "The Tuas Checkpoint Situation at " + timestampp + " is like that la \n\n"
-    bot.sendPhoto(update.message.chat_id, caption=final_string, photo=img_url)
+    final_string = final_string + '<a href="' +img_url+ '">Traffic Image!</a>'
+    #bot.sendPhoto(update.message.chat_id, caption=final_string, photo=img_url)
+    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
 def psi3hour(bot, update):
