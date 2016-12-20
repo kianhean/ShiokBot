@@ -18,7 +18,32 @@ logger = logging.getLogger(__name__)
 """Response
 weather - Get Latest Weather Report
 psi - Get Latest PSI Report
+traffic_tuas - Get Latest Tuas Traffic Image
 """
+
+
+def traffic_tuas(bot, update):
+
+    # Make the HTTP request.
+    DATAGOV = str(os.environ.get('DATAGOV'))
+    headers = {'api-key': DATAGOV}
+    r = requests.get('https://api.data.gov.sg/v1/environment/psi', headers=headers)
+
+    # Load data into Dictionary and get reading
+    data = json.loads(r.text)
+    target_ = '4703' # Tuas
+    #target_ = '2701' # Woodlands
+
+    # Get required data
+    for data_ in data['items'][0]['cameras']:
+        if (data_['camera_id']) == target_: # Woodlands
+            img_url = data_['image']
+            timestampp = data_['timestamp'][:19].replace("T"," ")
+
+    # Create Response
+    final_string = "The Tuas Checkpoint Situation at " + timestampp + " is like that la \n\n"
+    bot.sendPhoto(update.message.chat_id, caption=final_string, photo=img_url)
+
 
 def psi3hour(bot, update):
 
@@ -93,6 +118,7 @@ def main():
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("psi", psi3hour))
     dp.add_handler(CommandHandler("weather", weathernow))
+    dp.add_handler(CommandHandler("traffic_tuas", traffic_tuas))
 
     # log all errors
     dp.add_error_handler(error)
