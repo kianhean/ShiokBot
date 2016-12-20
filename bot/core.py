@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 """Response
 weather - Get Latest Weather Report
 psi - Get Latest PSI Report
-traffic LOCATION - Get Latest Woodlands/Tuas Traffic Image. Example traffic Tuas
+traffic - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas
 """
 
 
@@ -38,7 +38,8 @@ def traffic(bot, update, args):
     elif location == 'Woodlands':
         target_ = '2701' # Woodlands
     else:
-        update.message.reply_text('Sorry for now only understooded either Tuas or Woodlands!')
+        final_string = 'Sorry for now only understooded either Tuas or Woodlands!'
+        bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
         return
 
     # Get required data
