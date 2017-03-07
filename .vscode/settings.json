@@ -1,9 +1,7 @@
 {
-    "python.unitTest.unittestArgs": [
-        "-v",
-        "-s",
-        "-p",
-        "test_*.py"
+    "python.pythonPath": "/usr/bin/python3",
+    "python.unitTest.nosetestArgs": [
+        "tests"
     ],
-    "python.unitTest.unittestEnabled": true
+    "python.unitTest.nosetestsEnabled": true
 }

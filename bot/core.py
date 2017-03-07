@@ -24,16 +24,20 @@ traffic - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas
 """
 
 
+def connnect_gov_api(url_string):
+    """ Conntect to Gov and return request object """
+    data_gov_api = str(os.environ.get('DATAGOV'))
+    headers = {'api-key': data_gov_api}
+    request = requests.get(url_string, headers=headers)
+
+    return request
+
+
 def traffic(bot, update, args):
     """ Get Traffic Updates """
 
-    # Make the HTTP request.
-    data_gov_api = str(os.environ.get('DATAGOV'))
-    headers = {'api-key': data_gov_api}
-    request = requests.get('https://api.data.gov.sg/v1/transport/traffic-images', headers=headers)
-
-    # Load data into Dictionary and get reading
-    data = json.loads(request.text)
+    connnect_gov_api_r = connnect_gov_api('https://api.data.gov.sg/v1/transport/traffic-images')
+    data = json.loads(connnect_gov_api_r.text)
 
     if len(args) == 0:
         final_string = 'Please enter either traffic Woodlands or traffic Tuas'
@@ -67,13 +71,11 @@ def traffic(bot, update, args):
 
 def psi3hour(bot, update):
     """ Get Latest Singapore PSI """
-    # Make the HTTP request.
-    data_gov_api = str(os.environ.get('DATAGOV'))
-    headers = {'api-key': data_gov_api}
-    request = requests.get('https://api.data.gov.sg/v1/environment/psi', headers=headers)
+
+    connnect_gov_api_r = connnect_gov_api('https://api.data.gov.sg/v1/environment/psi')
+    data = json.loads(connnect_gov_api_r.text)
 
     # Load data into Dictionary and get reading
-    data = json.loads(request.text)
     hourly = data['items'][0]['readings']['psi_three_hourly']
     timestampp = data['items'][0]['timestamp'][:19].replace("T", " ")
 
@@ -87,13 +89,11 @@ def psi3hour(bot, update):
 
 def weathernow(bot, update):
     """ Get Latest Singapore Weather """
-    data_gov_api = str(os.environ.get('DATAGOV'))
-    headers = {'api-key': data_gov_api}
-    request = requests.get('https://api.data.gov.sg/v1/environment/24-hour-weather-forecast',
-                           headers=headers)
+    connnect_gov_api_r = connnect_gov_api(
+        'https://api.data.gov.sg/v1/environment/24-hour-weather-forecast')
+    data = json.loads(connnect_gov_api_r.text)
 
     # Load data into Dictionary and get reading
-    data = json.loads(request.text)
     forecast = data['items'][0]['general']['forecast']
     high_ = data['items'][0]['general']['temperature']['high']
     low_ = data['items'][0]['general']['temperature']['low']
