@@ -1,13 +1,15 @@
-﻿#!/usr/bin/env python3
+﻿""" Core Bot Functions """
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 
 # Import Libraries
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-import logging
-import requests
-import json
 import os
+import logging
+import json
+import requests
+from telegram.ext import Updater, CommandHandler
+
 
 # Enable logging
 logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -23,25 +25,26 @@ traffic - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas
 
 
 def traffic(bot, update, args):
+    """ Get Traffic Updates """
 
     # Make the HTTP request.
-    DATAGOV = str(os.environ.get('DATAGOV'))
-    headers = {'api-key': DATAGOV}
-    r = requests.get('https://api.data.gov.sg/v1/transport/traffic-images', headers=headers)
+    data_gov_api = str(os.environ.get('DATAGOV'))
+    headers = {'api-key': data_gov_api}
+    request = requests.get('https://api.data.gov.sg/v1/transport/traffic-images', headers=headers)
 
     # Load data into Dictionary and get reading
-    data = json.loads(r.text)
+    data = json.loads(request.text)
 
     if len(args) == 0:
         final_string = 'Please enter either traffic Woodlands or traffic Tuas'
         bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
         return
     else:
-        location = str(args[0])
+        location = str(args[0]).upper()
 
-    if location == 'Tuas':
+    if location == 'TUAS':
         target_ = '4703' # Tuas
-    elif location == 'Woodlands':
+    elif location == 'WOODLANDS':
         target_ = '2701' # Woodlands
     else:
         final_string = 'Sorry for now only understooded either Tuas or Woodlands!'
@@ -52,52 +55,59 @@ def traffic(bot, update, args):
     for data_ in data['items'][0]['cameras']:
         if (data_['camera_id']) == target_:
             img_url = data_['image']
-            timestampp = data_['timestamp'][:19].replace("T"," ")
+            timestampp = data_['timestamp'][:19].replace("T", " ")
 
     # Create Response
-    final_string = "The " + location + " Checkpoint Situation at " + timestampp + " is like that la \n\n"
+    final_string = "The " + location + " Checkpoint Situation at " + \
+                   timestampp + " is like that la \n\n"
+
     final_string = final_string + '<a href="' +img_url+ '">Traffic Image!</a>'
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
 def psi3hour(bot, update):
-
+    """ Get Latest Singapore PSI """
     # Make the HTTP request.
-    DATAGOV = str(os.environ.get('DATAGOV'))
-    headers = {'api-key': DATAGOV}
-    r = requests.get('https://api.data.gov.sg/v1/environment/psi', headers=headers)
+    data_gov_api = str(os.environ.get('DATAGOV'))
+    headers = {'api-key': data_gov_api}
+    request = requests.get('https://api.data.gov.sg/v1/environment/psi', headers=headers)
 
     # Load data into Dictionary and get reading
-    data = json.loads(r.text)
+    data = json.loads(request.text)
     hourly = data['items'][0]['readings']['psi_three_hourly']
-    timestampp = data['items'][0]['timestamp'][:19].replace("T"," ")
+    timestampp = data['items'][0]['timestamp'][:19].replace("T", " ")
 
     # Create Response
     final_string = "The 3 hourly PSI Reading at " + timestampp + " is actually \n\n"
     for key in sorted(hourly):
-        final_string  =  final_string + (str(key) + " " + str(hourly[key]) + "\n")
+        final_string  =  final_string + (str(key) + " " + \
+                                        str(hourly[key]) + "\n")
     bot.sendMessage(update.message.chat_id, text=final_string)
 
 
 def weathernow(bot, update):
-    DATAGOV = str(os.environ.get('DATAGOV'))
-    headers = {'api-key': DATAGOV}
-    r = requests.get('https://api.data.gov.sg/v1/environment/24-hour-weather-forecast', headers=headers)
+    """ Get Latest Singapore Weather """
+    data_gov_api = str(os.environ.get('DATAGOV'))
+    headers = {'api-key': data_gov_api}
+    request = requests.get('https://api.data.gov.sg/v1/environment/24-hour-weather-forecast',
+                           headers=headers)
 
     # Load data into Dictionary and get reading
-    data = json.loads(r.text)
+    data = json.loads(request.text)
     forecast = data['items'][0]['general']['forecast']
-    h_ = data['items'][0]['general']['temperature']['high']
-    l_ = data['items'][0]['general']['temperature']['low']
+    high_ = data['items'][0]['general']['temperature']['high']
+    low_ = data['items'][0]['general']['temperature']['low']
 
     # Create Response
-    final_string = "In General the weather will be looking like " + forecast + " with a high of " + str(h_) + \
-    "°C and a low of " + str(l_) + "°C\n\nForecast Next 12 Hrs\n\n"
+    final_string = "In General the weather will be looking like " + forecast + \
+                    " with a high of " + str(high_) + \
+                    "°C and a low of " + str(low_) + "°C\n\nForecast Next 12 Hrs\n\n"
 
     # Add 12 hr cast
     nowcast = data['items'][0]['periods'][0]['regions']
     for key in sorted(nowcast):
-        final_string  =  final_string + (str(key) + " - " + str(nowcast[key]) + "\n")
+        final_string  =  final_string + (str(key) + \
+                                        " - " + str(nowcast[key]) + "\n")
     final_string = final_string + "\nForecast Tomorrow\n\n"
 
     # Add 24 hr cast
@@ -109,34 +119,46 @@ def weathernow(bot, update):
 
 
 def start(bot, update):
-    bot.sendMessage(update.message.chat_id, text='Hello! I am @ShiokBot! \nThe helpful singlish spouting bot! \n\nAvailable Commands \n/psi - Report the latest PSI readings lo \n/weather - Report the latest weather lah')
+    """ Start Text """
+    bot.sendMessage(update.message.chat_id,
+                    text='''Hello! I am @ShiokBot! \nThe helpful singlish spouting bot!
+                     \n\nAvailable Commands \n/psi - Report the latest PSI readings lo
+                      \n/weather - Report the latest weather lah''')
 
 
 def help(bot, update):
-    bot.sendMessage(update.message.chat_id, text='Hello! I am @ShiokBot! \nThe helpful singlish spouting bot! \n\nAvailable Commands \n/psi - Report the latest PSI readings lo \n/weather - Report the latest weather lah')
+    """ Help Text"""
+    bot.sendMessage(update.message.chat_id,
+                    text='''Hello! I am @ShiokBot! \nThe helpful singlish spouting bot!
+                         \n\nAvailable Commands \n/psi - 
+                         Report the latest PSI readings lo \n/weather -
+                          Report the latest weather lah''')
 
 
 def error(bot, update, error):
+    """ Log Errors"""
     logger.warn('Update "%s" caused error "%s"' % (update, error))
 
 
 def main():
+    """ This is where the bot starts from! """
+
     # Create the EventHandler and pass it your bot's token.
-    TELEGRAM = str(os.environ.get('TELEGRAM'))
-    updater = Updater(TELEGRAM)
+    telegram = str(os.environ.get('TELEGRAM'))
+    updater = Updater(telegram)
 
     # Get the dispatcher to register handlers
-    dp = updater.dispatcher
+    dispatch = updater.dispatcher
 
     # on different commands - answer in Telegram
-    dp.add_handler(CommandHandler("start", start))
-    dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(CommandHandler("psi", psi3hour))
-    dp.add_handler(CommandHandler("weather", weathernow))
-    dp.add_handler(CommandHandler("traffic", traffic, pass_args=True))
+    dispatch.add_handler(CommandHandler("start", start))
+    dispatch.add_handler(CommandHandler("help", help))
+    dispatch.add_handler(CommandHandler("psi", psi3hour))
+    dispatch.add_handler(CommandHandler("weather", weathernow))
+    dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
 
     # log all errors
-    dp.add_error_handler(error)
+    dispatch.add_error_handler(error)
 
     # Start the Bot
     """
@@ -150,11 +172,11 @@ def main():
     """
 
     #PROD
-    PORT = int(os.environ.get('PORT', '5000'))
+    port_number = int(os.environ.get('PORT', '5000'))
     updater.start_webhook(listen="0.0.0.0",
-                          port=PORT,
-                          url_path=TELEGRAM)
-    updater.bot.setWebhook("https://shiokbot.herokuapp.com/" + TELEGRAM)
+                          port=port_number,
+                          url_path=telegram)
+    updater.bot.setWebhook("https://shiokbot.herokuapp.com/" + telegram)
     updater.idle()
 
 if __name__ == '__main__':
