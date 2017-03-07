@@ -8,7 +8,7 @@ from .context import bot
 class BasicTestSuite(unittest.TestCase):
     """Basic test cases."""
 
-    def test_absolute_truth_and_meaning(self):
+    def test_traffic(self):
         """ testing """
         assert True
 

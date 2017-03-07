@@ -58,7 +58,7 @@ def traffic(bot, update, args):
             timestampp = data_['timestamp'][:19].replace("T", " ")
 
     # Create Response
-    final_string = "The " + location + " Checkpoint Situation at " + \
+    final_string = "The " + location.title() + " Checkpoint Situation at " + \
                    timestampp + " is like that la \n\n"
 
     final_string = final_string + '<a href="' +img_url+ '">Traffic Image!</a>'
