@@ -35,7 +35,7 @@ def FourD():
         consol_prize +=  result[i].get_text() + "  "
 
     # Create Reply
-    chat_reply = "Latest Draw Results on " + latest_result_date + " \n\n"
+    chat_reply = "<b>Latest Draw Results on " + latest_result_date + "</b> \n\n"
     chat_reply += top_text
     chat_reply += special_prize
     chat_reply += consol_prize

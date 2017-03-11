@@ -9,6 +9,7 @@ import logging
 from telegram.ext import Updater, CommandHandler
 from bot import gov
 from bot import draw
+from bot import promo
 
 
 # Enable logging
@@ -22,6 +23,7 @@ weather - Get Latest Weather Report
 psi - Get Latest PSI Report
 traffic - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas
 4d - Get Latest 4D Draw Results
+ridepromos - Get Latest Promos from Uber/Grab
 """
 
 
@@ -29,6 +31,17 @@ def fourdresults(bot, update):
     """ Send results from 4D """
     final_string = draw.FourD()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+
+
+def taxipromos(bot, update):
+    """ Get Latest taxipromos """
+
+    text_ = "<b> Latest Uber Promo Codes </b> \n\n"
+    text_ += promo.get_code(1)
+    text_ += "\n\n <b> Latest Grab Promo Codes </b> \n\n"
+    text_ += promo.get_code(0)
+
+    bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
 
 
 def traffic(bot, update, args):
@@ -90,6 +103,7 @@ def main():
     dispatch.add_handler(CommandHandler("psi", psi3hour))
     dispatch.add_handler(CommandHandler("weather", weathernow))
     dispatch.add_handler(CommandHandler("4d", fourdresults))
+    dispatch.add_handler(CommandHandler("ridepromos", taxipromos))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
 
     # log all errors
