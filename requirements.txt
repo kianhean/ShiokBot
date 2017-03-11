@@ -2,4 +2,4 @@ nose
 sphinx
 python-telegram-bot
 requests
-BeautifulSoup
+beautifulsoup4
