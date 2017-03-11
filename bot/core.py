@@ -47,7 +47,10 @@ def taxipromos(bot, update):
 def traffic(bot, update, args):
     """ Get Traffic Updates """
 
-    final_string = gov.traffic_get(args[0])
+    if len(args) == 0:
+        final_string = 'Please enter either traffic Woodlands or traffic Tuas'
+    else:
+        final_string = gov.traffic_get(args[0])
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
