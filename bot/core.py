@@ -58,7 +58,7 @@ def FourD():
 
     # SPECIAL PRIZE
     special_prize = "Special/Starter Prizes\n\n"
-    for i in range(10, 21):
+    for i in range(11, 21):
         special_prize +=  result[i].get_text() + "  "
 
     # CONSOLATION PRIZE
