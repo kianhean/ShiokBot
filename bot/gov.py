@@ -57,12 +57,12 @@ def psi3hour_get():
     timestampp = data['items'][0]['timestamp'][:19].replace("T", " ")
 
     # Create Response
-    final_string = "The 3 hourly PSI Reading at " + timestampp + " is actually \n\n"
+    final_string = "<b>The 3 hourly PSI Reading at " + timestampp + " is actually</b> \n\n"
                     
     for key in sorted(hourly):
         final_string  =  final_string + (str(key) + " " + \
                                         str(hourly[key]) + "\n")
-    return final_string
+    return final_string + "\n\n Hotspots at our neighbours there are like that!"
 
 
 def weathernow_get():
@@ -79,18 +79,18 @@ def weathernow_get():
     # Create Response
     final_string = "In General the weather will be looking like " + forecast + \
                     " with a high of " + str(high_) + \
-                    "°C and a low of " + str(low_) + "°C\n\nForecast Next 12 Hrs\n\n"
+                    "°C and a low of " + str(low_) + "°C\n\n<b>Forecast Next 12 Hrs</b>\n\n"
 
     # Add 12 hr cast
     nowcast = data['items'][0]['periods'][0]['regions']
     for key in sorted(nowcast):
         final_string  =  final_string + (str(key) + \
                                         " - " + str(nowcast[key]) + "\n")
-    final_string = final_string + "\nForecast Tomorrow\n\n"
+    final_string = final_string + "\n<b>Forecast Tomorrow</b>\n\n"
 
     # Add 24 hr cast
     nowcast = data['items'][0]['periods'][1]['regions']
     for key in sorted(nowcast):
         final_string  =  final_string + (str(key) + " - " + str(nowcast[key]) + "\n")
 
-    return final_string
+    return final_string + "\n\n Show you radarrrr somemore!"
