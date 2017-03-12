@@ -1,4 +1,4 @@
-ShiokBot Telegram Bot
+#### ShiokBot Telegram Bot
 ========================
 
 A little something I am building as a fun side project. Get the latest weather/psi/traffic data at your fingertips with the smart and easy to use Singapore Telegram Bot @ShiokBot.

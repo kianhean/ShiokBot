@@ -71,18 +71,29 @@ def weathernow(bot, update):
 def start(bot, update):
     """ Start Text """
     bot.sendMessage(update.message.chat_id,
-                    text='''Hello! I am @ShiokBot! \nThe helpful singlish spouting bot!
-                     \n\nAvailable Commands \n/psi - Report the latest PSI readings lo
-                      \n/weather - Report the latest weather lah''')
+                    text='''Hello! I am @ShiokBot! 
+                     \nThe helpful singlish spouting bot!
+                     \n\nAvailable Commands 
+                     \n/psi - Report the latest PSI readings lo
+                     \n/weather - Report the latest weather lah
+                     \n/4d - Give you latest 4d results wor
+                     \n/ridepromos - Help you save money give you uber/grab codes
+                     \n/traffic woodlands - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas
+                     ''')
 
 
 def help(bot, update):
     """ Help Text"""
     bot.sendMessage(update.message.chat_id,
-                    text='''Hello! I am @ShiokBot! \nThe helpful singlish spouting bot!
-                         \n\nAvailable Commands \n/psi - 
-                         Report the latest PSI readings lo \n/weather -
-                          Report the latest weather lah''')
+                    text='''Hello! I am @ShiokBot! 
+                     \nThe helpful singlish spouting bot!
+                     \n\nAvailable Commands 
+                     \n/psi - Report the latest PSI readings lo
+                     \n/weather - Report the latest weather lah
+                     \n/4d - Give you latest 4d results wor
+                     \n/ridepromos - Help you save money give you uber/grab codes
+                     \n/traffic woodlands - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas
+                     ''')
 
 
 def error(bot, update, error):
