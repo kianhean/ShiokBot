@@ -26,6 +26,10 @@ traffic - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas
 ridepromos - Get Latest Promos from Uber/Grab
 """
 
+"""
+REF
+https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#post-a-photo-from-a-url
+"""
 
 def fourdresults(bot, update):
     """ Send results from 4D """
@@ -59,6 +63,7 @@ def psi3hour(bot, update):
 
     final_string = gov.psi3hour_get()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    bot.sendPhoto(update.message.chat_id, photo='http://wip.weather.gov.sg/wip/pp/gif/rghz.gif')
 
 
 def weathernow(bot, update):
@@ -66,6 +71,7 @@ def weathernow(bot, update):
     final_string = gov.weathernow_get()
 
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    bot.sendPhoto(update.message.chat_id, photo='http://www.ulfp.com/ulfp/txp_file/download.asp?SRC=download/ulfp/Animate/1_rad70d.gif')
 
 
 def start(bot, update):

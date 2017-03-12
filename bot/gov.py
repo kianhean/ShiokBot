@@ -62,7 +62,7 @@ def psi3hour_get():
     for key in sorted(hourly):
         final_string  =  final_string + (str(key) + " " + \
                                         str(hourly[key]) + "\n")
-    return final_string + '<img src="http://wip.weather.gov.sg/wip/pp/gif/rghz.gif" >'
+    return final_string
 
 
 def weathernow_get():
@@ -93,4 +93,4 @@ def weathernow_get():
     for key in sorted(nowcast):
         final_string  =  final_string + (str(key) + " - " + str(nowcast[key]) + "\n")
 
-    return final_string + '<a href="http://www.ulfp.com/ulfp/txp_file/download.asp?SRC=download/ulfp/Animate/1_rad70d.gif" > Radar Map </a>'
+    return final_string
