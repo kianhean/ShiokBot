@@ -10,6 +10,7 @@ from telegram.ext import Updater, CommandHandler
 from bot import gov
 from bot import draw
 from bot import promo
+from telegram import ReplyKeyboardMarkup
 
 
 # Enable logging
@@ -53,9 +54,13 @@ def traffic(bot, update, args):
 
     if len(args) == 0:
         final_string = 'Please enter either traffic Woodlands or traffic Tuas'
+        custom_keyboard = [['/traffic Tuas', '/traffic Woodlands']]
+        reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True)
+        bot.sendMessage(update.message.chat_id, final_string, reply_markup=reply_markup)
+
     else:
         final_string = gov.traffic_get(args[0])
-    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+        bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
 def psi3hour(bot, update):
