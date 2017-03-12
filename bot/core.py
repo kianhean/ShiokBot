@@ -38,7 +38,7 @@ def taxipromos(bot, update):
 
     text_ = "<b> Latest Uber Promo Codes </b> \n\n"
     text_ += promo.get_code(1)
-    text_ += "\n\n <b> Latest Grab Promo Codes </b> \n\n"
+    text_ += "\n<b> Latest Grab Promo Codes </b> \n\n"
     text_ += promo.get_code(0)
 
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
