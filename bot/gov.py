@@ -57,12 +57,12 @@ def psi3hour_get():
     timestampp = data['items'][0]['timestamp'][:19].replace("T", " ")
 
     # Create Response
-    final_string = "The 3 hourly PSI Reading at " + timestampp + " is actually \n\n" + \
-                    '<a href="http://www.nea.gov.sg/data/xml/dt/Warning_Advisory/Haze.gif" > Haze Map </a>'
+    final_string = "The 3 hourly PSI Reading at " + timestampp + " is actually \n\n"
+                    
     for key in sorted(hourly):
         final_string  =  final_string + (str(key) + " " + \
                                         str(hourly[key]) + "\n")
-    return final_string
+    return final_string + '<a href="http://www.nea.gov.sg/data/xml/dt/Warning_Advisory/Haze.gif" > Haze Map </a>'
 
 
 def weathernow_get():
@@ -91,7 +91,6 @@ def weathernow_get():
     # Add 24 hr cast
     nowcast = data['items'][0]['periods'][1]['regions']
     for key in sorted(nowcast):
-        final_string  =  final_string + (str(key) + " - " + str(nowcast[key]) + "\n") + \
-                         '<a href="http://wip.weather.gov.sg/wip/pp/rndops/web/ship/gif/rad70.gif" > Radar Map </a>'
+        final_string  =  final_string + (str(key) + " - " + str(nowcast[key]) + "\n")
 
-    return final_string
+    return final_string + '<a href="http://wip.weather.gov.sg/wip/pp/rndops/web/ship/gif/rad70.gif" > Radar Map </a>'
