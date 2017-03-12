@@ -58,14 +58,14 @@ def psi3hour(bot, update):
     """ Get Latest Singapore PSI """
 
     final_string = gov.psi3hour_get()
-    bot.sendMessage(update.message.chat_id, text=final_string)
+    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
 def weathernow(bot, update):
     """ Get Latest Singapore Weather """
     final_string = gov.weathernow_get()
 
-    bot.sendMessage(update.message.chat_id, text=final_string)
+    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
 def start(bot, update):
