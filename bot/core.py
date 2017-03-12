@@ -10,6 +10,7 @@ from telegram.ext import Updater, CommandHandler
 from bot import gov
 from bot import draw
 from bot import promo
+from bot import finance
 from telegram import ReplyKeyboardMarkup
 
 
@@ -26,6 +27,7 @@ traffic - Get Latest Traffic Images
 4d - Get Latest 4D Draw Results
 ridepromos - Get Latest Promos from Uber/Grab
 sti - Get Latest Straits Times Index Level
+sgd - Get Latest SGD Rates
 """
 
 """
@@ -78,6 +80,13 @@ def sti_level(bot, update):
     final_string = "<b>Straits Times Index Level</b>"
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendPhoto(update.message.chat_id, photo='https://chart.finance.yahoo.com/t?s=%5eSTI&lang=en-SG&region=SG&width=300&height=180')
+
+
+def sgd_level(bot, update):
+    """ Get Latest FX """
+
+    final_string = finance.get_fx()
+    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
 def weathernow(bot, update):
@@ -142,6 +151,7 @@ def main():
     dispatch.add_handler(CommandHandler("ridepromos", taxipromos))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
     dispatch.add_handler(CommandHandler("sti", sti_level))
+    dispatch.add_handler(CommandHandler("sgd", sgd_level))
 
     # log all errors
     dispatch.add_error_handler(error)
