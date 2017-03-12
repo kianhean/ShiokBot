@@ -22,9 +22,10 @@ logger = logging.getLogger(__name__)
 """Response
 weather - Get Latest Weather Report
 psi - Get Latest PSI Report
-traffic - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas
+traffic - Get Latest Traffic Images
 4d - Get Latest 4D Draw Results
 ridepromos - Get Latest Promos from Uber/Grab
+sti - Get Latest Straits Times Index Level
 """
 
 """
@@ -92,12 +93,13 @@ def start(bot, update):
     bot.sendMessage(update.message.chat_id,
                     text='''Hello! I am @ShiokBot! 
                      \nThe helpful singlish spouting bot!
-                     \n\nAvailable Commands 
+                     \nAvailable Commands 
                      \n/psi - Report the latest PSI readings lo
                      \n/weather - Report the latest weather lah
                      \n/4d - Give you latest 4d results wor
                      \n/ridepromos - Help you save money give you uber/grab codes
-                     \n/traffic woodlands - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas
+                     \n/traffic - Get Latest Traffic Images
+                     \n/sti - Get Latest Straits Times Index Level
                      ''')
 
 
@@ -106,12 +108,13 @@ def help(bot, update):
     bot.sendMessage(update.message.chat_id,
                     text='''Hello! I am @ShiokBot! 
                      \nThe helpful singlish spouting bot!
-                     \n\nAvailable Commands 
+                     \nAvailable Commands 
                      \n/psi - Report the latest PSI readings lo
                      \n/weather - Report the latest weather lah
                      \n/4d - Give you latest 4d results wor
                      \n/ridepromos - Help you save money give you uber/grab codes
-                     \n/traffic woodlands - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas
+                     \n/traffic - Get Latest Traffic Images
+                     \n/sti - Get Latest Straits Times Index Level
                      ''')
 
 

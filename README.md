@@ -20,11 +20,11 @@ Singapore Data APIs from https://developers.data.gov.sg/
 
 #### weather - Get Latest Weather Report
 
-![weather](https://cloud.githubusercontent.com/assets/5037305/23828250/0d4ebc0a-0707-11e7-892e-4bd1df8cca91.PNG)
+![weather](https://cloud.githubusercontent.com/assets/5037305/23828838/c32a6eb8-0719-11e7-9cd2-45bab969d771.PNG)
 
 #### psi - Get Latest PSI Report
 
-![psi](https://cloud.githubusercontent.com/assets/5037305/23828247/0d4cd624-0707-11e7-9ca1-11d1d3d6b6e2.PNG)
+![psi](https://cloud.githubusercontent.com/assets/5037305/23828836/beaa9ac0-0719-11e7-92c6-34abda730a9d.PNG)
 
 #### traffic - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas or traffic Woodlands
 
@@ -36,6 +36,6 @@ Singapore Data APIs from https://developers.data.gov.sg/
 
 #### ridepromos - Get Latest Promos from Uber/Grab
 
-![ridecodes](https://cloud.githubusercontent.com/assets/5037305/23828246/0d4c882c-0707-11e7-8bbf-e9d37d1ebc5b.PNG)
+![ridecodes](https://cloud.githubusercontent.com/assets/5037305/23828837/bfd1a114-0719-11e7-9372-0f5fbc5ae1a1.PNG)
 
 Pretty Cool huh?
