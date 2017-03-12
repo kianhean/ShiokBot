@@ -87,7 +87,7 @@ def sgd_level(bot, update):
     """ Get Latest FX """
 
     final_string = finance.get_fx()
-    final_string += "Yay can Travel liao!"
+    final_string += "\nYay can Travel liao!"
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
@@ -95,7 +95,7 @@ def sibor_level(bot, update):
     """ Get Latest SIBOR """
 
     final_string = finance.get_sibor()
-    final_string += "Wa Why So High Now!"
+    final_string += "\nWa Why So High Now!"
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
