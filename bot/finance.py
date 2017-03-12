@@ -1,6 +1,8 @@
 import os
 import json
 import requests
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
 
 
 def get_sti():
@@ -34,3 +36,22 @@ def get_fx():
         text_final += key + " " + str(list_curr[key]) + " = 1 SGD \n"
     return text_final
 
+
+def get_sibor():
+    # Connect to Source
+    url ='http://www.moneysmart.sg/home-loan/sibor-trend'
+    data = urlopen(url)
+    soup = BeautifulSoup(data, 'html.parser')
+
+    # Find latest Result
+    result = soup.findAll("div", { "class" : "sibor-sor-table" })
+    result = result[0].findAll("td")
+    result = result[1:]
+
+    text_final = '<b>Latest SIBOR Rates</b>\n\n'
+    name = result[0:][::2]
+    rate = result[1:][::2]
+
+    for i in range(0,4):
+        text_final += name[i].get_text() + " - " + rate[i].get_text() + "\n"
+    return text_final

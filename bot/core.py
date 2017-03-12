@@ -89,6 +89,13 @@ def sgd_level(bot, update):
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
+def sibor_level(bot, update):
+    """ Get Latest SIBOR """
+
+    final_string = finance.get_sibor()
+    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+
+
 def weathernow(bot, update):
     """ Get Latest Singapore Weather """
     final_string = gov.weathernow_get()
@@ -152,6 +159,7 @@ def main():
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
     dispatch.add_handler(CommandHandler("sti", sti_level))
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
+    dispatch.add_handler(CommandHandler("sibor", sibor_level))
 
     # log all errors
     dispatch.add_error_handler(error)
