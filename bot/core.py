@@ -27,7 +27,8 @@ traffic - Get Latest Traffic Images
 4d - Get Latest 4D Draw Results
 ridepromos - Get Latest Promos from Uber/Grab
 sti - Get Latest Straits Times Index Level
-sgd - Get Latest SGD Rates
+sgd - Get Latest SGD FX Rates
+sibor - Get Latest SIBOR Rates
 """
 
 """
@@ -86,6 +87,7 @@ def sgd_level(bot, update):
     """ Get Latest FX """
 
     final_string = finance.get_fx()
+    final_string += "Yay can Travel liao!"
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
@@ -93,6 +95,7 @@ def sibor_level(bot, update):
     """ Get Latest SIBOR """
 
     final_string = finance.get_sibor()
+    final_string += "Wa Why So High Now!"
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
