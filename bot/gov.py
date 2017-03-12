@@ -62,7 +62,7 @@ def psi3hour_get():
     for key in sorted(hourly):
         final_string  =  final_string + (str(key) + " " + \
                                         str(hourly[key]) + "\n")
-    return final_string + '<a href="http://wip.weather.gov.sg/wip/pp/gif/rghz.gif" > Haze Map </a>'
+    return final_string + '<img src="http://wip.weather.gov.sg/wip/pp/gif/rghz.gif" >'
 
 
 def weathernow_get():

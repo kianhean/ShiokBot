@@ -36,9 +36,9 @@ def fourdresults(bot, update):
 def taxipromos(bot, update):
     """ Get Latest taxipromos """
 
-    text_ = "<b> Latest Uber Promo Codes </b> \n\n"
+    text_ = "<b> Latest Uber Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(1)
-    text_ += "\n<b> Latest Grab Promo Codes </b> \n\n"
+    text_ += "\n<b> Latest Grab Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(0)
 
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')

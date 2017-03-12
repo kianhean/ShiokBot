@@ -18,6 +18,6 @@ def get_code(pos=0):
     expiry = service.findAll("span", { "class" : "expiry" })
     text_ = ""
     
-    for i in range(0, len(code)):
+    for i in range(len(code) - 1, 0, -1):
         text_ += "<b>" + code[i].get_text() + "</b> | Expires - " + expiry[i].get_text() + " | " + desc[i].get_text() + "\n"
     return text_
