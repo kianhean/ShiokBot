@@ -55,7 +55,7 @@ def traffic(bot, update, args):
     if len(args) == 0:
         final_string = 'Please enter either traffic Woodlands or traffic Tuas'
         custom_keyboard = [['/traffic Tuas', '/traffic Woodlands']]
-        reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True)
+        reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True, selective=True)
         bot.sendMessage(update.message.chat_id, final_string, reply_markup=reply_markup)
 
     else:
@@ -69,6 +69,14 @@ def psi3hour(bot, update):
     final_string = gov.psi3hour_get()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendPhoto(update.message.chat_id, photo='http://wip.weather.gov.sg/wip/pp/gif/rghz.gif')
+
+
+def sti_level(bot, update):
+    """ Get Latest STI Level """
+
+    final_string = "<b>Straits Times Index Level</b>"
+    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    bot.sendPhoto(update.message.chat_id, photo='https://chart.finance.yahoo.com/t?s=%5eSTI&lang=en-SG&region=SG&width=300&height=180')
 
 
 def weathernow(bot, update):
@@ -130,6 +138,7 @@ def main():
     dispatch.add_handler(CommandHandler("4d", fourdresults))
     dispatch.add_handler(CommandHandler("ridepromos", taxipromos))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
+    dispatch.add_handler(CommandHandler("sti", sti_level))
 
     # log all errors
     dispatch.add_error_handler(error)
