@@ -72,6 +72,33 @@ def taxipromos_smart(bot, update):
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
 
 
+def taxi_around_me(bot, update):
+    """ Get Taxis in Radius """
+
+    # Detect if in group
+    chat_type = update.message.chat.type
+    senderid = update.message.from.id
+    senderusername = update.message.from.username
+
+    if chat_type == 'private':
+        # Run Code
+        send_long = update.message.location.longitude
+        send_lat = update.message.location.latitude
+
+        count_ = gov.taxi_get(send_long, send_lat)
+        text_ = "There are a total of " + str(count_) + " Available Taxis in a 500M radius Around you!"
+        bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+    else:
+        # Send PM
+        message_ = senderusername + ", sent you a PM. Locations can only be shared in private"
+        custom_keyboard = [['/taxi_around_me', request_location=True]]
+        
+        reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True, selective=True)
+        
+        bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
+        bot.sendMessage(senderid, 'Click the button below scan for Available Taxis!', reply_markup=reply_markup)
+
+
 def traffic(bot, update, args):
     """ Get Traffic Updates """
 
@@ -188,6 +215,7 @@ def main():
     dispatch.add_handler(CommandHandler("sti", sti_level))
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
     dispatch.add_handler(CommandHandler("sibor", sibor_level))
+    dispatch.add_handler(CommandHandler("taxi_around_me", taxi_around_me))
 
     # log all errors
     dispatch.add_error_handler(error)

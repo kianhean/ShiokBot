@@ -3,6 +3,7 @@
 import os
 import json
 import requests
+from haversine import haversine
 
 
 def connnect_gov_api(url_string):
@@ -12,6 +13,23 @@ def connnect_gov_api(url_string):
     request = requests.get(url_string, headers=headers)
 
     return request
+
+
+def taxi_get(send_long, send_lat):
+    """ Get Taxi Updates """
+    connnect_gov_api_r = connnect_gov_api('https://api.data.gov.sg/v1/transport/taxi-availability')
+    data = json.loads(connnect_gov_api_r.text)
+
+    """ Create inputs """
+    current = (send_long, send_lat)
+    count_number = 0
+    thres = 0.5
+
+    # Count Number of Taxis <= thres
+    for coord in data['features'][0]['geometry']['coordinates']:
+        if haversine(current, coord) <= thres:
+            count_number += 1
+    return count_number
 
 
 def traffic_get(location):
