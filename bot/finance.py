@@ -33,7 +33,7 @@ def get_fx():
     text_final = '<b>Latest SGD End of Day Rates ' + result_today['end_of_day'] + '</b>\n\n'
 
     for key in sorted(list_curr.keys()):
-        text_final += key + " " + str(list_curr[key]) + " = 1 SGD \n"
+        text_final += key + " " + str(round(list_curr[key],3)) + " = 1 SGD \n"
     return text_final
 
 

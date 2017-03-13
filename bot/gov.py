@@ -62,7 +62,7 @@ def psi3hour_get():
     for key in sorted(hourly):
         final_string  =  final_string + (str(key) + " " + \
                                         str(hourly[key]) + "\n")
-    return final_string + "\n\n Hotspots at our neighbours there are like that!"
+    return final_string + "\nHotspots at our neighbours there are like that!"
 
 
 def weathernow_get():
@@ -93,4 +93,4 @@ def weathernow_get():
     for key in sorted(nowcast):
         final_string  =  final_string + (str(key) + " - " + str(nowcast[key]) + "\n")
 
-    return final_string + "\n\n Show you radarrrr somemore!"
+    return final_string + "\nShow you radarrrr somemore! Got colour means raining!"

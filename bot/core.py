@@ -26,6 +26,7 @@ psi - Get Latest PSI Report
 traffic - Get Latest Traffic Images
 4d - Get Latest 4D Draw Results
 ridepromos - Get Latest Promos from Uber/Grab
+ridepromos_smart - Get Latest Promos from Uber/Grab (Smart List)
 sti - Get Latest Straits Times Index Level
 sgd - Get Latest SGD FX Rates
 sibor - Get Latest SIBOR Rates
@@ -45,10 +46,21 @@ def fourdresults(bot, update):
 def taxipromos(bot, update):
     """ Get Latest taxipromos """
 
-    text_ = "<b> Latest Uber Promo Codes (Latest on Top)</b> \n\n"
+    text_ = "<b>Uber Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(1)
-    text_ += "\n<b> Latest Grab Promo Codes (Latest on Top)</b> \n\n"
+    text_ += "\n<b>Grab Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(0)
+
+    bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+
+
+def taxipromos_smart(bot, update):
+    """ Get Latest taxipromos Smart """
+
+    text_ = "<b>Smart List of Uber Promo Codes (Latest on Top)</b> \n\n"
+    text_ += promo.get_code(1, smart=True)
+    text_ += "\n<b>Smart List of Grab Promo Codes (Latest on Top)</b> \n\n"
+    text_ += promo.get_code(0, smart=True)
 
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
 
@@ -78,7 +90,7 @@ def psi3hour(bot, update):
 def sti_level(bot, update):
     """ Get Latest STI Level """
 
-    final_string = "<b>Straits Times Index Level</b>"
+    final_string = "<b>Straits Times Index Level</b>\nThis is the index today..."
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendPhoto(update.message.chat_id, photo='https://chart.finance.yahoo.com/t?s=%5eSTI&lang=en-SG&region=SG&width=300&height=180')
 
@@ -117,6 +129,7 @@ def start(bot, update):
                      \n/weather - Report the latest weather lah
                      \n/4d - Give you latest 4d results wor
                      \n/ridepromos - Help you save money give you uber/grab codes
+                     \n/ridepromos_smart - Help you save money give you uber/grab codes (narrowed down)
                      \n/traffic - Get Latest Traffic Images
                      \n/sti - Get Latest Straits Times Index Level
                      ''')
@@ -132,6 +145,7 @@ def help(bot, update):
                      \n/weather - Report the latest weather lah
                      \n/4d - Give you latest 4d results wor
                      \n/ridepromos - Help you save money give you uber/grab codes
+                     \n/ridepromos_smart - Help you save money give you uber/grab codes (narrowed down)
                      \n/traffic - Get Latest Traffic Images
                      \n/sti - Get Latest Straits Times Index Level
                      ''')
@@ -159,6 +173,7 @@ def main():
     dispatch.add_handler(CommandHandler("weather", weathernow))
     dispatch.add_handler(CommandHandler("4d", fourdresults))
     dispatch.add_handler(CommandHandler("ridepromos", taxipromos))
+    dispatch.add_handler(CommandHandler("ridepromos_smart", taxipromos_smart))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
     dispatch.add_handler(CommandHandler("sti", sti_level))
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
