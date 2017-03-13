@@ -35,10 +35,39 @@ def FourD():
         consol_prize +=  result[i].get_text() + "  "
 
     # Create Reply
-    chat_reply = "<b>Latest Draw Results on " + latest_result_date + "</b> \n\n"
+    chat_reply = "<b>Latest 4D Draw Results on " + latest_result_date + "</b> \n\n"
     chat_reply += top_text
     chat_reply += special_prize
     chat_reply += consol_prize
+    chat_reply += "\n\n No need check la sure never win!"
+
+    return chat_reply
+
+
+def TOTO():
+    """TOTO Methods!"""
+
+    # Connect to Source
+    url = 'https://www.gidapp.com/lottery/singapore/toto'
+    data = urlopen(url)
+    soup = BeautifulSoup(data, 'html.parser')
+
+    # Find latest Result
+    result = soup.findAll('time')
+    latest_result_date = result[0].get_text()
+
+    result = soup.find_all('span')
+
+    # SPECIAL PRIZE
+    special_prize = "<b>Winning Numbers</b>\n\n"
+    for i in range(4, 11):
+        special_prize +=  result[i].get_text() + "  "
+
+    # Create Reply
+    chat_reply = "<b>Latest TOTO Draw Results on " + latest_result_date + "</b> \n\n"
+    chat_reply += special_prize
+    chat_reply += '\n<b>Bonus</b> - '
+    chat_reply += result[11].get_text()
     chat_reply += "\n\n No need check la sure never win!"
 
     return chat_reply

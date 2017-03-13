@@ -18,24 +18,41 @@ Singapore Data APIs from https://developers.data.gov.sg/
 
 **Available Commands**
 
-#### weather - Get Latest Weather Report
+#### /ridepromos - Get Latest Promos from Uber/Grab
+
+![ridecodes](https://cloud.githubusercontent.com/assets/5037305/23828837/bfd1a114-0719-11e7-9372-0f5fbc5ae1a1.PNG)
+
+#### /ridepromos_smart - Get Latest Promos from Uber/Grab (Filtered First Time Users/Targeted Crap)
+
+![ridecodes](https://cloud.githubusercontent.com/assets/5037305/23856817/e4fae820-0835-11e7-8de7-7a1b075d2943.PNG)
+
+#### /weather - Get Latest Weather Report
 
 ![weather](https://cloud.githubusercontent.com/assets/5037305/23828838/c32a6eb8-0719-11e7-9cd2-45bab969d771.PNG)
 
-#### psi - Get Latest PSI Report
+#### /psi - Get Latest PSI Report
 
 ![psi](https://cloud.githubusercontent.com/assets/5037305/23828836/beaa9ac0-0719-11e7-92c6-34abda730a9d.PNG)
 
-#### traffic - Get Latest Woodlands or Tuas Traffic Image. Example traffic Tuas or traffic Woodlands
+#### /traffic - Get Latest Woodlands or Tuas Traffic Image
 
 ![traffic](https://cloud.githubusercontent.com/assets/5037305/23828248/0d4d4f14-0707-11e7-9935-f2016496cdcb.PNG)
 
-#### 4d - Get Latest 4D Draw Results
+#### /4d - Get Latest 4D Draw Results
 
 ![4d](https://cloud.githubusercontent.com/assets/5037305/23828249/0d4e2632-0707-11e7-9e76-b6e826a512c3.PNG)
 
-#### ridepromos - Get Latest Promos from Uber/Grab
+#### /sibor - Get Latest Sibor Rates
 
-![ridecodes](https://cloud.githubusercontent.com/assets/5037305/23828837/bfd1a114-0719-11e7-9372-0f5fbc5ae1a1.PNG)
+![sibor](https://cloud.githubusercontent.com/assets/5037305/23856816/e4f89cf0-0835-11e7-9f3b-8064d1560d98.PNG)
+
+#### /sgd - Get Latest SGX FX Rates
+
+![sgd](https://cloud.githubusercontent.com/assets/5037305/23856815/e4f7477e-0835-11e7-9492-9d1e505ac0d7.PNG)
+
+#### /sti - Get Latest STI Index Level
+
+![sti](https://cloud.githubusercontent.com/assets/5037305/23856814/e4f04564-0835-11e7-822c-6e4571075813.PNG)
+
 
 Pretty Cool huh?

@@ -25,6 +25,7 @@ weather - Get Latest Weather Report
 psi - Get Latest PSI Report
 traffic - Get Latest Traffic Images
 4d - Get Latest 4D Draw Results
+toto - Get Latest TOTO Draw Results
 ridepromos - Get Latest Promos from Uber/Grab
 ridepromos_smart - Get Latest Promos from Uber/Grab (Smart List)
 sti - Get Latest Straits Times Index Level
@@ -40,6 +41,12 @@ https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#po
 def fourdresults(bot, update):
     """ Send results from 4D """
     final_string = draw.FourD()
+    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+
+
+def totoresults(bot, update):
+    """ Send results from TOTO """
+    final_string = draw.TOTO()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
@@ -128,6 +135,7 @@ def start(bot, update):
                      \n/psi - Report the latest PSI readings lo
                      \n/weather - Report the latest weather lah
                      \n/4d - Give you latest 4d results wor
+                     \n/toto - Give you latest toto results huat ar!
                      \n/ridepromos - Help you save money give you uber/grab codes
                      \n/ridepromos_smart - Help you save money give you uber/grab codes (narrowed down)
                      \n/traffic - Get Latest Traffic Images
@@ -144,6 +152,7 @@ def help(bot, update):
                      \n/psi - Report the latest PSI readings lo
                      \n/weather - Report the latest weather lah
                      \n/4d - Give you latest 4d results wor
+                     \n/toto - Give you latest toto results huat ar!
                      \n/ridepromos - Help you save money give you uber/grab codes
                      \n/ridepromos_smart - Help you save money give you uber/grab codes (narrowed down)
                      \n/traffic - Get Latest Traffic Images
@@ -172,6 +181,7 @@ def main():
     dispatch.add_handler(CommandHandler("psi", psi3hour))
     dispatch.add_handler(CommandHandler("weather", weathernow))
     dispatch.add_handler(CommandHandler("4d", fourdresults))
+    dispatch.add_handler(CommandHandler("toto", totoresults))
     dispatch.add_handler(CommandHandler("ridepromos", taxipromos))
     dispatch.add_handler(CommandHandler("ridepromos_smart", taxipromos_smart))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
