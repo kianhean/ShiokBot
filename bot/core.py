@@ -71,9 +71,8 @@ def taxipromos_smart(bot, update):
 
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
 
-
+"""
 def taxi_around_me(bot, update):
-    """ Get Taxis in Radius """
 
     # Detect if in group
     chat_type = update.message.chat.type
@@ -97,7 +96,7 @@ def taxi_around_me(bot, update):
         
         bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
         bot.sendMessage(senderid, 'Click the button below scan for Available Taxis!', reply_markup=reply_markup)
-
+"""
 
 def traffic(bot, update, args):
     """ Get Traffic Updates """
@@ -215,7 +214,7 @@ def main():
     dispatch.add_handler(CommandHandler("sti", sti_level))
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
     dispatch.add_handler(CommandHandler("sibor", sibor_level))
-    dispatch.add_handler(CommandHandler("taxi_around_me", taxi_around_me))
+    #dispatch.add_handler(CommandHandler("taxi_around_me", taxi_around_me))
 
     # log all errors
     dispatch.add_error_handler(error)
