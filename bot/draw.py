@@ -59,14 +59,14 @@ def TOTO():
     result = soup.find_all('span')
 
     # SPECIAL PRIZE
-    special_prize = "<b>Winning Numbers</b>\n\n"
+    special_prize = "<b>Winning Numbers</b>\n"
     for i in range(4, 11):
         special_prize +=  result[i].get_text() + "  "
 
     # Create Reply
     chat_reply = "<b>Latest TOTO Draw Results on " + latest_result_date + "</b> \n\n"
     chat_reply += special_prize
-    chat_reply += '\n<b>Bonus</b> - '
+    chat_reply += '\n\n<b>Bonus</b> - '
     chat_reply += result[11].get_text()
     chat_reply += "\n\n No need check la sure never win!"
 
