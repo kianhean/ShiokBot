@@ -94,6 +94,8 @@ def taxi_around_me(bot, update):
             # If already sent the message
             send_long = update.message.location.longitude
             send_lat = update.message.location.latitude
+            bot.sendMessage(update.message.chat_id, text=send_long,
+                            parse_mode='HTML')
             success_status = True
         except:
             # If have not sent the message
