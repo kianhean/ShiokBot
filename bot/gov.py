@@ -23,7 +23,7 @@ def taxi_get(send_long, send_lat):
     # Create inputs
     current = (send_long, send_lat)
     count_number = 0
-    thres = 0.5
+    thres = 0.2
 
     # Count Number of Taxis <= thres
     for coord in data['features'][0]['geometry']['coordinates']:

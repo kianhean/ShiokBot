@@ -111,22 +111,31 @@ def taxi_around_me(bot, update):
 
             count_ = gov.taxi_get(send_long, send_lat)
             text_ = "There are a total of " + str(count_) + \
-            " Available Taxis in a 500M radius Around you!"
+            " Available Taxis in a 200M radius Around you!"
             bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
 
     else:
         # If in group chat... send PM
-        message_ = senderusername + \
-        ", I sent you a love note. Location can only be shared in private"
-        bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
-
         location_keyboard = KeyboardButton(text="/taxi_around_me", request_location=True)
         custom_keyboard = [[location_keyboard]]
         reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True, selective=True)
+        pm_try = False
 
-        bot.sendMessage(senderid, 'Click the button below scan for Available Taxis!',
-                        reply_markup=reply_markup)
+        try:
+            # Try to send PM, will have an error if never added before
+            bot.sendMessage(senderid, 'Click the button below scan for Available Taxis!',
+                            reply_markup=reply_markup)
+            pm_try = True
+        except:
+            message_ = "You have to start a convo with me first! @ShiokBot before I can send you this info!"
+            bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
+            message_ = "After starting the PM with me try /taxi_around_me again"
+            bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
 
+        if pm_try:
+            message_ = senderusername + \
+            ", I sent you a love note. Location can only be shared in private"
+            bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
 
 def traffic(bot, update, args):
     """ Get Traffic Updates """
