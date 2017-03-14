@@ -11,7 +11,7 @@ from bot import gov
 from bot import draw
 from bot import promo
 from bot import finance
-from telegram import ReplyKeyboardMarkup
+from telegram import ReplyKeyboardMarkup, KeyboardButton
 
 
 # Enable logging
@@ -71,13 +71,13 @@ def taxipromos_smart(bot, update):
 
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
 
-"""
-def taxi_around_me(bot, update):
 
+def taxi_around_me(bot, update):
+    """ Find Taxis Around me """
     # Detect if in group
     chat_type = update.message.chat.type
-    senderid = update.message.from.id
-    senderusername = update.message.from.username
+    senderid = update.message.from_user.id
+    senderusername = update.message.from_user.username
 
     if chat_type == 'private':
         # Run Code
@@ -85,18 +85,22 @@ def taxi_around_me(bot, update):
         send_lat = update.message.location.latitude
 
         count_ = gov.taxi_get(send_long, send_lat)
-        text_ = "There are a total of " + str(count_) + " Available Taxis in a 500M radius Around you!"
+        text_ = "There are a total of " + str(count_) + \
+        " Available Taxis in a 500M radius Around you!"
         bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     else:
         # Send PM
-        message_ = senderusername + ", sent you a PM. Locations can only be shared in private"
-        custom_keyboard = [['/taxi_around_me', request_location=True]]
-        
+        message_ = senderusername + \
+        ", I sent you a love note. Location can only be shared in private"
+        location_keyboard = KeyboardButton(text="/taxi_around_me", request_location=True)
+        custom_keyboard = [[location_keyboard]]
+
         reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True, selective=True)
-        
+
         bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
-        bot.sendMessage(senderid, 'Click the button below scan for Available Taxis!', reply_markup=reply_markup)
-"""
+        bot.sendMessage(senderid, 'Click the button below scan for Available Taxis!',
+                        reply_markup=reply_markup)
+
 
 def traffic(bot, update, args):
     """ Get Traffic Updates """
@@ -155,7 +159,7 @@ def weathernow(bot, update):
 def start(bot, update):
     """ Start Text """
     bot.sendMessage(update.message.chat_id,
-                    text='''Hello! I am @ShiokBot! 
+                    text='''Hello! I am @ShiokBot!
                      \nThe helpful singlish spouting bot!
                      \nAvailable Commands 
                      \n/psi - Report the latest PSI readings lo
@@ -172,7 +176,7 @@ def start(bot, update):
 def help(bot, update):
     """ Help Text"""
     bot.sendMessage(update.message.chat_id,
-                    text='''Hello! I am @ShiokBot! 
+                    text='''Hello! I am @ShiokBot!
                      \nThe helpful singlish spouting bot!
                      \nAvailable Commands 
                      \n/psi - Report the latest PSI readings lo
@@ -214,7 +218,7 @@ def main():
     dispatch.add_handler(CommandHandler("sti", sti_level))
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
     dispatch.add_handler(CommandHandler("sibor", sibor_level))
-    #dispatch.add_handler(CommandHandler("taxi_around_me", taxi_around_me))
+    dispatch.add_handler(CommandHandler("taxi_around_me", taxi_around_me))
 
     # log all errors
     dispatch.add_error_handler(error)

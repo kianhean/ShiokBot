@@ -1,7 +1,7 @@
-import os
+
 import json
-import requests
 from urllib.request import urlopen
+import requests
 from bs4 import BeautifulSoup
 
 
@@ -28,12 +28,13 @@ def get_fx():
     USD = 1/float(result_today['usd_sgd'])*1
     VND = 1/float(result_today['vnd_sgd_100'])*100
 
-    list_curr = {'AUD': AUD, 'CNY':CNY, 'HKD':HKD, 'EUR':EUR, 'JPY':JPY, 'MYR':MYR, 'THB':THB, 'TWD':TWD, 'USD':USD, 'VND':VND}
+    list_curr = {'AUD': AUD, 'CNY':CNY, 'HKD':HKD, 'EUR':EUR, 'JPY':JPY,
+                 'MYR':MYR, 'THB':THB, 'TWD':TWD, 'USD':USD, 'VND':VND}
 
     text_final = '<b>Latest SGD End of Day Rates ' + result_today['end_of_day'] + '</b>\n\n'
 
     for key in sorted(list_curr.keys()):
-        text_final += key + " " + str(round(list_curr[key],3)) + " = 1 SGD \n"
+        text_final += key + " " + str(round(list_curr[key], 3)) + " = 1 SGD \n"
     return text_final
 
 
@@ -44,7 +45,7 @@ def get_sibor():
     soup = BeautifulSoup(data, 'html.parser')
 
     # Find latest Result
-    result = soup.findAll("div", { "class" : "sibor-sor-table" })
+    result = soup.findAll("div", {"class" : "sibor-sor-table"})
     result = result[0].findAll("td")
     result = result[1:]
 
@@ -52,6 +53,6 @@ def get_sibor():
     name = result[0:][::2]
     rate = result[1:][::2]
 
-    for i in range(0,4):
+    for i in range(0, 4):
         text_final += name[i].get_text() + " - " + rate[i].get_text() + "\n"
     return text_final

@@ -20,7 +20,7 @@ def taxi_get(send_long, send_lat):
     connnect_gov_api_r = connnect_gov_api('https://api.data.gov.sg/v1/transport/taxi-availability')
     data = json.loads(connnect_gov_api_r.text)
 
-    """ Create inputs """
+    # Create inputs
     current = (send_long, send_lat)
     count_number = 0
     thres = 0.5
@@ -76,7 +76,7 @@ def psi3hour_get():
 
     # Create Response
     final_string = "<b>The 3 hourly PSI Reading at " + timestampp + " is actually</b> \n\n"
-                    
+
     for key in sorted(hourly):
         final_string  =  final_string + (str(key) + " " + \
                                         str(hourly[key]) + "\n")
