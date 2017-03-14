@@ -11,7 +11,7 @@ from bot import gov
 from bot import draw
 from bot import promo
 from bot import finance
-from telegram import ReplyKeyboardMarkup, KeyboardButton
+from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction
 
 
 # Enable logging
@@ -40,12 +40,14 @@ https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#po
 
 def fourdresults(bot, update):
     """ Send results from 4D """
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = draw.FourD()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
 def totoresults(bot, update):
     """ Send results from TOTO """
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = draw.TOTO()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
@@ -53,22 +55,26 @@ def totoresults(bot, update):
 def taxipromos(bot, update):
     """ Get Latest taxipromos """
 
+    bot.sendMessage(update.message.chat_id, text="Let me go and bug Uber/Grab...",
+                    parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = "<b>Uber Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(1)
     text_ += "\n<b>Grab Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(0)
-
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
 
 
 def taxipromos_smart(bot, update):
     """ Get Latest taxipromos Smart """
 
+    bot.sendMessage(update.message.chat_id, text="Let me go and bug Uber/Grab...",
+                    parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = "<b>Smart List of Uber Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(1, smart=True)
     text_ += "\n<b>Smart List of Grab Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(0, smart=True)
-
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
 
 
@@ -81,23 +87,39 @@ def taxi_around_me(bot, update):
 
     if chat_type == 'private':
         # Run Code
-        send_long = update.message.location.longitude
-        send_lat = update.message.location.latitude
+        if update.message.location.longitude is None:
 
-        count_ = gov.taxi_get(send_long, send_lat)
-        text_ = "There are a total of " + str(count_) + \
-        " Available Taxis in a 500M radius Around you!"
-        bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+            # If have not sent the message
+            location_keyboard = KeyboardButton(text="/taxi_around_me", request_location=True)
+            custom_keyboard = [[location_keyboard]]
+            reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True,
+                                               selective=True)
+            bot.sendMessage(senderid, 'Click the button below scan for Available Taxis!',
+                            reply_markup=reply_markup)
+        else:
+
+            # If already sent the message
+            send_long = update.message.location.longitude
+            send_lat = update.message.location.latitude
+
+            bot.sendMessage(update.message.chat_id, text="I go see see look look...",
+                            parse_mode='HTML')
+            bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+
+            count_ = gov.taxi_get(send_long, send_lat)
+            text_ = "There are a total of " + str(count_) + \
+            " Available Taxis in a 500M radius Around you!"
+            bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     else:
-        # Send PM
+        # If in group chat... send PM
         message_ = senderusername + \
         ", I sent you a love note. Location can only be shared in private"
+        bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
+
         location_keyboard = KeyboardButton(text="/taxi_around_me", request_location=True)
         custom_keyboard = [[location_keyboard]]
-
         reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True, selective=True)
 
-        bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
         bot.sendMessage(senderid, 'Click the button below scan for Available Taxis!',
                         reply_markup=reply_markup)
 
@@ -112,13 +134,18 @@ def traffic(bot, update, args):
         bot.sendMessage(update.message.chat_id, final_string, reply_markup=reply_markup)
 
     else:
+        bot.sendMessage(update.message.chat_id, text='I go turn on my spycam, please wait',
+                        parse_mode='HTML')
+        bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
         final_string = gov.traffic_get(args[0])
         bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
 
 
 def psi3hour(bot, update):
     """ Get Latest Singapore PSI """
-
+    bot.sendMessage(update.message.chat_id, text='Puting my hand in the air to feel the dust...',
+                    parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = gov.psi3hour_get()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendPhoto(update.message.chat_id, photo='http://wip.weather.gov.sg/wip/pp/gif/rghz.gif')
@@ -129,12 +156,15 @@ def sti_level(bot, update):
 
     final_string = "<b>Straits Times Index Level</b>\nThis is the index today..."
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     bot.sendPhoto(update.message.chat_id, photo='https://chart.finance.yahoo.com/t?s=%5eSTI&lang=en-SG&region=SG&width=300&height=180')
 
 
 def sgd_level(bot, update):
     """ Get Latest FX """
-
+    bot.sendMessage(update.message.chat_id, text='Let me go arcade and spy...',
+                    parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = finance.get_fx()
     final_string += "\nYay can Travel liao!"
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
@@ -142,7 +172,9 @@ def sgd_level(bot, update):
 
 def sibor_level(bot, update):
     """ Get Latest SIBOR """
-
+    bot.sendMessage(update.message.chat_id, text='Let me ask the GAHMEN...',
+                    parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = finance.get_sibor()
     final_string += "\nWa Why So High Now!"
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
@@ -150,6 +182,9 @@ def sibor_level(bot, update):
 
 def weathernow(bot, update):
     """ Get Latest Singapore Weather """
+    bot.sendMessage(update.message.chat_id, text='Let me look out of the window...',
+                    parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = gov.weathernow_get()
 
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')

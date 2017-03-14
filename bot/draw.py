@@ -66,7 +66,7 @@ def TOTO():
     # Create Reply
     chat_reply = "<b>Latest TOTO Draw Results on " + latest_result_date + "</b> \n\n"
     chat_reply += special_prize
-    chat_reply += '\n\n<b>Bonus</b> - '
+    chat_reply += '\n\n<b>Bonus</b> '
     chat_reply += result[11].get_text()
     chat_reply += "\n\n No need check la sure never win!"
 
