@@ -87,17 +87,7 @@ def taxi_around_me(bot, update):
 
     if chat_type == 'private':
         # Run Code
-        if update.message.location.longitude is None:
-
-            # If have not sent the message
-            location_keyboard = KeyboardButton(text="/taxi_around_me", request_location=True)
-            custom_keyboard = [[location_keyboard]]
-            reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True,
-                                               selective=True)
-            bot.sendMessage(senderid, 'Click the button below scan for Available Taxis!',
-                            reply_markup=reply_markup)
-        else:
-
+        try:
             # If already sent the message
             send_long = update.message.location.longitude
             send_lat = update.message.location.latitude
@@ -110,6 +100,15 @@ def taxi_around_me(bot, update):
             text_ = "There are a total of " + str(count_) + \
             " Available Taxis in a 500M radius Around you!"
             bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+
+        except:
+            # If have not sent the message
+            location_keyboard = KeyboardButton(text="/taxi_around_me", request_location=True)
+            custom_keyboard = [[location_keyboard]]
+            reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True,
+                                               selective=True)
+            bot.sendMessage(senderid, 'Click the button below scan for Available Taxis!',
+                            reply_markup=reply_markup)
     else:
         # If in group chat... send PM
         message_ = senderusername + \
@@ -143,7 +142,7 @@ def traffic(bot, update, args):
 
 def psi3hour(bot, update):
     """ Get Latest Singapore PSI """
-    bot.sendMessage(update.message.chat_id, text='Puting my hand in the air to feel the dust...',
+    bot.sendMessage(update.message.chat_id, text='Putting my hand in the air to feel the dust...',
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = gov.psi3hour_get()
@@ -184,10 +183,10 @@ def weathernow(bot, update):
     """ Get Latest Singapore Weather """
     bot.sendMessage(update.message.chat_id, text='Let me look out of the window...',
                     parse_mode='HTML')
-    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = gov.weathernow_get()
 
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     bot.sendPhoto(update.message.chat_id, photo='http://www.ulfp.com/ulfp/txp_file/download.asp?SRC=download/ulfp/Animate/1_rad70d.gif')
 
 
