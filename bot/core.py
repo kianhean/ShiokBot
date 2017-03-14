@@ -6,7 +6,7 @@
 # Import Libraries
 import os
 import logging
-from telegram.ext import Updater, CommandHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from bot import gov
 from bot import draw
 from bot import promo
@@ -94,8 +94,6 @@ def taxi_around_me(bot, update):
             # If already sent the message
             send_long = update.message.location.longitude
             send_lat = update.message.location.latitude
-            bot.sendMessage(update.message.chat_id, text=send_long,
-                            parse_mode='HTML')
             success_status = True
         except:
             # If have not sent the message
@@ -260,6 +258,7 @@ def main():
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
     dispatch.add_handler(CommandHandler("sibor", sibor_level))
     dispatch.add_handler(CommandHandler("taxi_around_me", taxi_around_me))
+    dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
 
     # log all errors
     dispatch.add_error_handler(error)
