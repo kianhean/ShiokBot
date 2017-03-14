@@ -89,18 +89,8 @@ def taxi_around_me(bot, update):
         # Run Code
         try:
             # If already sent the message
-            send_long = update.message.location.longitude
-            send_lat = update.message.location.latitude
-
-            bot.sendMessage(update.message.chat_id, text="I go see see look look...",
-                            parse_mode='HTML')
-            bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-
-            count_ = gov.taxi_get(send_long, send_lat)
-            text_ = "There are a total of " + str(count_) + \
-            " Available Taxis in a 500M radius Around you!"
-            bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
-
+            send_long = float(update.message.location.longitude)
+            send_lat = float(update.message.location.latitude)
         except:
             # If have not sent the message
             location_keyboard = KeyboardButton(text="/taxi_around_me", request_location=True)
@@ -109,6 +99,16 @@ def taxi_around_me(bot, update):
                                                selective=True)
             bot.sendMessage(senderid, 'Click the button below scan for Available Taxis!',
                             reply_markup=reply_markup)
+
+        bot.sendMessage(update.message.chat_id, text="I go see see look look...",
+                        parse_mode='HTML')
+        bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+
+        count_ = gov.taxi_get(send_long, send_lat)
+        text_ = "There are a total of " + str(count_) + \
+        " Available Taxis in a 500M radius Around you!"
+        bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+
     else:
         # If in group chat... send PM
         message_ = senderusername + \
