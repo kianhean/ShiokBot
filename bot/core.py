@@ -89,8 +89,8 @@ def taxi_around_me(bot, update):
         # Run Code
         try:
             # If already sent the message
-            send_long = float(update.message.location.longitude)
-            send_lat = float(update.message.location.latitude)
+            send_long = update.message.location.longitude
+            send_lat = update.message.location.latitude
         except:
             # If have not sent the message
             location_keyboard = KeyboardButton(text="/taxi_around_me", request_location=True)
