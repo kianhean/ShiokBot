@@ -11,6 +11,7 @@ from bot import gov
 from bot import draw
 from bot import promo
 from bot import finance
+from bot import news
 from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction
 
 
@@ -21,16 +22,15 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 """Response
-weather - Get Latest Weather Report
-psi - Get Latest PSI Report
-traffic - Get Latest Traffic Images
-4d - Get Latest 4D Draw Results
-toto - Get Latest TOTO Draw Results
-ridepromos - Get Latest Promos from Uber/Grab
-ridepromos_smart - Get Latest Promos from Uber/Grab (Smart List)
-sti - Get Latest Straits Times Index Level
-sgd - Get Latest SGD FX Rates
-sibor - Get Latest SIBOR Rates
+/weather - Report the latest weather lah
+/sg_news - Latest Headlines from Singapore
+/ridepromos - Help you save money give you uber/grab codes
+/traffic - Get Latest Traffic Images
+/sti - Get Latest Straits Times Index Level
+/sgd - Latest SGD Rates!      
+/psi - Report the latest PSI readings lo
+/4d - Give you latest 4d results wor
+/toto - Give you latest toto results huat ar!
 """
 
 """
@@ -53,19 +53,6 @@ def totoresults(bot, update):
 
 
 def taxipromos(bot, update):
-    """ Get Latest taxipromos """
-
-    bot.sendMessage(update.message.chat_id, text="Let me go and bug Uber/Grab...",
-                    parse_mode='HTML')
-    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    text_ = "<b>Uber Promo Codes (Latest on Top)</b> \n\n"
-    text_ += promo.get_code(1)
-    text_ += "\n<b>Grab Promo Codes (Latest on Top)</b> \n\n"
-    text_ += promo.get_code(0)
-    bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
-
-
-def taxipromos_smart(bot, update):
     """ Get Latest taxipromos Smart """
 
     bot.sendMessage(update.message.chat_id, text="Let me go and bug Uber/Grab...",
@@ -164,6 +151,16 @@ def psi3hour(bot, update):
     bot.sendPhoto(update.message.chat_id, photo='http://wip.weather.gov.sg/wip/pp/gif/rghz.gif')
 
 
+def get_news_st(bot, update):
+    """ Get Latest Singapore PSI """
+    bot.sendMessage(update.message.chat_id, text='Reading the Newspapers...',
+                    parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+    final_string = news.get_news_st()
+    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+
+
+
 def sti_level(bot, update):
     """ Get Latest STI Level """
 
@@ -209,15 +206,18 @@ def start(bot, update):
     bot.sendMessage(update.message.chat_id,
                     text='''Hello! I am @ShiokBot!
                      \nThe helpful singlish spouting bot!
-                     \nAvailable Commands 
-                     \n/psi - Report the latest PSI readings lo
+                     \nAvailable Commands
                      \n/weather - Report the latest weather lah
-                     \n/4d - Give you latest 4d results wor
-                     \n/toto - Give you latest toto results huat ar!
+                     \n/sg_news - Latest Headlines from Singapore
+
                      \n/ridepromos - Help you save money give you uber/grab codes
-                     \n/ridepromos_smart - Help you save money give you uber/grab codes (narrowed down)
                      \n/traffic - Get Latest Traffic Images
                      \n/sti - Get Latest Straits Times Index Level
+                     \n/sgd - Latest SGD Rates!
+                    
+                     \n/psi - Report the latest PSI readings lo
+                     \n/4d - Give you latest 4d results wor
+                     \n/toto - Give you latest toto results huat ar!
                      ''')
 
 
@@ -226,15 +226,18 @@ def help(bot, update):
     bot.sendMessage(update.message.chat_id,
                     text='''Hello! I am @ShiokBot!
                      \nThe helpful singlish spouting bot!
-                     \nAvailable Commands 
-                     \n/psi - Report the latest PSI readings lo
+                     \nAvailable Commands
                      \n/weather - Report the latest weather lah
-                     \n/4d - Give you latest 4d results wor
-                     \n/toto - Give you latest toto results huat ar!
+                     \n/sg_news - Latest Headlines from Singapore
+
                      \n/ridepromos - Help you save money give you uber/grab codes
-                     \n/ridepromos_smart - Help you save money give you uber/grab codes (narrowed down)
                      \n/traffic - Get Latest Traffic Images
                      \n/sti - Get Latest Straits Times Index Level
+                     \n/sgd - Latest SGD Rates!
+                    
+                     \n/psi - Report the latest PSI readings lo
+                     \n/4d - Give you latest 4d results wor
+                     \n/toto - Give you latest toto results huat ar!
                      ''')
 
 
@@ -261,7 +264,7 @@ def main():
     dispatch.add_handler(CommandHandler("4d", fourdresults))
     dispatch.add_handler(CommandHandler("toto", totoresults))
     dispatch.add_handler(CommandHandler("ridepromos", taxipromos))
-    dispatch.add_handler(CommandHandler("ridepromos_smart", taxipromos_smart))
+    dispatch.add_handler(CommandHandler("sg_news", get_news_st))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
     dispatch.add_handler(CommandHandler("sti", sti_level))
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
