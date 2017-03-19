@@ -19,12 +19,12 @@ def get_news_st():
     time_lines = soup.findAll('div', {'class' : 'node-postdate'})
 
     count_ = 0
-    final_text = "<b>Top Singapore Headlines</b> \n\n"
+    final_text = "<b>Top Singapore Headlines</b><br><br>"
     
     # Loop Through Headlines!
     for headline in headlines[:5]:
-        final_text += "<a href='" + "http://www.straitstimes.com" + headline.a['href'] + "'>"
-        final_text += "<b>" + headline.get_text()[1:] + "</b> </a>"
-        final_text += "\n" + time_lines[count_].get_text()
+        final_text += '<a href="' + 'http://www.straitstimes.com' + headline.a['href'] + '">'
+        final_text += headline.get_text()[1:] + "</a>"
+        final_text += "<br>" + time_lines[count_].get_text() + "<br>"
         count_ += 1
     return final_text

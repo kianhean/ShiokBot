@@ -157,7 +157,7 @@ def get_news_st(bot, update):
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = news.get_news_st()
-    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML', disable_web_page_preview=True)
 
 
 
