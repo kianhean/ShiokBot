@@ -2,11 +2,13 @@
 
 import requests as r
 from bs4 import BeautifulSoup
+from fake_useragent import UserAgent
 
 
 def get_news_st():
     # Get Text
-    website = r.get('http://www.straitstimes.com/container/custom-landing-page/breaking-news')
+    headers = {'User-Agent': UserAgent().random}
+    website = r.get('http://www.straitstimes.com/container/custom-landing-page/breaking-news', headers=headers)
     website_text = website.text
 
     # Parse HTML using BS

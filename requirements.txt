@@ -6,3 +6,4 @@ beautifulsoup4
 haversine
 flask
 gunicorn
+fake-useragent

@@ -22,15 +22,15 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 """Response
-/weather - Report the latest weather lah
-/sg_news - Latest Headlines from Singapore
-/ridepromos - Help you save money give you uber/grab codes
-/traffic - Get Latest Traffic Images
-/sti - Get Latest Straits Times Index Level
-/sgd - Latest SGD Rates!      
-/psi - Report the latest PSI readings lo
-/4d - Give you latest 4d results wor
-/toto - Give you latest toto results huat ar!
+weather - Report the latest weather lah
+sg_news - Latest Headlines from Singapore
+ridepromos - Help you save money give you uber/grab codes
+traffic - Get Latest Traffic Images
+sti - Get Latest Straits Times Index Level
+sgd - Latest SGD Rates!      
+psi - Report the latest PSI readings lo
+4d - Give you latest 4d results wor
+toto - Give you latest toto results huat ar!
 """
 
 """
