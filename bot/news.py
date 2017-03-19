@@ -25,6 +25,6 @@ def get_news_st():
     for headline in headlines[:5]:
         final_text += '<a href="' + 'http://www.straitstimes.com' + headline.a['href'] + '">'
         final_text += headline.get_text()[1:] + "</a>"
-        final_text += "\n" + time_lines[count_].get_text() + "\n"
+        final_text += "\n" + time_lines[count_].get_text() + "\n\n"
         count_ += 1
     return final_text
