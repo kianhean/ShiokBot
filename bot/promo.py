@@ -33,6 +33,15 @@ def get_code(pos=0, smart=False):
                     break
 
         if ban is False:
+            try:
+                e = expiry[i].get_text()
+            except:
+                e = ""
+            try:
+                d = desc[i].get_text()
+            except:
+                d = ""
+                
             text_ += "<b>" + code[i].get_text() + "</b> | Expires - " + \
-                     expiry[i].get_text() + " | " + desc[i].get_text() + "\n"
+                    e + " | " + d + "\n"
     return text_
