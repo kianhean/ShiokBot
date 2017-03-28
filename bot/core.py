@@ -27,7 +27,7 @@ def botan_track(uid, message, name):
     botan.track(
         token=str(os.environ.get('STATS_API')),
         uid=uid,
-        message=message,
+        message=message.to_dict(),
         name=name
     )
 
@@ -75,7 +75,7 @@ def taxipromos(bot, update):
     text_ += "\n<b>Smart List of Grab Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(0, smart=True)
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, "TAXI PROMO")
+    botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def taxi_around_me(bot, update):
