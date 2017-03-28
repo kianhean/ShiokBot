@@ -53,7 +53,7 @@ def fourdresults(bot, update):
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = draw.FourD()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, "4D Results")
+    botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def totoresults(bot, update):
@@ -61,7 +61,7 @@ def totoresults(bot, update):
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = draw.TOTO()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, "TOTO")
+    botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def taxipromos(bot, update):
@@ -152,7 +152,7 @@ def traffic(bot, update, args):
         bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
         final_string = gov.traffic_get(args[0])
         bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
-        botan_track(update.message.from_user.id, update.message, "TRAFFIC " + str(args[0]))
+        botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def psi3hour(bot, update):
@@ -163,7 +163,7 @@ def psi3hour(bot, update):
     final_string = gov.psi3hour_get()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendPhoto(update.message.chat_id, photo='http://wip.weather.gov.sg/wip/pp/gif/rghz.gif')
-    botan_track(update.message.from_user.id, update.message, "PSI")
+    botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def get_news_st(bot, update):
@@ -173,7 +173,7 @@ def get_news_st(bot, update):
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = news.get_news_st()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML', disable_web_page_preview=True)
-    botan_track(update.message.from_user.id, update.message, "ST NEWS")
+    botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def sti_level(bot, update):
@@ -183,7 +183,7 @@ def sti_level(bot, update):
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     bot.sendPhoto(update.message.chat_id, photo='https://chart.finance.yahoo.com/t?s=%5eSTI&lang=en-SG&region=SG&width=300&height=180')
-    botan_track(update.message.from_user.id, update.message, "STI")
+    botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def sgd_level(bot, update):
@@ -194,7 +194,7 @@ def sgd_level(bot, update):
     final_string = finance.get_fx()
     final_string += "\nYay can Travel liao!"
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, "SGD")
+    botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def sibor_level(bot, update):
@@ -205,7 +205,7 @@ def sibor_level(bot, update):
     final_string = finance.get_sibor()
     final_string += "\nWa Why So High Now!"
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, "SIBOR")
+    botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def weathernow(bot, update):
@@ -217,7 +217,7 @@ def weathernow(bot, update):
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     bot.sendPhoto(update.message.chat_id, photo='http://www.ulfp.com/ulfp/txp_file/download.asp?SRC=download/ulfp/Animate/1_rad70d.gif')
-    botan_track(update.message.from_user.id, update.message, "WEATHER")
+    botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def start(bot, update):
