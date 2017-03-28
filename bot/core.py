@@ -13,6 +13,7 @@ from bot import promo
 from bot import finance
 from bot import news
 from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction
+import botan
 
 
 # Enable logging
@@ -20,6 +21,15 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                     level=logging.INFO)
 
 logger = logging.getLogger(__name__)
+
+# Enable stats
+def botan_track(uid, message, name):
+    botan.track(
+        token=str(os.environ.get('STATS_API')),
+        uid=uid,
+        message=message,
+        name=name
+    )
 
 """Response
 weather - Report the latest weather lah
@@ -43,6 +53,7 @@ def fourdresults(bot, update):
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = draw.FourD()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, "4D Results")
 
 
 def totoresults(bot, update):
@@ -50,6 +61,7 @@ def totoresults(bot, update):
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = draw.TOTO()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, "TOTO")
 
 
 def taxipromos(bot, update):
@@ -63,6 +75,7 @@ def taxipromos(bot, update):
     text_ += "\n<b>Smart List of Grab Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(0, smart=True)
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, "TAXI PROMO")
 
 
 def taxi_around_me(bot, update):
@@ -139,6 +152,7 @@ def traffic(bot, update, args):
         bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
         final_string = gov.traffic_get(args[0])
         bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+        botan_track(update.message.from_user.id, update.message, "TRAFFIC " + str(args[0]))
 
 
 def psi3hour(bot, update):
@@ -149,6 +163,7 @@ def psi3hour(bot, update):
     final_string = gov.psi3hour_get()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendPhoto(update.message.chat_id, photo='http://wip.weather.gov.sg/wip/pp/gif/rghz.gif')
+    botan_track(update.message.from_user.id, update.message, "PSI")
 
 
 def get_news_st(bot, update):
@@ -158,7 +173,7 @@ def get_news_st(bot, update):
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = news.get_news_st()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML', disable_web_page_preview=True)
-
+    botan_track(update.message.from_user.id, update.message, "ST NEWS")
 
 
 def sti_level(bot, update):
@@ -168,6 +183,7 @@ def sti_level(bot, update):
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     bot.sendPhoto(update.message.chat_id, photo='https://chart.finance.yahoo.com/t?s=%5eSTI&lang=en-SG&region=SG&width=300&height=180')
+    botan_track(update.message.from_user.id, update.message, "STI")
 
 
 def sgd_level(bot, update):
@@ -178,6 +194,7 @@ def sgd_level(bot, update):
     final_string = finance.get_fx()
     final_string += "\nYay can Travel liao!"
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, "SGD")
 
 
 def sibor_level(bot, update):
@@ -188,6 +205,7 @@ def sibor_level(bot, update):
     final_string = finance.get_sibor()
     final_string += "\nWa Why So High Now!"
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, "SIBOR")
 
 
 def weathernow(bot, update):
@@ -199,6 +217,7 @@ def weathernow(bot, update):
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     bot.sendPhoto(update.message.chat_id, photo='http://www.ulfp.com/ulfp/txp_file/download.asp?SRC=download/ulfp/Animate/1_rad70d.gif')
+    botan_track(update.message.from_user.id, update.message, "WEATHER")
 
 
 def start(bot, update):
