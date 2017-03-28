@@ -13,7 +13,7 @@ from bot import promo
 from bot import finance
 from bot import news
 from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction
-import botan
+from bot import botan
 
 
 # Enable logging

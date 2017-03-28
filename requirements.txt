@@ -7,4 +7,3 @@ haversine
 flask
 gunicorn
 fake-useragent
-botan
