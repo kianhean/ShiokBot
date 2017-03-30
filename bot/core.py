@@ -33,7 +33,7 @@ def botan_track(uid, message, name):
 
 """Response
 ridepromos - Help you save money give you uber/grab codes
-tax_near_me - Show you the taxis near you!
+taxi_near_me - Show you the taxis near you!
 weather - Report the latest weather lah
 sg_news - Latest Headlines from Singapore
 traffic - Get Latest Traffic Images
@@ -235,7 +235,7 @@ def start(bot, update):
                      \n/sg_news - Latest Headlines from Singapore
 
                      \n/ridepromos - Help you save money give you uber/grab codes
-                     \n/tax_near_me - Show you the taxis near you!
+                     \n/taxi_near_me - Show you the taxis near you!
                      \n/traffic - Get Latest Traffic Images
                      \n/sti - Get Latest Straits Times Index Level
                      \n/sgd - Latest SGD Rates!
@@ -256,7 +256,7 @@ def help(bot, update):
                      \n/sg_news - Latest Headlines from Singapore
 
                      \n/ridepromos - Help you save money give you uber/grab codes
-                     \n/tax_near_me - Show you the taxis near you!
+                     \n/taxi_near_me - Show you the taxis near you!
                      \n/traffic - Get Latest Traffic Images
                      \n/sti - Get Latest Straits Times Index Level
                      \n/sgd - Latest SGD Rates!
