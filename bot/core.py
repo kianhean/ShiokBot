@@ -114,9 +114,13 @@ def taxi_around_me(bot, update):
             text_ = "There are a total of " + str(taxi['count_number']) + \
             " Available Taxis (not uber/grab) in a 200M radius Around you!"
             bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
-            bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-            bot.sendPhoto(update.message.chat_id, photo=taxi['url'])
-            bot.sendMessage(update.message.chat_id, text='Run my child, run...', parse_mode='HTML')
+
+            if taxi['count_number'] > 0 :
+                bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+                bot.sendPhoto(update.message.chat_id, photo=taxi['url'])
+                bot.sendMessage(update.message.chat_id, text='Run my child, run...', parse_mode='HTML')
+            else:
+                bot.sendMessage(update.message.chat_id, text='No taxi!?! Why u at ulu place?', parse_mode='HTML')
             botan_track(update.message.from_user.id, update.message, update.message.text)
 
     else:
