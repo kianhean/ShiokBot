@@ -32,9 +32,10 @@ def botan_track(uid, message, name):
     )
 
 """Response
+ridepromos - Help you save money give you uber/grab codes
+tax_near_me - Show you the taxis near you!
 weather - Report the latest weather lah
 sg_news - Latest Headlines from Singapore
-ridepromos - Help you save money give you uber/grab codes
 traffic - Get Latest Traffic Images
 sti - Get Latest Straits Times Index Level
 sgd - Latest SGD Rates!      
@@ -116,6 +117,7 @@ def taxi_around_me(bot, update):
             bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
             bot.sendPhoto(update.message.chat_id, photo=taxi['url'])
             bot.sendMessage(update.message.chat_id, text='Run my child, run...', parse_mode='HTML')
+            botan_track(update.message.from_user.id, update.message, update.message.text)
 
     else:
         # If in group chat... send PM
@@ -233,6 +235,7 @@ def start(bot, update):
                      \n/sg_news - Latest Headlines from Singapore
 
                      \n/ridepromos - Help you save money give you uber/grab codes
+                     \n/tax_near_me - Show you the taxis near you!
                      \n/traffic - Get Latest Traffic Images
                      \n/sti - Get Latest Straits Times Index Level
                      \n/sgd - Latest SGD Rates!
@@ -253,6 +256,7 @@ def help(bot, update):
                      \n/sg_news - Latest Headlines from Singapore
 
                      \n/ridepromos - Help you save money give you uber/grab codes
+                     \n/tax_near_me - Show you the taxis near you!
                      \n/traffic - Get Latest Traffic Images
                      \n/sti - Get Latest Straits Times Index Level
                      \n/sgd - Latest SGD Rates!
