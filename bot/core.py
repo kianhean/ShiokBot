@@ -109,10 +109,13 @@ def taxi_around_me(bot, update):
                             parse_mode='HTML')
             bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
 
-            count_ = gov.taxi_get(send_long, send_lat)
-            text_ = "There are a total of " + str(count_) + \
-            " Available Taxis in a 200M radius Around you!"
+            taxi = gov.taxi_get(send_long, send_lat)
+            text_ = "There are a total of " + str(taxi['count_number']) + \
+            " Available Taxis (not uber/grab) in a 200M radius Around you!"
             bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+            bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+            bot.sendPhoto(update.message.chat_id, photo=taxi['url'])
+            bot.sendMessage(update.message.chat_id, text='Run my child, run...', parse_mode='HTML')
 
     else:
         # If in group chat... send PM
@@ -288,7 +291,7 @@ def main():
     dispatch.add_handler(CommandHandler("sti", sti_level))
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
     dispatch.add_handler(CommandHandler("sibor", sibor_level))
-    dispatch.add_handler(CommandHandler("taxi_around_me", taxi_around_me))
+    dispatch.add_handler(CommandHandler("taxi_near_me", taxi_around_me))
     dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
 
     # log all errors

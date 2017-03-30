@@ -26,10 +26,34 @@ def taxi_get(send_long, send_lat):
     thres = 0.2
 
     # Count Number of Taxis <= thres
+    collect_taxis = []
     for coord in data['features'][0]['geometry']['coordinates']:
         if haversine(current, coord) <= thres:
             count_number += 1
-    return count_number
+            collect_taxis.append(coord)
+    
+    # Convert location to string
+    current_str = ''
+    for x in current[::-1]:
+        current_str += str(x) + ","
+    current_str = current_str[:-1] + "|flag-YOU-lg"
+
+    # Taxis!
+    taxi_str = '||'
+    for y in collect_taxis:
+        taxi_str_t = ''
+        for x in y[::-1]:
+            taxi_str_t += str(x) + ","
+        taxi_str += taxi_str_t[:-1] + "||"
+    taxi_str = taxi_str[:-2]
+
+    # Create Map
+    key = str(os.environ.get('MAPQUEST'))
+
+    url = "https://beta.mapquestapi.com/staticmap/v5/map?key="+ key + "&locations=" + current_str + \
+          taxi_str + "&type=dark&scalebar=true|bottom&size=@2x&zoom=16&defaultMarker=circle-start-sm"
+
+    return {'count_number': count_number, 'url':url}
 
 
 def traffic_get(location):
