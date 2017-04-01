@@ -22,9 +22,9 @@ Singapore Data APIs from https://developers.data.gov.sg/
 
 ![ridecodes](https://cloud.githubusercontent.com/assets/5037305/23828837/bfd1a114-0719-11e7-9372-0f5fbc5ae1a1.PNG)
 
-#### /ridepromos_smart - Get Latest Promos from Uber/Grab (Filtered First Time Users/Targeted Crap)
+#### /taxi_near_me - Get locations of nearests Taxis (not uber/grab) Near you!
 
-![ridecodes](https://cloud.githubusercontent.com/assets/5037305/23856817/e4fae820-0835-11e7-8de7-7a1b075d2943.PNG)
+![taxi](https://cloud.githubusercontent.com/assets/5037305/24579859/581e2db8-1730-11e7-8e5a-477cc8c00c47.PNG)
 
 #### /weather - Get Latest Weather Report
 
