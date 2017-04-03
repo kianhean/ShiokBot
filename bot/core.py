@@ -40,7 +40,8 @@ weather - Report the latest weather lah
 sg_news - Latest Headlines from Singapore
 traffic - Get Latest Traffic Images
 sti - Get Latest Straits Times Index Level
-sgd - Latest SGD Rates!      
+sgd - Latest SGD Rates!
+sibor - Latest Sibor Rates!
 psi - Report the latest PSI readings lo
 4d - Give you latest 4d results wor
 toto - Give you latest toto results huat ar!
@@ -79,10 +80,25 @@ def taxipromos(bot, update):
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    text_ = "<b>Smart List of Uber Promo Codes (Latest on Top)</b> \n\n"
+    text_ = "<b>List of Uber Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(1, smart=True)
-    text_ += "\n<b>Smart List of Grab Promo Codes (Latest on Top)</b> \n\n"
+    text_ += "\n<b>List of Grab Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(0, smart=True)
+    bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, update.message.text)
+
+
+def deliverypromos(bot, update):
+    """ Get Latest taxipromos Smart """
+    text_bot = ['Let me go and bug Uber/Deliveroo :sunglasses:',
+               ]
+    bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
+                    parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+    text_ = "<b>List of UberEats Promo Codes (Latest on Top)</b> \n\n"
+    text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/ubereats.com')
+    text_ += "\n<b>List of Deliveroo Promo Codes (Latest on Top)</b> \n\n"
+    text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/deliveroo.com.sg')
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
@@ -304,14 +320,13 @@ def help(bot, update):
 def version(bot, update):
     """ Version Text"""
     bot.sendMessage(update.message.chat_id,
-                    text='''Version 2
-                    \n
+                    text='''<b>Version 2 || 3 Apr 2017</b>
                     \n Emojis added!
                     \n Random Speech!
                     \n This update command!
                     \n Send suggestions to 
                     \n http://t.me/shiokbotnews
-                     ''')
+                     ''', parse_mode='HTML')
 
 
 def error(bot, update, error):
@@ -337,6 +352,7 @@ def main():
     dispatch.add_handler(CommandHandler("4d", fourdresults))
     dispatch.add_handler(CommandHandler("toto", totoresults))
     dispatch.add_handler(CommandHandler("ridepromos", taxipromos))
+    dispatch.add_handler(CommandHandler("deliverypromos", deliverypromos))
     dispatch.add_handler(CommandHandler("sg_news", get_news_st))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
     dispatch.add_handler(CommandHandler("sti", sti_level))
