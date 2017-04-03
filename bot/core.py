@@ -35,7 +35,8 @@ def botan_track(uid, message, name):
 
 """Response
 ridepromos - Help you save money give you uber/grab codes
-taxi_near_me - Show you the taxis near you!
+deliverypromos - Help you save money with uber/deliveroo codes
+taxi_near_me - Show you taxis near you!
 weather - Report the latest weather lah
 sg_news - Latest Headlines from Singapore
 traffic - Get Latest Traffic Images
