@@ -15,7 +15,7 @@ from bot import finance
 from bot import news
 from bot import botan
 from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction
-from emoji import emojize
+from emoji import emojize # emojize(random.choice(text_bot), use_aliases=True)
 
 
 # Enable logging
@@ -44,6 +44,7 @@ sgd - Latest SGD Rates!
 psi - Report the latest PSI readings lo
 4d - Give you latest 4d results wor
 toto - Give you latest toto results huat ar!
+version - Version Info
 """
 
 """
@@ -93,10 +94,10 @@ def taxi_around_me(bot, update):
     senderid = update.message.from_user.id
     senderusername = update.message.from_user.username
 
-    text_bot = ['I go see see look look...',
-                'Get ready to run...',
-                'I find where they hiding now...',
-                'Usually if i want to go somewhere i let my fingers do the walking'
+    text_bot = ['I go see see look look... :eyes:',
+                'Get ready to run :running:',
+                'I find where they hiding now :eyes: :eyes:',
+                'Usually if i want to go somewhere i let my fingers do the walking :v:'
                ]
 
     if chat_type == 'private':
@@ -111,7 +112,7 @@ def taxi_around_me(bot, update):
             success_status = True
         except:
             # If have not sent the message
-            location_keyboard = KeyboardButton(text="/taxi_around_me", request_location=True)
+            location_keyboard = KeyboardButton(text="/taxi_near_me", request_location=True)
             custom_keyboard = [[location_keyboard]]
             reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True,
                                                selective=True)
@@ -119,7 +120,8 @@ def taxi_around_me(bot, update):
                             reply_markup=reply_markup)
 
         if success_status:
-            bot.sendMessage(update.message.chat_id, text=random.choice(text_bot),
+            bot.sendMessage(update.message.chat_id,
+                            text=emojize(random.choice(text_bot), use_aliases=True),
                             parse_mode='HTML')
             bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
 
@@ -140,7 +142,7 @@ def taxi_around_me(bot, update):
 
     else:
         # If in group chat... send PM
-        location_keyboard = KeyboardButton(text="/taxi_around_me", request_location=True)
+        location_keyboard = KeyboardButton(text="/taxi_near_me", request_location=True)
         custom_keyboard = [[location_keyboard]]
         reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True, selective=True)
         pm_try = False
@@ -153,7 +155,7 @@ def taxi_around_me(bot, update):
         except:
             message_ = "You have to start a convo with me first! @ShiokBot before I can send you this info!"
             bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
-            message_ = "After starting the PM with me try /taxi_around_me again"
+            message_ = "After starting the PM with me try /taxi_near_me again"
             bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
 
         if pm_try:
@@ -299,6 +301,19 @@ def help(bot, update):
                      ''')
 
 
+def version(bot, update):
+    """ Version Text"""
+    bot.sendMessage(update.message.chat_id,
+                    text='''Version 2
+                    \n
+                    \n Emojis added!
+                    \n Random Speech!
+                    \n This update command!
+                    \n Send suggestions to 
+                    \n http://t.me/shiokbotnews
+                     ''')
+
+
 def error(bot, update, error):
     """ Log Errors"""
     logger.warning('Update "%s" caused error "%s"' % (update, error))
@@ -328,6 +343,7 @@ def main():
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
     dispatch.add_handler(CommandHandler("sibor", sibor_level))
     dispatch.add_handler(CommandHandler("taxi_near_me", taxi_around_me))
+    dispatch.add_handler(CommandHandler("version", version))
     dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
 
     # log all errors
