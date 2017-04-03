@@ -1,14 +1,7 @@
-# ----------------
-# dont forget 'pip install requests' first
-# ----------------
-# usage example:
-#
-# import botan
-#
-# print botan.track(1111, 1, {'text':2}, 'Search')
+""" Botan Functions """
 
-import requests
 import json
+import requests
 
 
 TRACK_URL = 'https://api.botan.io/track'

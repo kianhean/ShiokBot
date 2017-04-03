@@ -15,7 +15,7 @@ from bot import finance
 from bot import news
 from bot import botan
 from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction
-import emoji
+from emoji import emojize
 
 
 # Enable logging
@@ -69,13 +69,13 @@ def totoresults(bot, update):
 
 def taxipromos(bot, update):
     """ Get Latest taxipromos Smart """
-    text_bot = ['Let me go and bug Uber/Grab...',
-                'Wait ar... I ask my friend Google',
-                'Dont you just hate those targeted promos :(',
-                'If cannot work not, still friend me ok?',
-                'If the discount works remember share share ok',
+    text_bot = ['Let me go and bug Uber/Grab :sunglasses:',
+                'Wait ar... I ask my friend Google :wink: :wink:',
+                'Dont you just hate those targeted promos :weary:',
+                'If cannot work not, still friend me ok? :stuck_out_tongue:',
+                'If the discount works remember share share ok :smirk:',
                ]
-    bot.sendMessage(update.message.chat_id, text=random.choice(text_bot),
+    bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = "<b>Smart List of Uber Promo Codes (Latest on Top)</b> \n\n"
@@ -181,12 +181,12 @@ def traffic(bot, update, args):
 
 def psi3hour(bot, update):
     """ Get Latest Singapore PSI """
-    text_bot = ['Putting my hand in the air to feel the dust...',
-                'Sometimes I wear my N95 mask as a fashion statement',
-                'Unlike you, i am not affected by Haze',
-                'Air quality in the cloud, is the freshest...'
+    text_bot = ['Putting my hand in the air to feel the dust :point_up:',
+                'Sometimes I wear my N95 mask as a fashion statement :sunglasses:',
+                'Unlike you, i am not affected by Haze :alien:',
+                'Air smells the freshes when hosted in the :cloud:'
                ]
-    bot.sendMessage(update.message.chat_id, text=random.choice(text_bot),
+    bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = gov.psi3hour_get()
@@ -201,7 +201,8 @@ def get_news_st(bot, update):
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = news.get_news_st()
-    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML', disable_web_page_preview=True)
+    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML',
+                    disable_web_page_preview=True)
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
@@ -211,7 +212,8 @@ def sti_level(bot, update):
     final_string = "<b>Straits Times Index Level</b>\nThis is the index today..."
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    bot.sendPhoto(update.message.chat_id, photo='https://chart.finance.yahoo.com/t?s=%5eSTI&lang=en-SG&region=SG&width=300&height=180')
+    bot.sendPhoto(update.message.chat_id,
+                  photo='https://chart.finance.yahoo.com/t?s=%5eSTI&lang=en-SG&region=SG&width=300&height=180')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
@@ -239,12 +241,12 @@ def sibor_level(bot, update):
 
 def weathernow(bot, update):
     """ Get Latest Singapore Weather """
-    text_bot = ['Let me look out of the window...',
-                'Why dont you look out of the window instead?',
-                'Dont cry for me roti prataaaaa...',
-                'If there is a flood remember that fat people dont actually float...'
+    text_bot = ['Let me look out of the window... :dash:',
+                'Why dont you look out of the window instead? :smirk:',
+                'Dont cry for me roti prataaaaa... :scream:',
+                'If there is a flood remember that fat people dont actually float :smiling_imp:'
                ]
-    bot.sendMessage(update.message.chat_id, text=random.choice(text_bot),
+    bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     final_string = gov.weathernow_get()
 
