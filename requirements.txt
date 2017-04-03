@@ -7,3 +7,4 @@ haversine
 flask
 gunicorn
 fake-useragent
+emoji

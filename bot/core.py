@@ -6,14 +6,16 @@
 # Import Libraries
 import os
 import logging
+import random
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from bot import gov
 from bot import draw
 from bot import promo
 from bot import finance
 from bot import news
-from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction
 from bot import botan
+from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction
+import emoji
 
 
 # Enable logging
@@ -67,8 +69,13 @@ def totoresults(bot, update):
 
 def taxipromos(bot, update):
     """ Get Latest taxipromos Smart """
-
-    bot.sendMessage(update.message.chat_id, text="Let me go and bug Uber/Grab...",
+    text_bot = ['Let me go and bug Uber/Grab...',
+                'Wait ar... I ask my friend Google',
+                'Dont you just hate those targeted promos :(',
+                'If cannot work not, still friend me ok?',
+                'If the discount works remember share share ok',
+               ]
+    bot.sendMessage(update.message.chat_id, text=random.choice(text_bot),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = "<b>Smart List of Uber Promo Codes (Latest on Top)</b> \n\n"
@@ -85,6 +92,12 @@ def taxi_around_me(bot, update):
     chat_type = update.message.chat.type
     senderid = update.message.from_user.id
     senderusername = update.message.from_user.username
+
+    text_bot = ['I go see see look look...',
+                'Get ready to run...',
+                'I find where they hiding now...',
+                'Usually if i want to go somewhere i let my fingers do the walking'
+               ]
 
     if chat_type == 'private':
 
@@ -106,7 +119,7 @@ def taxi_around_me(bot, update):
                             reply_markup=reply_markup)
 
         if success_status:
-            bot.sendMessage(update.message.chat_id, text="I go see see look look...",
+            bot.sendMessage(update.message.chat_id, text=random.choice(text_bot),
                             parse_mode='HTML')
             bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
 
@@ -115,12 +128,14 @@ def taxi_around_me(bot, update):
             " Available Taxis (not uber/grab) in a 200M radius Around you!"
             bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
 
-            if taxi['count_number'] > 0 :
+            if taxi['count_number'] > 0:
                 bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
                 bot.sendPhoto(update.message.chat_id, photo=taxi['url'])
-                bot.sendMessage(update.message.chat_id, text='Run my child, run...', parse_mode='HTML')
+                bot.sendMessage(update.message.chat_id, text='Run my child, run...',
+                                parse_mode='HTML')
             else:
-                bot.sendMessage(update.message.chat_id, text='No taxi!?! Why u at ulu place?', parse_mode='HTML')
+                bot.sendMessage(update.message.chat_id, text='No taxi!?! Why u at ulu place?',
+                                parse_mode='HTML')
             botan_track(update.message.from_user.id, update.message, update.message.text)
 
     else:
@@ -166,7 +181,12 @@ def traffic(bot, update, args):
 
 def psi3hour(bot, update):
     """ Get Latest Singapore PSI """
-    bot.sendMessage(update.message.chat_id, text='Putting my hand in the air to feel the dust...',
+    text_bot = ['Putting my hand in the air to feel the dust...',
+                'Sometimes I wear my N95 mask as a fashion statement',
+                'Unlike you, i am not affected by Haze',
+                'Air quality in the cloud, is the freshest...'
+               ]
+    bot.sendMessage(update.message.chat_id, text=random.choice(text_bot),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = gov.psi3hour_get()
@@ -219,13 +239,19 @@ def sibor_level(bot, update):
 
 def weathernow(bot, update):
     """ Get Latest Singapore Weather """
-    bot.sendMessage(update.message.chat_id, text='Let me look out of the window...',
+    text_bot = ['Let me look out of the window...',
+                'Why dont you look out of the window instead?',
+                'Dont cry for me roti prataaaaa...',
+                'If there is a flood remember that fat people dont actually float...'
+               ]
+    bot.sendMessage(update.message.chat_id, text=random.choice(text_bot),
                     parse_mode='HTML')
     final_string = gov.weathernow_get()
 
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    bot.sendPhoto(update.message.chat_id, photo='http://www.ulfp.com/ulfp/txp_file/download.asp?SRC=download/ulfp/Animate/1_rad70d.gif')
+    bot.sendPhoto(update.message.chat_id,
+                  photo='http://www.ulfp.com/ulfp/txp_file/download.asp?SRC=download/ulfp/Animate/1_rad70d.gif')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
@@ -273,7 +299,7 @@ def help(bot, update):
 
 def error(bot, update, error):
     """ Log Errors"""
-    logger.warn('Update "%s" caused error "%s"' % (update, error))
+    logger.warning('Update "%s" caused error "%s"' % (update, error))
 
 
 def main():
