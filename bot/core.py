@@ -75,7 +75,7 @@ def taxipromos(bot, update):
     text_bot = ['Let me go and bug Uber/Grab :sunglasses:',
                 'Wait ar... I ask my friend Google :wink: :wink:',
                 'Dont you just hate those targeted promos :weary:',
-                'If cannot work not, still friend me ok? :stuck_out_tongue:',
+                'If cannot work, still friend me ok? :stuck_out_tongue:',
                 'If the discount works remember share share ok :smirk:',
                ]
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
