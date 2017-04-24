@@ -101,11 +101,11 @@ def psi3hour_get():
     data = json.loads(connnect_gov_api_r.text)
 
     # Load data into Dictionary and get reading
-    hourly = data['items'][0]['readings']['psi_three_hourly']
+    hourly = data['items'][0]['readings']['psi_twenty_four_hourly']
     timestampp = data['items'][0]['timestamp'][:19].replace("T", " ")
 
     # Create Response
-    final_string = "<b>The 3 hourly PSI Reading at " + timestampp + " is actually</b> \n\n"
+    final_string = "<b>The 24 hourly PSI Reading at " + timestampp + " is actually</b> \n\n"
 
     for key in sorted(hourly):
         final_string  =  final_string + (str(key) + " " + \
