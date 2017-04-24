@@ -50,7 +50,9 @@ def get_code(pos=0, smart=False):
                     e + " | " + d
             # Generate Deep Link
             if pos == 1:
-                deep_link = ' <a href="uber://?action=applyPromo&client_id=0WaekG8fxi5hhC-dF91xAF395YO8iRd3&promo=' + \
+                #deep_link = ' <a href="uber://?action=applyPromo&client_id=0WaekG8fxi5hhC-dF91xAF395YO8iRd3&promo=' + \
+                #             code[i].get_text() + '">' + " Apply Code!" + "</a>"
+                deep_link = ' <a href="https://m.uber.com/ul/?action=applyPromo&client_id=0WaekG8fxi5hhC-dF91xAF395YO8iRd3&promo=' + \
                              code[i].get_text() + '">' + " Apply Code!" + "</a>"
                 text_ += deep_link + "\n"
             else:
