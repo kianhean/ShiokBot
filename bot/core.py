@@ -14,6 +14,7 @@ from bot import promo
 from bot import finance
 from bot import news
 from bot import botan
+from bot import promo_alert
 from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction
 from emoji import emojize # emojize(random.choice(text_bot), use_aliases=True)
 
@@ -100,6 +101,20 @@ def deliverypromos(bot, update):
     text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/ubereats.com')
     text_ += "\n<b>List of Deliveroo Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/deliveroo.com.sg')
+    bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, update.message.text)
+
+
+def subscribe(bot, update):
+    """ Get Latest taxipromos Smart """
+    text_ = promo_alert.subscribe(update.message.chat_id)
+    bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, update.message.text)
+
+
+def unsubscribe(bot, update):
+    """ Get Latest taxipromos Smart """
+    text_ = promo_alert.unsubscribe(update.message.chat_id)
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
@@ -361,6 +376,8 @@ def main():
     dispatch.add_handler(CommandHandler("sibor", sibor_level))
     dispatch.add_handler(CommandHandler("taxi_near_me", taxi_around_me))
     dispatch.add_handler(CommandHandler("version", version))
+    dispatch.add_handler(CommandHandler("subscribe", subscribe))
+    dispatch.add_handler(CommandHandler("unsubscribe", unsubscribe))
     dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
 
     # log all errors
