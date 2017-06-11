@@ -32,7 +32,13 @@ def get_code(pos=0, smart=False):
 
         if smart is True:
             for ban_word in ban_list:
-                if ban_word.upper() in desc[i].get_text().upper():
+
+                try:
+                    desc_ = desc[i].get_text().upper()
+                except:
+                    desc_ = ""
+
+                if ban_word.upper() in desc_:
                     ban = True
                     break
 
