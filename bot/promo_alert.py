@@ -3,7 +3,7 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
 
-def get_code(pos=0):
+def get_code(pos=1):
     """ Connect to Paged Promo Codes"""
     # Connect to Source
     url = 'https://www.cheapcheaplah.com/pages/grab-uber-taxi-promos'
@@ -63,7 +63,7 @@ def get_all_users():
     db = dataset.connect('sqlite:///database.db')
     output = []
     for user in db['subscriptions']:
-        output = output.append(user['id'])
+        output.append(user['id'])
     return output
 
 
@@ -79,7 +79,7 @@ def store_new():
     for key, value in new_codes.items():
 
         if table.find_one(promo=key) is None:
-            new = new.append(key)
+            new.append(key)
         else:
             pass
 
