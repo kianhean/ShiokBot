@@ -41,9 +41,10 @@ def subscribe(user_id):
 
     if table.find_one(id=user_id) is None:
         table.insert(dict(id=user_id))
-        return "This thread has succesfully subscribed!"
+        return "This thread has succesfully subscribed to recieve New Uber Codes!"
     else:
-        return "You are already subscribed!"
+        return "You are already subscribed to recieve New Uber Codes!"
+
 
 def unsubscribe(user_id):
     """ unsubscribe to the database """
@@ -51,7 +52,52 @@ def unsubscribe(user_id):
     table = db['subscriptions']
 
     if table.find_one(id=user_id) is None:
-        return "You are not subcscribed!"
+        return "You are not subcscribed to recieve New Uber Codes!"
     else:
         table.delete(id=user_id)
-        return "You have been unsubscribed!"
+        return "You have been unsubscribed to recieve New Uber Codes!"
+
+
+def get_all_users():
+    """ get all users """
+    db = dataset.connect('sqlite:///database.db')
+    output = []
+    for user in db['subscriptions']:
+        output = output.append(user['id'])
+    return output
+
+
+def store_new():
+    """ Return New Codes and Refresh DB"""
+    db = dataset.connect('sqlite:///database.db')
+    new_codes = get_code()
+
+    table = db['promo']
+
+    """ Get New Codes"""
+    new = []
+    for key, value in new_codes.items():
+
+        if table.find_one(promo=key) is None:
+            new = new.append(key)
+        else:
+            pass
+
+    """ Refresh DB """
+    table.drop()
+
+    for key, value in new_codes.items():
+        table.insert(dict(promo=key, desc=value[1], exp=value[0]))
+
+    """ Return New Promos """
+    if len(new) == 0:
+        # Nothing new
+        return None
+    else:
+        text_ = "<b> New Promo Codes Released! Apply Now! </b> \n\n"
+
+        for key in new:
+            text_ += "<b>" + key + "</b> | Expires - " + new_codes[key][0] + " | " + new_codes[key][1]
+            text_ += "\n"
+
+        return text_

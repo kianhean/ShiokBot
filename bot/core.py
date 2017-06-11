@@ -7,7 +7,7 @@
 import os
 import logging
 import random
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Job
 from bot import gov
 from bot import draw
 from bot import promo
@@ -117,6 +117,18 @@ def unsubscribe(bot, update):
     text_ = promo_alert.unsubscribe(update.message.chat_id)
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
+
+
+def monitor_promo(bot, job):
+    """ Job to Send Message """
+    msg = promo_alert.store_new()
+
+    if msg is None:
+        print("No new Promos")
+    else:
+        all_users = promo_alert.get_all_users()
+        for user in all_users:
+            bot.sendMessage(user, text=msg, parse_mode='HTML')
 
 
 def taxi_around_me(bot, update):
@@ -356,6 +368,7 @@ def main():
     # Create the EventHandler and pass it your bot's token.
     telegram = str(os.environ.get('TELEGRAM'))
     updater = Updater(telegram)
+    j = updater.job_queue
 
     # Get the dispatcher to register handlers
     dispatch = updater.dispatcher
@@ -379,6 +392,10 @@ def main():
     dispatch.add_handler(CommandHandler("subscribe", subscribe))
     dispatch.add_handler(CommandHandler("unsubscribe", unsubscribe))
     dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
+
+    # create jobs
+    job_minute = Job(monitor_promo, 60.0)
+    j.put(job_minute, next_t=0.0)
 
     # log all errors
     dispatch.add_error_handler(error)
