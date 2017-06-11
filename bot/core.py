@@ -394,7 +394,7 @@ def main():
     dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
 
     # create jobs
-    job_minute = Job(monitor_promo, 60.0)
+    job_minute = Job(monitor_promo, 3600.0)
     j.put(job_minute, next_t=0.0)
 
     # log all errors
