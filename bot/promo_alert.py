@@ -41,7 +41,8 @@ def subscribe(user_id):
 
     if table.find_one(id=user_id) is None:
         table.insert(dict(id=user_id))
-        return "This thread has succesfully subscribed to recieve New Uber Codes!"
+        text_ = """This thread has succesfully subscribed to recieve New Uber Codes! \n Every hour I will send you the latest Uber Promo Codes so that you can apply them first!"""
+        return 
     else:
         return "You are already subscribed to recieve New Uber Codes!"
 
@@ -85,9 +86,10 @@ def store_new():
 
     """ Refresh DB """
     table.drop()
+    table2 = db['promo']
 
     for key, value in new_codes.items():
-        table.insert(dict(promo=key, desc=value[1], exp=value[0]))
+        table2.insert(dict(promo=key, desc=value[1], exp=value[0]))
 
     """ Return New Promos """
     if len(new) == 0:
