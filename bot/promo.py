@@ -24,7 +24,7 @@ def get_code(pos=0, smart=False):
                 'First 2 Rides']
     ban_list = ['First Ride', 'New Customers', 'From SMU', 'From NTU',
                 'From NUS', 'From SUTD', 'From SIM', 'First GrabHitch', 'New GrabPay',
-                'First 2 Rides']
+                'First 2 Rides', 'First 4 Rides']
 
     for i in range(len(code) - 1, 0, -1):
 

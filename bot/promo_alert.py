@@ -3,6 +3,17 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 
 
+def bann(code):
+    ban_list = ['First Ride', 'New Customers', 'From SMU', 'From NTU',
+            'From NUS', 'From SUTD', 'From SIM', 'First GrabHitch', 'New GrabPay',
+            'First 2 Rides', 'First 4 Rides']
+
+    for word in ban_list:
+        if code.find(word) > 0:
+            return True
+    return False
+
+
 def get_code(pos=1):
     """ Connect to Paged Promo Codes"""
     # Connect to Source
@@ -29,7 +40,8 @@ def get_code(pos=1):
         except:
             d = ""
 
-        output[code[i].get_text()] = [e, d]
+        if bann(d) is False:
+            output[code[i].get_text()] = [e, d]
 
     return output
 
