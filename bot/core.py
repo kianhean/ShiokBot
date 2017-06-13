@@ -160,7 +160,7 @@ def force_promo_check(bot, update):
     if msg is None:
         pass
     else:
-        bot.sendMessage(22959774, text=msg, parse_mode='HTML')
+        #bot.sendMessage(22959774, text=msg, parse_mode='HTML')
         all_users = promo_alert.get_all_users()
         for user in all_users:
             bot.sendMessage(int(user), text=msg, parse_mode='HTML')
