@@ -124,8 +124,9 @@ def monitor_promo(bot, job):
     msg = promo_alert.store_new()
 
     if msg is None:
-        print("No new Promos")
+        bot.sendMessage(22959774, text="No new Promos", parse_mode='HTML')
     else:
+        bot.sendMessage(22959774, text="New Promos", parse_mode='HTML')
         all_users = promo_alert.get_all_users()
         for user in all_users:
             bot.sendMessage(user, text=msg, parse_mode='HTML')
@@ -394,8 +395,8 @@ def main():
     dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
 
     # create jobs
-    job_minute = Job(monitor_promo, 3600.0)
-    j.put(job_minute, next_t=0.0)
+    job_minute = Job(monitor_promo, 3600)
+    j.put(job_minute, next_t=0)
 
     # log all errors
     dispatch.add_error_handler(error)

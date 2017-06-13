@@ -4,9 +4,10 @@ from bs4 import BeautifulSoup
 
 
 def bann(code):
+    """ If banned return True else False """
     ban_list = ['First Ride', 'New Customers', 'From SMU', 'From NTU',
-            'From NUS', 'From SUTD', 'From SIM', 'First GrabHitch', 'New GrabPay',
-            'First 2 Rides', 'First 4 Rides']
+                'From NUS', 'From SUTD', 'From SIM', 'First GrabHitch', 'New GrabPay',
+                'First 2 Rides', 'First 4 Rides']
 
     for word in ban_list:
         if code.find(word) > 0:
@@ -53,7 +54,13 @@ def subscribe(user_id):
 
     if table.find_one(id=user_id) is None:
         table.insert(dict(id=user_id))
-        text_ = """This thread has succesfully subscribed to recieve New Uber Codes! \n Every hour I will send you the latest Uber Promo Codes so that you can apply them first!"""
+        text_ = """This thread has succesfully subscribed to recieve New Uber Codes! \nEvery hour I will send you the latest Uber Promo Codes so that you can apply them first!\n"""
+        text_ += """These are the latest codes right now\n\n"""
+        new_codes = get_code()
+
+        for key in new_codes:
+            text_ += "<b>" + key + "</b> | Expires - " + new_codes[key][0] + " | " + new_codes[key][1]
+            text_ += "\n"
         return text_
     else:
         return "You are already subscribed to recieve New Uber Codes!"
