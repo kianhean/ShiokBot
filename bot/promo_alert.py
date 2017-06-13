@@ -15,6 +15,12 @@ def bann(code):
     return False
 
 
+def clear_db():
+    db = dataset.connect('sqlite:///database.db')
+    db['subscriptions'].drop()
+    db['promo'].drop()
+
+
 def get_code(pos=1):
     """ Connect to Paged Promo Codes"""
     # Connect to Source
@@ -87,7 +93,8 @@ def get_all_users():
     return output
 
 
-def store_new():
+def get_new_codes():
+
     """ Return New Codes and Refresh DB"""
     db = dataset.connect('sqlite:///database.db')
     new_codes = get_code()
@@ -110,15 +117,22 @@ def store_new():
     for key, value in new_codes.items():
         table2.insert(dict(promo=key, desc=value[1], exp=value[0]))
 
+    return new
+
+
+def get_new_codes_message():
     """ Return New Promos """
+
+    all_codes = get_code()
+    new = get_new_codes()
+
     if len(new) == 0:
-        # Nothing new
         return None
     else:
-        text_ = "<b> New Promo Codes Released! Apply Now! </b> \n\n"
+        text_ = "<b>New Promo Codes Released! Apply Now!</b>\n\n"
 
         for key in new:
-            text_ += "<b>" + key + "</b> | Expires - " + new_codes[key][0] + " | " + new_codes[key][1]
+            text_ += "<b>" + key + "</b> | Expires - " + all_codes[key][0] + " | " + all_codes[key][1]
             text_ += "\n"
 
         return text_

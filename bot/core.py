@@ -17,6 +17,20 @@ from bot import botan
 from bot import promo_alert
 from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction
 from emoji import emojize # emojize(random.choice(text_bot), use_aliases=True)
+from functools import wraps
+
+
+LIST_OF_ADMINS = [22959774]
+
+def restricted(func):
+    @wraps(func)
+    def wrapped(bot, update, *args, **kwargs):
+        user_id = update.effective_user.id
+        if user_id not in LIST_OF_ADMINS:
+            print("Unauthorized access denied for {}.".format(user_id))
+            return
+        return func(bot, update, *args, **kwargs)
+    return wrapped
 
 
 # Enable logging
@@ -121,15 +135,37 @@ def unsubscribe(bot, update):
 
 def monitor_promo(bot, job):
     """ Job to Send Message """
-    msg = promo_alert.store_new()
+    msg = promo_alert.get_new_codes_message()
 
     if msg is None:
         bot.sendMessage(22959774, text="No new Promos", parse_mode='HTML')
     else:
-        bot.sendMessage(22959774, text="New Promos", parse_mode='HTML')
+        bot.sendMessage(22959774, text=msg, parse_mode='HTML')
         all_users = promo_alert.get_all_users()
         for user in all_users:
-            bot.sendMessage(user, text=msg, parse_mode='HTML')
+            bot.sendMessage(int(user), text=msg, parse_mode='HTML')
+
+
+@restricted
+def clear_db(bot, update):
+    promo_alert.clear_db()
+    bot.sendMessage(22959774, text='Database Cleared!', parse_mode='HTML')
+
+
+@restricted
+def force_promo_check(bot, update):
+    """ Job to Send Message """
+    msg = promo_alert.get_new_codes_message()
+
+    if msg is None:
+        pass
+    else:
+        bot.sendMessage(22959774, text=msg, parse_mode='HTML')
+        all_users = promo_alert.get_all_users()
+        for user in all_users:
+            bot.sendMessage(int(user), text=msg, parse_mode='HTML')
+
+    bot.sendMessage(22959774, text='Forced Promo Check!', parse_mode='HTML')
 
 
 def taxi_around_me(bot, update):
@@ -392,6 +428,8 @@ def main():
     dispatch.add_handler(CommandHandler("version", version))
     dispatch.add_handler(CommandHandler("subscribe", subscribe))
     dispatch.add_handler(CommandHandler("unsubscribe", unsubscribe))
+    dispatch.add_handler(CommandHandler("admin_force_promo_check", force_promo_check))
+    dispatch.add_handler(CommandHandler("admin_clear_db", clear_db))
     dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
 
     # create jobs
