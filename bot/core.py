@@ -25,7 +25,7 @@ LIST_OF_ADMINS = [22959774]
 def restricted(func):
     @wraps(func)
     def wrapped(bot, update, *args, **kwargs):
-        user_id = update.effective_user.id
+        user_id = update.message.from_user.id
         if user_id not in LIST_OF_ADMINS:
             print("Unauthorized access denied for {}.".format(user_id))
             return
