@@ -1,6 +1,10 @@
+import os
 import dataset
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
+
+database_url = 'sqlite:///database.db'
+database_url = str(os.environ.get('DATABASE_URL'))
 
 
 def bann(code):
@@ -16,7 +20,7 @@ def bann(code):
 
 
 def clear_db():
-    db = dataset.connect('sqlite:///database.db')
+    db = dataset.connect(database_url)
     db['subscriptions'].drop()
     db['promo'].drop()
 
@@ -55,7 +59,7 @@ def get_code(pos=1):
 
 def subscribe(user_id):
     """ subscribe to the database """
-    db = dataset.connect('sqlite:///database.db')
+    db = dataset.connect(database_url)
     table = db['subscriptions']
 
     if table.find_one(id=user_id) is None:
@@ -74,7 +78,7 @@ def subscribe(user_id):
 
 def unsubscribe(user_id):
     """ unsubscribe to the database """
-    db = dataset.connect('sqlite:///database.db')
+    db = dataset.connect(database_url)
     table = db['subscriptions']
 
     if table.find_one(id=user_id) is None:
@@ -86,7 +90,7 @@ def unsubscribe(user_id):
 
 def get_all_users():
     """ get all users """
-    db = dataset.connect('sqlite:///database.db')
+    db = dataset.connect(database_url)
     output = []
     for user in db['subscriptions']:
         output.append(user['id'])
@@ -96,7 +100,7 @@ def get_all_users():
 def get_new_codes():
 
     """ Return New Codes and Refresh DB"""
-    db = dataset.connect('sqlite:///database.db')
+    db = dataset.connect(database_url)
     new_codes = get_code()
 
     table = db['promo']

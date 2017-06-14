@@ -9,3 +9,4 @@ gunicorn
 fake-useragent
 emoji
 dataset
+psycopg2
