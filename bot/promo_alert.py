@@ -110,12 +110,9 @@ def get_new_codes():
         else:
             pass
 
-    """ Refresh DB """
-    table.drop()
-    table2 = db['promo']
-
-    for key, value in new_codes.items():
-        table2.insert(dict(promo=key, desc=value[1], exp=value[0]))
+    """ Add to DB """
+    for key in new:
+        table.insert(dict(promo=key, desc=new_codes[key][1], exp=new_codes[key][0]))
 
     return new
 

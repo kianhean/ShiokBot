@@ -153,14 +153,25 @@ def clear_db(bot, update):
 
 
 @restricted
+def list_users(bot, update):
+    userlist = promo_alert.get_all_users()
+    msg = 'Users\n'
+
+    for user in userlist:
+        msg += str(user) + "\n"
+
+    bot.sendMessage(22959774, text=msg, parse_mode='HTML')
+
+
+@restricted
 def force_promo_check(bot, update):
     """ Job to Send Message """
     msg = promo_alert.get_new_codes_message()
 
     if msg is None:
-        pass
+        bot.sendMessage(22959774, text="No new Promos", parse_mode='HTML')
     else:
-        #bot.sendMessage(22959774, text=msg, parse_mode='HTML')
+        bot.sendMessage(22959774, text=msg, parse_mode='HTML')
         all_users = promo_alert.get_all_users()
         for user in all_users:
             bot.sendMessage(int(user), text=msg, parse_mode='HTML')
@@ -430,11 +441,12 @@ def main():
     dispatch.add_handler(CommandHandler("unsubscribe", unsubscribe))
     dispatch.add_handler(CommandHandler("admin_force_promo_check", force_promo_check))
     dispatch.add_handler(CommandHandler("admin_clear_db", clear_db))
+    dispatch.add_handler(CommandHandler("admin_list_users", list_users))
     dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
 
     # create jobs
     job_minute = Job(monitor_promo, 3600)
-    j.put(job_minute, next_t=0)
+    j.put(job_minute, next_t=1800)
 
     # log all errors
     dispatch.add_error_handler(error)
