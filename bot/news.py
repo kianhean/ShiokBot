@@ -6,9 +6,11 @@ from fake_useragent import UserAgent
 
 
 def get_news_st():
+    """ Get News From ST """
     # Get Text
     headers = {'User-Agent': UserAgent().random}
-    website = r.get('http://www.straitstimes.com/container/custom-landing-page/breaking-news', headers=headers)
+    website = r.get('http://www.straitstimes.com/container/custom-landing-page/breaking-news',
+                    headers=headers)
     website_text = website.text
 
     # Parse HTML using BS
@@ -20,7 +22,7 @@ def get_news_st():
 
     count_ = 0
     final_text = "<b>Top Singapore Headlines</b>\n\n"
-    
+
     # Loop Through Headlines!
     for headline in headlines[:5]:
         final_text += '<a href="' + 'http://www.straitstimes.com' + headline.a['href'] + '">'

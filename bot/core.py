@@ -121,14 +121,14 @@ def deliverypromos(bot, update):
 
 def subscribe(bot, update):
     """ Get Latest taxipromos Smart """
-    text_ = promo_alert.subscribe(update.message.chat_id)
+    text_ = promo_alert.subscribe(str(update.message.chat_id))
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def unsubscribe(bot, update):
     """ Get Latest taxipromos Smart """
-    text_ = promo_alert.unsubscribe(update.message.chat_id)
+    text_ = promo_alert.unsubscribe(str(update.message.chat_id))
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
@@ -138,9 +138,8 @@ def monitor_promo(bot, job):
     msg = promo_alert.get_new_codes_message()
 
     if msg is None:
-        bot.sendMessage(22959774, text="No new Promos", parse_mode='HTML')
+        print('No new promos')
     else:
-        bot.sendMessage(22959774, text=msg, parse_mode='HTML')
         all_users = promo_alert.get_all_users()
         for user in all_users:
             bot.sendMessage(int(user), text=msg, parse_mode='HTML')
@@ -172,9 +171,6 @@ def force_promo_check(bot, update):
         bot.sendMessage(22959774, text="No new Promos", parse_mode='HTML')
     else:
         bot.sendMessage(22959774, text=msg, parse_mode='HTML')
-        all_users = promo_alert.get_all_users()
-        for user in all_users:
-            bot.sendMessage(int(user), text=msg, parse_mode='HTML')
 
     bot.sendMessage(22959774, text='Forced Promo Check!', parse_mode='HTML')
 

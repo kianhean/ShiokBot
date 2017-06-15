@@ -20,6 +20,7 @@ def bann(code):
 
 
 def clear_db():
+    """ Delete all users and promos """
     db = dataset.connect(database_url)
     db['subscriptions'].drop()
     db['promo'].drop()
@@ -64,7 +65,7 @@ def subscribe(user_id):
 
     if table.find_one(id=user_id) is None:
         table.insert(dict(id=user_id))
-        text_ = """This thread has succesfully subscribed to recieve New Uber Codes! \nEvery hour I will send you the latest Uber Promo Codes so that you can apply them first!\n"""
+        text_ = """This thread has succesfully subscribed to recieve New Uber Codes! \nI will send you the latest Uber Promo Codes when they get released so that you can apply them first!\n"""
         text_ += """These are the latest codes right now\n\n"""
         new_codes = get_code()
 
@@ -82,10 +83,10 @@ def unsubscribe(user_id):
     table = db['subscriptions']
 
     if table.find_one(id=user_id) is None:
-        return "You are not subcscribed to recieve New Uber Codes!"
+        return "You are not subcscribed to recieve New Uber Codes!\n\subscribe@shiokbot to subscribe!"
     else:
         table.delete(id=user_id)
-        return "You have been unsubscribed to recieve New Uber Codes!"
+        return "You have been unsubscribed to recieve New Uber Codes :("
 
 
 def get_all_users():
@@ -98,7 +99,6 @@ def get_all_users():
 
 
 def get_new_codes():
-
     """ Return New Codes and Refresh DB"""
     db = dataset.connect(database_url)
     new_codes = get_code()
