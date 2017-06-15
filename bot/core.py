@@ -15,7 +15,7 @@ from bot import finance
 from bot import news
 from bot import botan
 from bot import promo_alert
-from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction
+from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction, InlineKeyboardMarkup, InlineKeyboardButton
 from emoji import emojize # emojize(random.choice(text_bot), use_aliases=True)
 from functools import wraps
 
@@ -102,6 +102,14 @@ def taxipromos(bot, update):
     text_ += promo.get_code(0, smart=True)
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
+
+    # Promo Feature with Inline Keyboard
+    promo_keyboard = InlineKeyboardButton(text="/subscribe@shiokbot")
+    custom_keyboard = [[promo_keyboard]]
+    reply_markup = InlineKeyboardMarkup(custom_keyboard)
+
+    bot.sendMessage(update.message.chat_id, 'Click the button below to subscribe to Uber Promo Codes! Be notified instantly!',
+                    reply_markup=reply_markup)
 
 
 def deliverypromos(bot, update):
