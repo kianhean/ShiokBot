@@ -50,6 +50,7 @@ def botan_track(uid, message, name):
 
 """Response
 ridepromos - Help you save money give you uber/grab codes
+subscribe - Subscribe to Uber Promo Alerts
 deliverypromos - Help you save money with uber/deliveroo codes
 taxi_near_me - Show you taxis near you!
 weather - Report the latest weather lah
@@ -104,12 +105,13 @@ def taxipromos(bot, update):
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
     # Promo Feature with Inline Keyboard
-    promo_keyboard = InlineKeyboardButton(text="/subscribe@shiokbot")
-    custom_keyboard = [[promo_keyboard]]
-    reply_markup = InlineKeyboardMarkup(custom_keyboard)
+    #promo_keyboard = InlineKeyboardButton(text="Subscribe!", url="")
+    #custom_keyboard = [[promo_keyboard]]
+    #reply_markup = InlineKeyboardMarkup(custom_keyboard)
 
-    bot.sendMessage(update.message.chat_id, 'Click the button below to subscribe to Uber Promo Codes! Be notified instantly!',
-                    reply_markup=reply_markup)
+    bot.sendMessage(update.message.chat_id,
+                    'Click on /subscribe@shiokbot to subscribe to Uber Promo Codes! Be notified instantly!',
+                    parse_mode='HTML')
 
 
 def deliverypromos(bot, update):
@@ -249,10 +251,15 @@ def taxi_around_me(bot, update):
                             reply_markup=reply_markup)
             pm_try = True
         except:
-            message_ = "You have to start a convo with me first! @ShiokBot before I can send you this info!"
-            bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
-            message_ = "After starting the PM with me try /taxi_near_me again"
-            bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
+
+            # Promo Feature with Inline Keyboard
+            promo_keyboard = InlineKeyboardButton(text="PM Me!", url="https://telegram.me/shiokbot?start")
+            custom_keyboard = [[promo_keyboard]]
+            reply_markup = InlineKeyboardMarkup(custom_keyboard)
+
+            message_ = "You have to start a convo with me first! @ShiokBot before I can send you this info!\n\nAfter starting the PM with me try /taxi_near_me again"
+            bot.sendMessage(update.message.chat_id, text=message_,
+                            parse_mode='HTML', reply_markup=reply_markup)
 
         if pm_try:
             message_ = senderusername + \
