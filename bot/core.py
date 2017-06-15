@@ -63,6 +63,7 @@ psi - Report the latest PSI readings lo
 4d - Give you latest 4d results wor
 toto - Give you latest toto results huat ar!
 version - Version Info
+unsubscribe - Unsubscribe to Uber Promo Alerts :(
 """
 
 """
@@ -407,10 +408,11 @@ def help(bot, update):
 def version(bot, update):
     """ Version Text"""
     bot.sendMessage(update.message.chat_id,
-                    text='''<b>Version 2 || 3 Apr 2017</b>
-                    \n Emojis added!
-                    \n Random Speech!
-                    \n This update command!
+                    text='''<b>Version 3 || 15 Jun 2017</b>
+                    \n Proactive notification to Uber Alerts
+                    \n Food delivery promos
+                    \n Various Wording fixes
+                    \n friendlier taxi near me workflow
                     \n Send suggestions to 
                     \n http://t.me/shiokbotnews
                      ''', parse_mode='HTML')
