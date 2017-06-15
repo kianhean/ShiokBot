@@ -63,9 +63,9 @@ def subscribe(user_id):
     db = dataset.connect(database_url)
     table = db['subscriptions']
 
-    if table.find_one(id=user_id) is None:
-        table.insert(dict(id=user_id))
-        text_ = """This thread has succesfully subscribed to recieve New Uber Codes! \nI will send you the latest Uber Promo Codes when they get released so that you can apply them first!\n"""
+    if table.find_one(id_user=user_id) is None:
+        table.insert(dict(id_user=user_id))
+        text_ = """This thread has succesfully subscribed to recieve New Uber Codes! \nI will send you the latest Uber Promo Codes when they get released so that you can apply them first!\n\n"""
         text_ += """These are the latest codes right now\n\n"""
         new_codes = get_code()
 
@@ -74,7 +74,7 @@ def subscribe(user_id):
             text_ += "\n"
         return text_
     else:
-        return "You are already subscribed to recieve New Uber Codes!"
+        return "This thread is already subscribed to recieve New Uber Codes!"
 
 
 def unsubscribe(user_id):
@@ -82,11 +82,11 @@ def unsubscribe(user_id):
     db = dataset.connect(database_url)
     table = db['subscriptions']
 
-    if table.find_one(id=user_id) is None:
-        return "You are not subcscribed to recieve New Uber Codes!\n\subscribe@shiokbot to subscribe!"
+    if table.find_one(id_user=user_id) is None:
+        return "This thread is not subscribed to recieve New Uber Codes!\n/subscribe@shiokbot to subscribe!"
     else:
-        table.delete(id=user_id)
-        return "You have been unsubscribed to recieve New Uber Codes :("
+        table.delete(id_user=user_id)
+        return "This thread has been unsubscribed to recieve New Uber Codes :("
 
 
 def get_all_users():
@@ -94,7 +94,7 @@ def get_all_users():
     db = dataset.connect(database_url)
     output = []
     for user in db['subscriptions']:
-        output.append(user['id'])
+        output.append(user['id_user'])
     return output
 
 
