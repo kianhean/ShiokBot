@@ -22,6 +22,10 @@ Singapore Data APIs from https://developers.data.gov.sg/
 
 ![ridecodes](https://cloud.githubusercontent.com/assets/5037305/23828837/bfd1a114-0719-11e7-9372-0f5fbc5ae1a1.PNG)
 
+#### /subscribe - Push Notifications for the Latest Promos from Uber
+
+![subscribe](https://user-images.githubusercontent.com/5037305/27434486-6b1a49b0-578b-11e7-96ff-b8e6743a9524.PNG)
+
 #### /taxi_near_me - Get locations of nearests Taxis (not uber/grab) Near you!
 
 ![taxi](https://cloud.githubusercontent.com/assets/5037305/24579859/581e2db8-1730-11e7-8e5a-477cc8c00c47.PNG)

@@ -51,19 +51,18 @@ def botan_track(uid, message, name):
 """Response
 ridepromos - Help you save money give you uber/grab codes
 subscribe - Subscribe to Uber Promo Alerts
+unsubscribe - Unsubscribe to Uber Promo Alerts :(
 deliverypromos - Help you save money with uber/deliveroo codes
 taxi_near_me - Show you taxis near you!
 weather - Report the latest weather lah
 sg_news - Latest Headlines from Singapore
 traffic - Get Latest Traffic Images
-sti - Get Latest Straits Times Index Level
 sgd - Latest SGD Rates!
 sibor - Latest Sibor Rates!
 psi - Report the latest PSI readings lo
 4d - Give you latest 4d results wor
 toto - Give you latest toto results huat ar!
 version - Version Info
-unsubscribe - Unsubscribe to Uber Promo Alerts :(
 """
 
 """
@@ -151,8 +150,15 @@ def monitor_promo(bot, job):
     if msg is None:
         print('No new promos')
     else:
+        text_bot = ['Uber poked me privately and said this :wink:',
+                    'I found this promo code while I was in my ActiveWear! :stuck_out_tongue:',
+                    'Quick apply the code! Later run out dont cry :sunglasses:',
+                    'Breaking News Brought to you by ShiokBot!',
+                   ]
         all_users = promo_alert.get_all_users()
         for user in all_users:
+            bot.sendMessage(int(user), text=emojize(random.choice(text_bot), use_aliases=True),
+                            parse_mode='HTML')
             bot.sendMessage(int(user), text=msg, parse_mode='HTML')
 
 
@@ -165,10 +171,7 @@ def clear_db(bot, update):
 @restricted
 def list_users(bot, update):
     userlist = promo_alert.get_all_users()
-    msg = 'Users\n'
-
-    for user in userlist:
-        msg += str(user) + "\n"
+    msg = str(len(userlist)) + ' Users Subscribed!'
 
     bot.sendMessage(22959774, text=msg, parse_mode='HTML')
 
@@ -254,7 +257,8 @@ def taxi_around_me(bot, update):
         except:
 
             # Promo Feature with Inline Keyboard
-            promo_keyboard = InlineKeyboardButton(text="PM Me!", url="https://telegram.me/shiokbot?start")
+            promo_keyboard = InlineKeyboardButton(text="PM Me!",
+                                                  url="https://telegram.me/shiokbot?start")
             custom_keyboard = [[promo_keyboard]]
             reply_markup = InlineKeyboardMarkup(custom_keyboard)
 
@@ -325,7 +329,7 @@ def sti_level(bot, update):
 
 def sgd_level(bot, update):
     """ Get Latest FX """
-    bot.sendMessage(update.message.chat_id, text='Let me go arcade and spy...',
+    bot.sendMessage(update.message.chat_id, text='Let me go the arcade and spy...',
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = finance.get_fx()
@@ -372,10 +376,10 @@ def start(bot, update):
                      \n/weather - Report the latest weather lah
                      \n/sg_news - Latest Headlines from Singapore
 
-                     \n/ridepromos - Help you save money give you uber/grab codes
+                     \n/ridepromos - Help you save money give you Uber/grab codes
+                     \n/subscribe - Subscribe to the latest Uber codes as they come out!
                      \n/taxi_near_me - Show you the taxis near you!
                      \n/traffic - Get Latest Traffic Images
-                     \n/sti - Get Latest Straits Times Index Level
                      \n/sgd - Latest SGD Rates!
                     
                      \n/psi - Report the latest PSI readings lo
@@ -393,10 +397,10 @@ def help(bot, update):
                      \n/weather - Report the latest weather lah
                      \n/sg_news - Latest Headlines from Singapore
 
-                     \n/ridepromos - Help you save money give you uber/grab codes
+                     \n/ridepromos - Help you save money give you Uber/grab codes
+                     \n/subscribe - Subscribe to the latest Uber codes as they come out!
                      \n/taxi_near_me - Show you the taxis near you!
                      \n/traffic - Get Latest Traffic Images
-                     \n/sti - Get Latest Straits Times Index Level
                      \n/sgd - Latest SGD Rates!
                     
                      \n/psi - Report the latest PSI readings lo
@@ -408,13 +412,16 @@ def help(bot, update):
 def version(bot, update):
     """ Version Text"""
     bot.sendMessage(update.message.chat_id,
-                    text='''<b>Version 3 || 15 Jun 2017</b>
+                    text='''
+                    <b>Version 3.1 || 22 Jun 2017</b>
+                    \n Wa kenna feratured!
+                    \n Some fixes
+                    \n Removed STI :( Yahoo API is gone
+                    <b>Version 3 || 15 Jun 2017</b>
                     \n Proactive notification to Uber Alerts
                     \n Food delivery promos
                     \n Various Wording fixes
                     \n friendlier taxi near me workflow
-                    \n Send suggestions to 
-                    \n http://t.me/shiokbotnews
                      ''', parse_mode='HTML')
 
 
