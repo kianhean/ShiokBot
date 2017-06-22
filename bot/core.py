@@ -157,9 +157,12 @@ def monitor_promo(bot, job):
                    ]
         all_users = promo_alert.get_all_users()
         for user in all_users:
-            bot.sendMessage(int(user), text=emojize(random.choice(text_bot), use_aliases=True),
-                            parse_mode='HTML')
-            bot.sendMessage(int(user), text=msg, parse_mode='HTML')
+            try:
+                bot.sendMessage(int(user), text=emojize(random.choice(text_bot), use_aliases=True),
+                                parse_mode='HTML')
+                bot.sendMessage(int(user), text=msg, parse_mode='HTML')
+            except:
+                print("Error! Sending Message to " + str(user))
 
 
 @restricted
