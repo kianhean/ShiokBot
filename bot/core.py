@@ -477,8 +477,8 @@ def main():
     dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
 
     # create jobs
-    job_minute = Job(monitor_promo, 60)
-    j.put(job_minute, next_t=900)
+    job_minute = Job(monitor_promo, 900)
+    j.put(job_minute, next_t=60)
 
     # log all errors
     dispatch.add_error_handler(error)
