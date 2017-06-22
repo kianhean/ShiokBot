@@ -474,11 +474,13 @@ def main():
     dispatch.add_handler(CommandHandler("admin_force_promo_check", force_promo_check))
     dispatch.add_handler(CommandHandler("admin_clear_db", clear_db))
     dispatch.add_handler(CommandHandler("admin_list_users", list_users))
-    dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
+    dispatch.add_handler(MessageHandler(Filters.location, taxi_around_me))
 
     # create jobs
-    job_minute = Job(monitor_promo, 900)
-    j.put(job_minute, next_t=60)
+    # job_minute = Job(monitor_promo, 900)
+    # j.put(job_minute, next_t=60)
+
+    j.run_repeating(monitor_promo, 900, 15)
 
     # log all errors
     dispatch.add_error_handler(error)
