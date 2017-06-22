@@ -306,8 +306,12 @@ def psi3hour(bot, update):
 
 
 def get_news_st(bot, update):
-    """ Get Latest Singapore PSI """
-    bot.sendMessage(update.message.chat_id, text='Reading the Newspapers...',
+    """ Get Latest Singapore News """
+    text_bot = ['Fake news is only fake because you are real :smiling_imp:',
+                'Let me tell you a story!',
+                'You read, I parse :smirk:'
+               ]
+    bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = news.get_news_st()
@@ -318,7 +322,6 @@ def get_news_st(bot, update):
 
 def sti_level(bot, update):
     """ Get Latest STI Level """
-
     final_string = "<b>Straits Times Index Level</b>\nThis is the index today..."
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
@@ -329,7 +332,12 @@ def sti_level(bot, update):
 
 def sgd_level(bot, update):
     """ Get Latest FX """
-    bot.sendMessage(update.message.chat_id, text='Let me go the arcade and spy...',
+    text_bot = ['The markets may be bad, but i slept like baby, every hour i woke up and cry. :smiling_imp:',
+                'The one with the shortest queue is the best :scream:',
+                'If only everyone displays FX rates as clearly as me :smirk:',
+                'Bots usually use Bitcoin, dealing with humans is boringgg'
+               ]
+    bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = finance.get_fx()
@@ -354,7 +362,8 @@ def weathernow(bot, update):
     text_bot = ['Let me look out of the window... :dash:',
                 'Why dont you look out of the window instead? :smirk:',
                 'Dont cry for me roti prataaaaa... :scream:',
-                'If there is a flood remember that fat people dont actually float :smiling_imp:'
+                'If there is a flood remember that fat people dont actually float :smiling_imp:',
+                'How do meteorologists say hi? With a heat wave! hahahaha'
                ]
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
