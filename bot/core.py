@@ -426,7 +426,7 @@ def version(bot, update):
                     \n Wa kenna feratured!
                     \n Some fixes
                     \n Removed STI :( Yahoo API is gone
-                    <b>Version 3 || 15 Jun 2017</b>
+                    \n<b>Version 3 || 15 Jun 2017</b>
                     \n Proactive notification to Uber Alerts
                     \n Food delivery promos
                     \n Various Wording fixes
@@ -474,8 +474,8 @@ def main():
     dispatch.add_handler(MessageHandler([Filters.location], taxi_around_me))
 
     # create jobs
-    job_minute = Job(monitor_promo, 3600)
-    j.put(job_minute, next_t=1800)
+    job_minute = Job(monitor_promo, 60)
+    j.put(job_minute, next_t=900)
 
     # log all errors
     dispatch.add_error_handler(error)
