@@ -31,7 +31,7 @@ def taxi_get(send_long, send_lat):
         if haversine(current, coord) <= thres:
             count_number += 1
             collect_taxis.append(coord)
-    
+
     if count_number > 0:
 
         # Convert location to string

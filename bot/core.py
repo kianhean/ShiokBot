@@ -15,6 +15,7 @@ from bot import finance
 from bot import news
 from bot import botan
 from bot import promo_alert
+from bot import train_alert
 from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction, InlineKeyboardMarkup, InlineKeyboardButton
 from emoji import emojize # emojize(random.choice(text_bot), use_aliases=True)
 from functools import wraps
@@ -130,21 +131,54 @@ def deliverypromos(bot, update):
 
 
 def subscribe(bot, update):
-    """ Get Latest taxipromos Smart """
+    """ Subscribe Latest taxipromos Smart """
     text_ = promo_alert.subscribe(str(update.message.chat_id))
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def unsubscribe(bot, update):
-    """ Get Latest taxipromos Smart """
+    """ Unsub Latest taxipromos Smart """
     text_ = promo_alert.unsubscribe(str(update.message.chat_id))
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
+def subscribe_train(bot, update):
+    """ Subscribe Latest train alerts """
+    text_ = train_alert.subscribe(str(update.message.chat_id))
+    bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, update.message.text)
+
+
+def unsubscribe_train(bot, update):
+    """ Unsub Latest train alerts """
+    text_ = train_alert.unsubscribe(str(update.message.chat_id))
+    bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, update.message.text)
+
+
+def monitor_train(bot, job):
+    """ Job to Send Train Message """
+    msg = train_alert.get_new_breakdowns_message()
+
+    if msg is None:
+        print('No new breakdowns')
+    else:
+        text_bot = ['Omg a breakdown! :cry:',
+                   ]
+        all_users = train_alert.get_all_users()
+        for user in all_users:
+            try:
+                bot.sendMessage(int(user), text=emojize(random.choice(text_bot), use_aliases=True),
+                                parse_mode='HTML')
+                bot.sendMessage(int(user), text=msg, parse_mode='HTML')
+            except:
+                print("Error! Sending Message to " + str(user))
+
+
 def monitor_promo(bot, job):
-    """ Job to Send Message """
+    """ Job to Send Promo Message """
     msg = promo_alert.get_new_codes_message()
 
     if msg is None:
@@ -471,6 +505,8 @@ def main():
     dispatch.add_handler(CommandHandler("version", version))
     dispatch.add_handler(CommandHandler("subscribe", subscribe))
     dispatch.add_handler(CommandHandler("unsubscribe", unsubscribe))
+    dispatch.add_handler(CommandHandler("subscribe_train", subscribe_train))
+    dispatch.add_handler(CommandHandler("unsubscribe_train", unsubscribe_train))
     dispatch.add_handler(CommandHandler("admin_force_promo_check", force_promo_check))
     dispatch.add_handler(CommandHandler("admin_clear_db", clear_db))
     dispatch.add_handler(CommandHandler("admin_list_users", list_users))
@@ -481,6 +517,7 @@ def main():
     # j.put(job_minute, next_t=60)
 
     j.run_repeating(monitor_promo, 900, 15)
+    j.run_repeating(monitor_train, 900, 60)
 
     # log all errors
     dispatch.add_error_handler(error)

@@ -10,3 +10,4 @@ fake-useragent
 emoji
 dataset
 psycopg2
+tweepy
