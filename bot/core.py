@@ -525,8 +525,8 @@ def main():
     # job_minute = Job(monitor_promo, 900)
     # j.put(job_minute, next_t=60)
 
-    j.run_repeating(monitor_promo, 900, 15)
-    j.run_repeating(monitor_train, 900, 60)
+    j.run_repeating(monitor_promo, 300, 15)
+    j.run_repeating(monitor_train, 300, 60)
 
     # log all errors
     dispatch.add_error_handler(error)
