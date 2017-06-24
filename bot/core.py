@@ -464,7 +464,7 @@ def main():
     dispatch.add_handler(CommandHandler("deliverypromos", deliverypromos))
     dispatch.add_handler(CommandHandler("sg_news", get_news_st))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
-    dispatch.add_handler(CommandHandler("sti", sti_level))
+    # dispatch.add_handler(CommandHandler("sti", sti_level))
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
     dispatch.add_handler(CommandHandler("sibor", sibor_level))
     dispatch.add_handler(CommandHandler("taxi_near_me", taxi_around_me))
