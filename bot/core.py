@@ -215,7 +215,7 @@ def list_users(bot, update):
 
 @restricted
 def list_users_train(bot, update):
-    userlist = promo_alert.get_all_users()
+    userlist = train_alert.get_all_users()
     msg = str(len(userlist)) + ' Users Subscribed To Train Alerts!'
 
     bot.sendMessage(22959774, text=msg, parse_mode='HTML')
