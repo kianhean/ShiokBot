@@ -201,14 +201,22 @@ def monitor_promo(bot, job):
 
 @restricted
 def clear_db(bot, update):
-    promo_alert.clear_db()
-    bot.sendMessage(22959774, text='Database Cleared!', parse_mode='HTML')
+    train_alert.clear_db()
+    bot.sendMessage(22959774, text='Train Database Cleared!', parse_mode='HTML')
 
 
 @restricted
 def list_users(bot, update):
     userlist = promo_alert.get_all_users()
-    msg = str(len(userlist)) + ' Users Subscribed!'
+    msg = str(len(userlist)) + ' Users Subscribed To Promo Alerts!'
+
+    bot.sendMessage(22959774, text=msg, parse_mode='HTML')
+
+
+@restricted
+def list_users_train(bot, update):
+    userlist = promo_alert.get_all_users()
+    msg = str(len(userlist)) + ' Users Subscribed To Train Alerts!'
 
     bot.sendMessage(22959774, text=msg, parse_mode='HTML')
 
@@ -510,6 +518,7 @@ def main():
     dispatch.add_handler(CommandHandler("admin_force_promo_check", force_promo_check))
     dispatch.add_handler(CommandHandler("admin_clear_db", clear_db))
     dispatch.add_handler(CommandHandler("admin_list_users", list_users))
+    dispatch.add_handler(CommandHandler("admin_list_users_train", list_users_train))
     dispatch.add_handler(MessageHandler(Filters.location, taxi_around_me))
 
     # create jobs

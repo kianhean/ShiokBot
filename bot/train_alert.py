@@ -26,7 +26,7 @@ def get_breakdowns(provider='@SMRT_Singapore'):
     final = {}
 
     # Get latest 20 tweets from SMRT_SINGAPORE
-    result = api.user_timeline(provider, count=20)
+    result = api.user_timeline(provider, count=5)
 
     for tweet in result:
 
@@ -38,7 +38,7 @@ def get_breakdowns(provider='@SMRT_Singapore'):
 
         if detect:
             output = {}
-            created_at = (tweet.created_at + timedelta(hours=8)).strftime('%Y %b %d %I %M %S %p')
+            created_at = (tweet.created_at + timedelta(hours=8)).strftime('%Y %b %d, at %I %M %S %p')
             output[tweet.id_str] = {'tweet':tweet.text,
                                     'created_at':created_at}
             final.update(output)
@@ -62,7 +62,6 @@ def subscribe(user_id):
     if table.find_one(id_user=user_id) is None:
         table.insert(dict(id_user=user_id))
         text_ = """This thread has succesfully subscribed to recieve Train Breakdown Notifications! \nI will send inform you as soon they happen!\n\n"""
-        text_ += """These were the latest disruptions\n\n"""
         return text_
     else:
         return "This thread is already subscribed to recieve Train Breakdown Notifications!"
@@ -87,6 +86,13 @@ def get_all_users():
     for user in db['subscriptions_train']:
         output.append(user['id_user'])
     return output
+
+
+def clear_db():
+    """ Delete all users and promos """
+    db = dataset.connect(database_url)
+    db['subscriptions_train'].drop()
+    db['train'].drop()
 
 
 def get_new_breakdowns():
@@ -126,8 +132,8 @@ def get_new_breakdowns_message():
         text_ = "<b>Train Breakdowns!</b>\n\n"
 
         for key in new:
-            text_ += "<b>" + _all_breakdowns[key]['tweet'] + \
-                     "</b> | Text - " + _all_breakdowns[key]['created_at']
-            text_ += "\n"
+            text_ += "<b>" + _all_breakdowns[key]['created_at'] + \
+                     "</b> | Text - " + _all_breakdowns[key]['tweet']
+            text_ += "\n\n"
 
         return text_
