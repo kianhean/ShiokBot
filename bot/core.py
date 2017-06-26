@@ -52,7 +52,7 @@ def botan_track(uid, message, name):
 """Response
 ridepromos - Help you save money give you uber/grab codes
 subscribe - Subscribe to Uber Promo Alerts
-unsubscribe - Unsubscribe to Uber Promo Alerts :(
+subscribe_train - Subscribe to MRT breakdown Alerts
 deliverypromos - Help you save money with uber/deliveroo codes
 taxi_near_me - Show you taxis near you!
 weather - Report the latest weather lah
@@ -64,6 +64,8 @@ psi - Report the latest PSI readings lo
 4d - Give you latest 4d results wor
 toto - Give you latest toto results huat ar!
 version - Version Info
+unsubscribe - Unsubscribe to Uber Promo Alerts :(
+unsubscribe_train - Unsubscribe to MRT breakdown Alerts :()
 """
 
 """
@@ -467,6 +469,9 @@ def version(bot, update):
     """ Version Text"""
     bot.sendMessage(update.message.chat_id,
                     text='''
+                    <b>Version 3.2 || 26 Jun 2017</b>
+                    \n Testing MRT breakdown Notification
+                    \n Fixed promo monitor bugs
                     <b>Version 3.1 || 22 Jun 2017</b>
                     \n Wa kenna feratured!
                     \n Some fixes
