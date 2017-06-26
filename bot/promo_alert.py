@@ -106,11 +106,12 @@ def get_new_codes():
     table = db['promo']
 
     """ Get New Codes"""
-    new = []
+    new = {}
+
     for key, value in new_codes.items():
 
         if table.find_one(promo=key) is None:
-            new.append(key)
+            new[key] = [new_codes[key][0], new_codes[key][1]]
         else:
             pass
 
@@ -123,8 +124,6 @@ def get_new_codes():
 
 def get_new_codes_message():
     """ Return New Promos """
-
-    all_codes = get_code()
     new = get_new_codes()
 
     if len(new) == 0:
@@ -132,8 +131,8 @@ def get_new_codes_message():
     else:
         text_ = "<b>New Promo Codes Released! Apply Now!</b>\n\n"
 
-        for key in new:
-            text_ += "<b>" + key + "</b> | Expires - " + all_codes[key][0] + " | " + all_codes[key][1]
+        for key, value in new.items():
+            text_ += "<b>" + key + "</b> | Expires - " + value[0] + " | " + value[1]
             text_ += "\n"
 
         return text_
