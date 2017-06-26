@@ -19,6 +19,7 @@ from bot import train_alert
 from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction, InlineKeyboardMarkup, InlineKeyboardButton
 from emoji import emojize # emojize(random.choice(text_bot), use_aliases=True)
 from functools import wraps
+from time import sleep
 
 
 LIST_OF_ADMINS = [22959774]
@@ -32,6 +33,12 @@ def restricted(func):
             return
         return func(bot, update, *args, **kwargs)
     return wrapped
+
+
+def chunks(l, n):
+    """Yield successive n-sized chunks from l."""
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
 
 
 # Enable logging
@@ -170,13 +177,18 @@ def monitor_train(bot, job):
         text_bot = ['Omg a breakdown! :cry:',
                    ]
         all_users = train_alert.get_all_users()
-        for user in all_users:
-            try:
-                bot.sendMessage(int(user), text=emojize(random.choice(text_bot), use_aliases=True),
-                                parse_mode='HTML')
-                bot.sendMessage(int(user), text=msg, parse_mode='HTML')
-            except:
-                print("Error! Sending Message to " + str(user))
+        to_send = chunks(all_users, 10)
+
+        for group in to_send:
+            for user in group:
+                try:
+                    bot.sendMessage(int(user),
+                                    text=emojize(random.choice(text_bot), use_aliases=True),
+                                    parse_mode='HTML')
+                    bot.sendMessage(int(user), text=msg, parse_mode='HTML')
+                except:
+                    print("Error! Sending Message to " + str(user))
+            sleep(1.2)
 
 
 def monitor_promo(bot, job):
@@ -192,13 +204,18 @@ def monitor_promo(bot, job):
                     'Breaking News Brought to you by ShiokBot!',
                    ]
         all_users = promo_alert.get_all_users()
-        for user in all_users:
-            try:
-                bot.sendMessage(int(user), text=emojize(random.choice(text_bot), use_aliases=True),
-                                parse_mode='HTML')
-                bot.sendMessage(int(user), text=msg, parse_mode='HTML')
-            except:
-                print("Error! Sending Message to " + str(user))
+        to_send = chunks(all_users, 10)
+
+        for group in to_send:
+            for user in group:
+                try:
+                    bot.sendMessage(int(user),
+                                    text=emojize(random.choice(text_bot), use_aliases=True),
+                                    parse_mode='HTML')
+                    bot.sendMessage(int(user), text=msg, parse_mode='HTML')
+                except:
+                    print("Error! Sending Message to " + str(user))
+            sleep(1.2)
 
 
 @restricted
