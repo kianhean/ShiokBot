@@ -129,7 +129,7 @@ def get_new_breakdowns_message():
     if len(new) == 0:
         return None
     else:
-        text_ = "<b>Train Breakdowns!</b>\n\n"
+        text_ = "<b>Singapore Train Alert/Updates!:disappointed_relieved:</b>\n\n"
 
         for key in new:
             text_ += "<b>" + _all_breakdowns[key]['created_at'] + \

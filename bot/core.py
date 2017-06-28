@@ -59,7 +59,8 @@ def botan_track(uid, message, name):
 """Response
 ridepromos - Help you save money give you uber/grab codes
 subscribe - Subscribe to Uber Promo Alerts
-subscribe_train - Subscribe to MRT breakdown Alerts
+subscribe_train - Subscribe to Train breakdown Alerts
+share - Easily Share Shiokbot with Friends!
 deliverypromos - Help you save money with uber/deliveroo codes
 taxi_near_me - Show you taxis near you!
 weather - Report the latest weather lah
@@ -70,9 +71,8 @@ sibor - Latest Sibor Rates!
 psi - Report the latest PSI readings lo
 4d - Give you latest 4d results wor
 toto - Give you latest toto results huat ar!
-version - Version Info
 unsubscribe - Unsubscribe to Uber Promo Alerts :(
-unsubscribe_train - Unsubscribe to MRT breakdown Alerts :()
+unsubscribe_train - Unsubscribe to Train breakdown Alerts :(
 """
 
 """
@@ -119,8 +119,11 @@ def taxipromos(bot, update):
     #custom_keyboard = [[promo_keyboard]]
     #reply_markup = InlineKeyboardMarkup(custom_keyboard)
 
+    ad_msg = "Click on /subscribe@shiokbot to subscribe to Uber Promo Codes! Be notified instantly!\n"
+    ad_msg += "Click on /subscribe_train@shiokbot to subscribe to Train Breakdown Alerts! Preview : https://goo.gl/1UrmL6"
+
     bot.sendMessage(update.message.chat_id,
-                    'Click on /subscribe@shiokbot to subscribe to Uber Promo Codes! Be notified instantly!',
+                    ad_msg,disable_web_page_preview=True,
                     parse_mode='HTML')
 
 
@@ -174,18 +177,14 @@ def monitor_train(bot, job):
     if msg is None:
         print('No new breakdowns')
     else:
-        text_bot = ['Omg a breakdown! :cry:',
-                   ]
         all_users = train_alert.get_all_users()
         to_send = chunks(all_users, 10)
 
         for group in to_send:
             for user in group:
                 try:
-                    bot.sendMessage(int(user),
-                                    text=emojize(random.choice(text_bot), use_aliases=True),
+                    bot.sendMessage(int(user), text=emojize(msg, use_aliases=True),
                                     parse_mode='HTML')
-                    bot.sendMessage(int(user), text=msg, parse_mode='HTML')
                 except:
                     print("Error! Sending Message to " + str(user))
             sleep(1.2)
@@ -446,11 +445,15 @@ def start(bot, update):
                     text='''Hello! I am @ShiokBot!
                      \nThe helpful singlish spouting bot!
                      \nAvailable Commands
-                     \n/weather - Report the latest weather lah
-                     \n/sg_news - Latest Headlines from Singapore
 
                      \n/ridepromos - Help you save money give you Uber/grab codes
                      \n/subscribe - Subscribe to the latest Uber codes as they come out!
+                     \n/subscribe_train - Subscribe to Train breakdown Alerts
+                     \n/share - Easily Share Shiokbot!
+
+                     \n/weather - Report the latest weather lah
+                     \n/sg_news - Latest Headlines from Singapore
+
                      \n/taxi_near_me - Show you the taxis near you!
                      \n/traffic - Get Latest Traffic Images
                      \n/sgd - Latest SGD Rates!
@@ -467,11 +470,15 @@ def help(bot, update):
                     text='''Hello! I am @ShiokBot!
                      \nThe helpful singlish spouting bot!
                      \nAvailable Commands
-                     \n/weather - Report the latest weather lah
-                     \n/sg_news - Latest Headlines from Singapore
 
                      \n/ridepromos - Help you save money give you Uber/grab codes
                      \n/subscribe - Subscribe to the latest Uber codes as they come out!
+                     \n/subscribe_train - Subscribe to Train breakdown Alerts
+                     \n/share - Easily Share Shiokbot!
+
+                     \n/weather - Report the latest weather lah
+                     \n/sg_news - Latest Headlines from Singapore
+
                      \n/taxi_near_me - Show you the taxis near you!
                      \n/traffic - Get Latest Traffic Images
                      \n/sgd - Latest SGD Rates!
@@ -482,23 +489,35 @@ def help(bot, update):
                      ''')
 
 
-def version(bot, update):
-    """ Version Text"""
-    bot.sendMessage(update.message.chat_id,
-                    text='''
-                    <b>Version 3.2 || 26 Jun 2017</b>
-                    \n Testing MRT breakdown Notification
-                    \n Fixed promo monitor bugs
-                    <b>Version 3.1 || 22 Jun 2017</b>
-                    \n Wa kenna feratured!
-                    \n Some fixes
-                    \n Removed STI :( Yahoo API is gone
+def share(bot, update):
+    """ Share Text"""
+
+    version_text = """
+                    Version Log\n
+                    \n<b>Version 3.3 || 28 Jun 2017</b>
+                    \nAdded Sharing cmd
+                    \nLaunching Train Breakdown Notifications
+                    \n<b>Version 3.2 || 26 Jun 2017</b>
+                    \nTesting Train breakdown Notification
+                    \nFixed promo monitor bugs
+                    \nb>Version 3.1 || 22 Jun 2017</b>
+                    \nWa kenna feratured on TSL!
+                    \nRemoved STI :( Yahoo API is gone
                     \n<b>Version 3 || 15 Jun 2017</b>
-                    \n Proactive notification to Uber Alerts
-                    \n Food delivery promos
-                    \n Various Wording fixes
-                    \n friendlier taxi near me workflow
-                     ''', parse_mode='HTML')
+                    \nProactive notification to Uber Alerts
+                    \nFood delivery promos
+                    \nfriendlier taxi near me workflow"""
+    share_text = """
+                 Shiokbot thanks you for sharing the love\n
+                 Send this link to your friends to start using!\n
+                 <b>https://t.me/shiokbot?start</b>
+                 \nMore Information Here!
+                 \nhttps://kianhean.com/2016/12/20/singapore-telegram-bot/
+                 """
+    bot.sendMessage(update.message.chat_id,
+                    text=share_text, parse_mode='HTML')
+    bot.sendMessage(update.message.chat_id,
+                    text=version_text, parse_mode='HTML')
 
 
 def error(bot, update, error):
@@ -532,7 +551,6 @@ def main():
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
     dispatch.add_handler(CommandHandler("sibor", sibor_level))
     dispatch.add_handler(CommandHandler("taxi_near_me", taxi_around_me))
-    dispatch.add_handler(CommandHandler("version", version))
     dispatch.add_handler(CommandHandler("subscribe", subscribe))
     dispatch.add_handler(CommandHandler("unsubscribe", unsubscribe))
     dispatch.add_handler(CommandHandler("subscribe_train", subscribe_train))
@@ -540,6 +558,7 @@ def main():
     dispatch.add_handler(CommandHandler("admin_force_promo_check", force_promo_check))
     dispatch.add_handler(CommandHandler("admin_clear_db", clear_db))
     dispatch.add_handler(CommandHandler("admin_list_users", list_users))
+    dispatch.add_handler(CommandHandler("share", share))
     dispatch.add_handler(CommandHandler("admin_list_users_train", list_users_train))
     dispatch.add_handler(MessageHandler(Filters.location, taxi_around_me))
 
