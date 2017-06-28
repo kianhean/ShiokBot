@@ -493,20 +493,20 @@ def share(bot, update):
     """ Share Text"""
 
     version_text = """
-                    Version Log\n
-                    \n<b>Version 3.3 || 28 Jun 2017</b>
-                    \nAdded Sharing cmd
-                    \nLaunching Train Breakdown Notifications
-                    \n<b>Version 3.2 || 26 Jun 2017</b>
-                    \nTesting Train breakdown Notification
-                    \nFixed promo monitor bugs
-                    \nb>Version 3.1 || 22 Jun 2017</b>
-                    \nWa kenna feratured on TSL!
-                    \nRemoved STI :( Yahoo API is gone
-                    \n<b>Version 3 || 15 Jun 2017</b>
-                    \nProactive notification to Uber Alerts
-                    \nFood delivery promos
-                    \nfriendlier taxi near me workflow"""
+                    Version Log
+                    \n\n <b>Version 3.3 || 28 Jun 2017</b>
+                    \n Added Sharing cmd
+                    \n Launching Train Breakdown Notifications
+                    \n <b>Version 3.2 || 26 Jun 2017</b>
+                    \n Testing Train breakdown Notification
+                    \n Fixed promo monitor bugs
+                    \n b>Version 3.1 || 22 Jun 2017</b>
+                    \n Wa kenna feratured on TSL!
+                    \n Removed STI :( Yahoo API is gone
+                    \n <b>Version 3 || 15 Jun 2017</b>
+                    \n Proactive notification to Uber Alerts
+                    \n Food delivery promos
+                    \n friendlier taxi near me workflow"""
     share_text = """
                  Shiokbot thanks you for sharing the love\n
                  Send this link to your friends to start using!\n
