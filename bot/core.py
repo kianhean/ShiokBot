@@ -512,8 +512,8 @@ def share(bot, update):
                  """
     bot.sendMessage(update.message.chat_id,
                     text=share_text, parse_mode='HTML')
-    bot.sendMessage(update.message.chat_id,
-                    text=version_text, parse_mode='HTML')
+    #bot.sendMessage(update.message.chat_id,
+    #                text=version_text, parse_mode='HTML')
 
 
 def error(bot, update, error):
