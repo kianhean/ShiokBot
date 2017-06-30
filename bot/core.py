@@ -20,6 +20,7 @@ from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction, InlineKeyb
 from emoji import emojize # emojize(random.choice(text_bot), use_aliases=True)
 from functools import wraps
 from time import sleep
+import datetime
 
 
 LIST_OF_ADMINS = [22959774]
@@ -161,19 +162,25 @@ def call_handler(bot, update):
 
     if update.callback_query.data == 'update_taxi':
         bot.answerCallbackQuery(callback_query_id=update.callback_query.id,
-                                text="Updating...")
+                                text="Refreshing Promo Codes...")
 
         text_ = "<b>List of Uber Promo Codes (Latest on Top)</b> \n\n"
         text_ += promo.get_code(1, smart=True)
         text_ += "\n<b>List of Grab Promo Codes (Latest on Top)</b> \n\n"
         text_ += promo.get_code(0, smart=True)
-        text_ += "\nDATETIME STAMPPPP!"
+        text_ += "\n :repeat:Last Update: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        # Update Feature with Inline Keyboard
+        promo_keyboard = InlineKeyboardButton(text="Update!", callback_data="update_taxi")
+        custom_keyboard = [[promo_keyboard]]
+        reply_markup = InlineKeyboardMarkup(custom_keyboard)
 
         bot.editMessageText(
             message_id=update.callback_query.message.message_id,
             chat_id=update.callback_query.message.chat.id,
-            text=text_,
-            parse_mode='HTML'
+            text=emojize(text_, use_aliases=True),
+            parse_mode='HTML',
+            reply_markup=reply_markup
         )
 
 
