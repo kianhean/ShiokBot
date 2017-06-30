@@ -108,7 +108,7 @@ def psi3hour_get():
     final_string = "<b>The 24 hourly PSI Reading at " + timestampp + " is actually</b> \n\n"
 
     for key in sorted(hourly):
-        final_string  =  final_string + (str(key) + " " + \
+        final_string = final_string + (str(key) + " " + \
                                         str(hourly[key]) + "\n")
     return final_string + "\nHotspots at our neighbours there are like that!"
 
@@ -132,13 +132,13 @@ def weathernow_get():
     # Add 12 hr cast
     nowcast = data['items'][0]['periods'][0]['regions']
     for key in sorted(nowcast):
-        final_string  =  final_string + (str(key) + \
+        final_string = final_string + (str(key) + \
                                         " - " + str(nowcast[key]) + "\n")
     final_string = final_string + "\n<b>Forecast Tomorrow</b>\n\n"
 
     # Add 24 hr cast
     nowcast = data['items'][0]['periods'][1]['regions']
     for key in sorted(nowcast):
-        final_string  =  final_string + (str(key) + " - " + str(nowcast[key]) + "\n")
+        final_string = final_string + (str(key) + " - " + str(nowcast[key]) + "\n")
 
     return final_string + "\nShow you radarrrr somemore! Got colour means raining!"

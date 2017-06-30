@@ -40,7 +40,7 @@ def get_fx():
 
 def get_sibor():
     # Connect to Source
-    url ='http://www.moneysmart.sg/home-loan/sibor-trend'
+    url = 'http://www.moneysmart.sg/home-loan/sibor-trend'
     data = urlopen(url)
     soup = BeautifulSoup(data, 'html.parser')
 

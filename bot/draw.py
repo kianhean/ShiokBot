@@ -27,12 +27,12 @@ def FourD():
     # SPECIAL PRIZE
     special_prize = "Special/Starter Prizes\n\n"
     for i in range(11, 21):
-        special_prize +=  result[i].get_text() + "  "
+        special_prize += result[i].get_text() + "  "
 
     # CONSOLATION PRIZE
     consol_prize = "\n\nConsolation Prizes\n\n"
     for i in range(21, 31):
-        consol_prize +=  result[i].get_text() + "  "
+        consol_prize += result[i].get_text() + "  "
 
     # Create Reply
     chat_reply = "<b>Latest 4D Draw Results on " + latest_result_date + "</b> \n\n"
@@ -61,7 +61,7 @@ def TOTO():
     # SPECIAL PRIZE
     special_prize = "<b>Winning Numbers</b>\n"
     for i in range(4, 11):
-        special_prize +=  result[i].get_text() + "  "
+        special_prize += result[i].get_text() + "  "
 
     # Create Reply
     chat_reply = "<b>Latest TOTO Draw Results on " + latest_result_date + "</b> \n\n"

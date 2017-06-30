@@ -26,6 +26,10 @@ Singapore Data APIs from https://developers.data.gov.sg/
 
 ![subscribe](https://user-images.githubusercontent.com/5037305/27434486-6b1a49b0-578b-11e7-96ff-b8e6743a9524.PNG)
 
+#### /subscribe_train - Push Notifications for Train Breakdown Notifications
+
+![subscribe](https://user-images.githubusercontent.com/5037305/27641925-e1205280-5c4f-11e7-9a65-1ab944c4050f.PNG)
+
 #### /taxi_near_me - Get locations of nearests Taxis (not uber/grab) Near you!
 
 ![taxi](https://cloud.githubusercontent.com/assets/5037305/24579859/581e2db8-1730-11e7-8e5a-477cc8c00c47.PNG)
@@ -53,10 +57,6 @@ Singapore Data APIs from https://developers.data.gov.sg/
 #### /sgd - Get Latest SGX FX Rates
 
 ![sgd](https://cloud.githubusercontent.com/assets/5037305/23856815/e4f7477e-0835-11e7-9492-9d1e505ac0d7.PNG)
-
-#### /sti - Get Latest STI Index Level
-
-![sti](https://cloud.githubusercontent.com/assets/5037305/23856814/e4f04564-0835-11e7-822c-6e4571075813.PNG)
 
 
 Pretty Cool huh?

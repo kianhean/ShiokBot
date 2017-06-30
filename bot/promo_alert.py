@@ -26,6 +26,38 @@ def clear_db():
     db['promo'].drop()
 
 
+def get_code2():
+    """ Connect to Paged Promo Codes"""
+    # Connect to Source
+    url = 'https://www.couponese.com/store/uber.com/'
+    data = urlopen(url)
+    soup = BeautifulSoup(data, 'html.parser')
+
+    # Find latest Result
+    loop = soup.findAll("article", {"class" : "ov-coupon"})
+    output = {}
+
+    for square in loop:
+
+        country = square.findAll("div")[1].findAll("img")[0]['title']
+
+        try:
+            square.findAll("span", {"class" : "ov-expired"})[0]
+            expired = True
+        except:
+            expired = False
+
+        if country == 'Singapore' and expired is False:
+
+            code = square.findAll("div")[2].findAll("strong")[0].text
+            desc = square.findAll("div")[3].findAll("div", {"class" : "ov-desc"})[0].text
+            expiry = square.findAll("div")[3].findAll("div", {"class" : "ov-expiry"})[0].text[1:]
+
+            if bann(desc) is False:
+                output[code] = [expiry, desc]
+    return output
+
+
 def get_code(pos=1):
     """ Connect to Paged Promo Codes"""
     # Connect to Source
