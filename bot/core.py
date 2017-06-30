@@ -596,7 +596,7 @@ def main():
     dispatch.add_handler(CommandHandler("weather", weathernow))
     dispatch.add_handler(CommandHandler("4d", fourdresults))
     dispatch.add_handler(CommandHandler("toto", totoresults))
-    dispatch.add_handler(CommandHandler("ridepromos", taxipromos))
+    dispatch.add_handler(CommandHandler("ridepromos", taxipromos2))
     dispatch.add_handler(CommandHandler("ridepromos2", taxipromos2))
     dispatch.add_handler(CommandHandler("deliverypromos", deliverypromos))
     dispatch.add_handler(CommandHandler("sg_news", get_news_st))
