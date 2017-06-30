@@ -7,7 +7,7 @@
 import os
 import logging
 import random
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Job
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Job, CallbackQueryHandler
 from bot import gov
 from bot import draw
 from bot import promo
@@ -111,13 +111,9 @@ def taxipromos(bot, update):
     text_ += promo.get_code(1, smart=True)
     text_ += "\n<b>List of Grab Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(0, smart=True)
+
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
-
-    # Promo Feature with Inline Keyboard
-    #promo_keyboard = InlineKeyboardButton(text="Subscribe!", url="")
-    #custom_keyboard = [[promo_keyboard]]
-    #reply_markup = InlineKeyboardMarkup(custom_keyboard)
 
     ad_msg = "Click on /subscribe@shiokbot to subscribe to Uber Promo Codes! Be notified instantly!\n"
     ad_msg += "Click on /subscribe_train@shiokbot to subscribe to Train Breakdown Alerts! Preview : https://goo.gl/1UrmL6"
@@ -125,6 +121,60 @@ def taxipromos(bot, update):
     bot.sendMessage(update.message.chat_id,
                     ad_msg,disable_web_page_preview=True,
                     parse_mode='HTML')
+
+
+def taxipromos2(bot, update):
+    """ Get Latest taxipromos Smart """
+    text_bot = ['Let me go and bug Uber/Grab :sunglasses:',
+                'Wait ar... I ask my friend Google :wink: :wink:',
+                'Dont you just hate those targeted promos :weary:',
+                'If cannot work, still friend me ok? :stuck_out_tongue:',
+                'If the discount works remember share share ok :smirk:',
+               ]
+    bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
+                    parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+    text_ = "<b>List of Uber Promo Codes (Latest on Top)</b> \n\n"
+    text_ += promo.get_code(1, smart=True)
+    text_ += "\n<b>List of Grab Promo Codes (Latest on Top)</b> \n\n"
+    text_ += promo.get_code(0, smart=True)
+
+    # Update Feature with Inline Keyboard
+    promo_keyboard = InlineKeyboardButton(text="Update!", callback_data="update_taxi")
+    custom_keyboard = [[promo_keyboard]]
+    reply_markup = InlineKeyboardMarkup(custom_keyboard)
+
+    bot.sendMessage(update.message.chat_id, text=text_,
+                    parse_mode='HTML', reply_markup=reply_markup)
+    botan_track(update.message.from_user.id, update.message, update.message.text)
+
+    ad_msg = "Click on /subscribe@shiokbot to subscribe to Uber Promo Codes! Be notified instantly!\n"
+    ad_msg += "Click on /subscribe_train@shiokbot to subscribe to Train Breakdown Alerts! Preview : https://goo.gl/1UrmL6"
+
+    bot.sendMessage(update.message.chat_id,
+                    ad_msg,disable_web_page_preview=True,
+                    parse_mode='HTML')
+
+
+def call_handler(bot, update):
+    """ https://stackoverflow.com/questions/39121678/updating-messages-with-inline-keyboards-using-callback-queries """
+
+    if update.callback_query.data == 'update_taxi':
+        bot.answerCallbackQuery(callback_query_id=update.callback_query.id,
+                                text="Updating...")
+
+        text_ = "<b>List of Uber Promo Codes (Latest on Top)</b> \n\n"
+        text_ += promo.get_code(1, smart=True)
+        text_ += "\n<b>List of Grab Promo Codes (Latest on Top)</b> \n\n"
+        text_ += promo.get_code(0, smart=True)
+        text_ += "\nDATETIME STAMPPPP!"
+
+        bot.editMessageText(
+            message_id=update.callback_query.message.message_id,
+            chat_id=update.callback_query.message.chat.id,
+            text=text_,
+            parse_mode='HTML'
+        )
 
 
 def deliverypromos(bot, update):
@@ -540,6 +590,7 @@ def main():
     dispatch.add_handler(CommandHandler("4d", fourdresults))
     dispatch.add_handler(CommandHandler("toto", totoresults))
     dispatch.add_handler(CommandHandler("ridepromos", taxipromos))
+    dispatch.add_handler(CommandHandler("ridepromos2", taxipromos2))
     dispatch.add_handler(CommandHandler("deliverypromos", deliverypromos))
     dispatch.add_handler(CommandHandler("sg_news", get_news_st))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
@@ -557,6 +608,7 @@ def main():
     dispatch.add_handler(CommandHandler("share", share))
     dispatch.add_handler(CommandHandler("admin_list_users_train", list_users_train))
     dispatch.add_handler(MessageHandler(Filters.location, taxi_around_me))
+    dispatch.add_handler(CallbackQueryHandler(call_handler))
 
     # create jobs
     # job_minute = Job(monitor_promo, 900)
