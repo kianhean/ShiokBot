@@ -170,7 +170,8 @@ def deliverypromos(bot, update):
     text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/ubereats.com')
     text_ += "\n<b>:four_leaf_clover:List of Deliveroo Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/deliveroo.com.sg')
-    bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True), parse_mode='HTML')
+    bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
+                    parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
@@ -184,7 +185,8 @@ def airline_promos(bot, update):
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = promo_general.promo_loop(promo_list)
     text_ = ":airplane::airplane::airplane:" + text_
-    bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+    bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
+                    parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
