@@ -16,6 +16,7 @@ from bot import news
 from bot import botan
 from bot import promo_alert
 from bot import train_alert
+from bot import promo_general
 from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction, InlineKeyboardMarkup, InlineKeyboardButton
 from emoji import emojize # emojize(random.choice(text_bot), use_aliases=True)
 from functools import wraps
@@ -97,33 +98,6 @@ def totoresults(bot, update):
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
-def taxipromos(bot, update):
-    """ Get Latest taxipromos Smart """
-    text_bot = ['Let me go and bug Uber/Grab :sunglasses:',
-                'Wait ar... I ask my friend Google :wink: :wink:',
-                'Dont you just hate those targeted promos :weary:',
-                'If cannot work, still friend me ok? :stuck_out_tongue:',
-                'If the discount works remember share share ok :smirk:',
-               ]
-    bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
-                    parse_mode='HTML')
-    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    text_ = "<b>List of Uber Promo Codes (Latest on Top)</b> \n\n"
-    text_ += promo.get_code(1, smart=True)
-    text_ += "\n<b>List of Grab Promo Codes (Latest on Top)</b> \n\n"
-    text_ += promo.get_code(0, smart=True)
-
-    bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
-
-    ad_msg = "Click on /subscribe@shiokbot to subscribe to Uber Promo Codes! Be notified instantly!\n"
-    ad_msg += "Click on /subscribe_train@shiokbot to subscribe to Train Breakdown Alerts! Preview : https://goo.gl/1UrmL6"
-
-    bot.sendMessage(update.message.chat_id,
-                    ad_msg,disable_web_page_preview=True,
-                    parse_mode='HTML')
-
-
 def taxipromos2(bot, update):
     """ Get Latest taxipromos Smart """
     text_bot = ['Let me go and bug Uber/Grab :sunglasses:',
@@ -135,9 +109,9 @@ def taxipromos2(bot, update):
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    text_ = "<b>List of Uber Promo Codes (Latest on Top)</b> \n\n"
+    text_ = "<b>:black_large_square:List of Uber Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(1, smart=True)
-    text_ += "\n<b>List of Grab Promo Codes (Latest on Top)</b> \n\n"
+    text_ += "\n<b>:white_check_mark:List of Grab Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(0, smart=True)
 
     # Update Feature with Inline Keyboard
@@ -145,7 +119,7 @@ def taxipromos2(bot, update):
     custom_keyboard = [[promo_keyboard]]
     reply_markup = InlineKeyboardMarkup(custom_keyboard)
 
-    bot.sendMessage(update.message.chat_id, text=text_,
+    bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
                     parse_mode='HTML', reply_markup=reply_markup)
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
@@ -164,9 +138,9 @@ def call_handler(bot, update):
         bot.answerCallbackQuery(callback_query_id=update.callback_query.id,
                                 text="Refreshing Promo Codes...")
 
-        text_ = "<b>List of Uber Promo Codes (Latest on Top)</b> \n\n"
+        text_ = "<b>:black_large_square:List of Uber Promo Codes (Latest on Top)</b> \n\n"
         text_ += promo.get_code(1, smart=True)
-        text_ += "\n<b>List of Grab Promo Codes (Latest on Top)</b> \n\n"
+        text_ += "\n<b>:white_check_mark:List of Grab Promo Codes (Latest on Top)</b> \n\n"
         text_ += promo.get_code(0, smart=True)
         text_ += "\n :repeat:Last Update: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -191,10 +165,23 @@ def deliverypromos(bot, update):
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    text_ = "<b>List of UberEats Promo Codes (Latest on Top)</b> \n\n"
+    text_ = "<b>:black_large_square:List of UberEats Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/ubereats.com')
-    text_ += "\n<b>List of Deliveroo Promo Codes (Latest on Top)</b> \n\n"
+    text_ += "\n<b>:four_leaf_clover:List of Deliveroo Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/deliveroo.com.sg')
+    bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True), parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, update.message.text)
+
+
+def airline_promos(bot, update):
+    """ Get Latest Airline Promos """
+    promo_list ={'Scoot':'https://www.couponese.com/store/flyscoot.com/',
+                 'Tigerair':'https://www.couponese.com/store/tigerair.com/',
+                 'AirAsia':'https://www.couponese.com/store/airasia.com/',
+                 'Singaporeair':'https://www.couponese.com/store/singaporeair.com/',
+                }
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+    text_ = promo_general.promo_loop(promo_list)
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
@@ -597,7 +584,7 @@ def main():
     dispatch.add_handler(CommandHandler("4d", fourdresults))
     dispatch.add_handler(CommandHandler("toto", totoresults))
     dispatch.add_handler(CommandHandler("ridepromos", taxipromos2))
-    dispatch.add_handler(CommandHandler("ridepromos2", taxipromos2))
+    dispatch.add_handler(CommandHandler("airlinepromos", airline_promos))
     dispatch.add_handler(CommandHandler("deliverypromos", deliverypromos))
     dispatch.add_handler(CommandHandler("sg_news", get_news_st))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
