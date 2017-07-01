@@ -183,6 +183,7 @@ def airline_promos(bot, update):
                 }
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = promo_general.promo_loop(promo_list)
+    text_ = ":airplane::airplane::airplane:" + text_
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 

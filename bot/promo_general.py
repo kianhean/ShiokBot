@@ -59,7 +59,7 @@ def promo_loop(promo_list):
     final = ''
     for key in promo_list.keys():
         final += key + ", "
-    output = '<b>Checking ' + final[:-2] + ' for Promos!</b>\n\n'
+    output = '<b>Checking ' + final[:-2] + ' for Promos!</b>\n'
 
     # Loop thru Websites to Check
     for key, value in promo_list.items():
@@ -68,10 +68,10 @@ def promo_loop(promo_list):
 
         # If there are promo codes
         if len(result) > 0:
-            output += '<b>' + key + '</b>\n\n'
+            output += '\n<b>' + key + '</b>\n\n'
 
             # Loop thru Promo Codes
             for key, value in result.items():
-                output += key + ' | Expires - ' + value[0] + ' | ' + value[1]
+                output += key + ' | Expires - ' + value[0] + ' | ' + value[1] + '\n'
 
     return output
