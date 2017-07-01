@@ -60,19 +60,20 @@ def botan_track(uid, message, name):
 
 """Response
 ridepromos - Help you save money give you uber/grab codes
+deliverypromos - Help you save money with uber/deliveroo codes
+airlinepromos - Help you save money with airline codes
+share - Easily Share Shiokbot with Friends!
 subscribe - Subscribe to Uber Promo Alerts
 subscribe_train - Subscribe to Train breakdown Alerts
-share - Easily Share Shiokbot with Friends!
-deliverypromos - Help you save money with uber/deliveroo codes
-taxi_near_me - Show you taxis near you!
-weather - Report the latest weather lah
 sg_news - Latest Headlines from Singapore
-traffic - Get Latest Traffic Images
 sgd - Latest SGD Rates!
-sibor - Latest Sibor Rates!
+weather - Report the latest weather lah
 psi - Report the latest PSI readings lo
 4d - Give you latest 4d results wor
 toto - Give you latest toto results huat ar!
+traffic - Get Latest Traffic Images
+taxi_near_me - Show you taxis near you!
+sibor - Latest Sibor Rates!
 unsubscribe - Unsubscribe to Uber Promo Alerts :(
 unsubscribe_train - Unsubscribe to Train breakdown Alerts :(
 """

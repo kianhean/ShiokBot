@@ -24,25 +24,34 @@ def get_code_general(url='https://www.couponese.com/store/uber.com/'):
     loop = soup.findAll("article", {"class" : "ov-coupon"})
     output = {}
 
-    for square in loop:
+    if len(loop) >0:
 
-        country = square.findAll("div")[1].findAll("img")[0]['title']
+        for square in loop:
 
-        try:
-            square.findAll("span", {"class" : "ov-expired"})[0]
-            expired = True
-        except:
-            expired = False
+            try:
+                country = square.findAll("div")[1].findAll("img")[0]['title']
+            except:
+                country = 'Singapore'
 
-        if country == 'Singapore' and expired is False:
+            try:
+                square.findAll("span", {"class" : "ov-expired"})[0]
+                expired = True
+            except:
+                expired = False
 
-            code = square.findAll("div")[2].findAll("strong")[0].text
-            desc = square.findAll("div")[3].findAll("div", {"class" : "ov-desc"})[0].text
-            expiry = square.findAll("div")[3].findAll("div", {"class" : "ov-expiry"})[0].text[1:]
+            if country == 'Singapore' and expired is False:
 
-            if bann(desc) is False:
-                output[code] = [expiry, desc]
-    return output
+                code = square.findAll("div")[2].findAll("strong")[0].text
+                desc = square.findAll("div")[3].findAll("div", {"class" : "ov-desc"})[0].text
+                expiry = square.findAll("div")[3].findAll("div", {"class" : "ov-expiry"})[0].text[1:]
+
+                if bann(desc) is False:
+                    output[code] = [expiry, desc]
+        return output
+
+    else:
+
+        return ''
 
 
 def promo_loop(promo_list):
