@@ -219,8 +219,9 @@ def unsubscribe_train(bot, update):
 
 
 def secret_sauce(bot, update):
-    text_ = "https://user-images.githubusercontent.com/5037305/27761010-dbdb1560-5e86-11e7-90b8-38a4e0274d17.jpg"
+    text_ = "Secret HDL Sauce!"
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+    bot.sendPhoto(update.message.chat_id, photo="https://user-images.githubusercontent.com/5037305/27761010-dbdb1560-5e86-11e7-90b8-38a4e0274d17.jpg")
 
 
 def monitor_train(bot, job):
