@@ -218,6 +218,11 @@ def unsubscribe_train(bot, update):
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
+def secret_sauce(bot, update):
+    text_ = "https://user-images.githubusercontent.com/5037305/27761010-dbdb1560-5e86-11e7-90b8-38a4e0274d17.jpg"
+    bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+
+
 def monitor_train(bot, job):
     """ Job to Send Train Message """
     msg = train_alert.get_new_breakdowns_message()
@@ -604,6 +609,7 @@ def main():
     dispatch.add_handler(CommandHandler("admin_clear_db", clear_db))
     dispatch.add_handler(CommandHandler("admin_list_users", list_users))
     dispatch.add_handler(CommandHandler("share", share))
+    dispatch.add_handler(CommandHandler("secret_sauce", secret_sauce))
     dispatch.add_handler(CommandHandler("admin_list_users_train", list_users_train))
     dispatch.add_handler(MessageHandler(Filters.location, taxi_around_me))
     dispatch.add_handler(CallbackQueryHandler(call_handler))
