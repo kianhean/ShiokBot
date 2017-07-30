@@ -72,6 +72,6 @@ def promo_loop(promo_list):
 
             # Loop thru Promo Codes
             for key, value in result.items():
-                output += key + ' | Expires - ' + value[0] + ' | ' + value[1] + '\n'
+                output += '<b>' + key + '</b> | Expires - ' + value[0] + ' | ' + value[1] + '\n'
 
     return output
