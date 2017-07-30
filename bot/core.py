@@ -62,6 +62,7 @@ def botan_track(uid, message, name):
 ridepromos - Help you save money give you uber/grab codes
 deliverypromos - Help you save money with uber/deliveroo codes
 airlinepromos - Help you save money with airline codes
+shoppingpromos - Help you save money with Online Shopping codes
 share - Easily Share Shiokbot with Friends!
 subscribe - Subscribe to Uber Promo Alerts
 subscribe_train - Subscribe to Train breakdown Alerts
@@ -181,6 +182,21 @@ def airline_promos(bot, update):
                  'Tigerair':'https://www.couponese.com/store/tigerair.com/',
                  'AirAsia':'https://www.couponese.com/store/airasia.com/',
                  'Singaporeair':'https://www.couponese.com/store/singaporeair.com/',
+                }
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+    text_ = promo_general.promo_loop(promo_list)
+    text_ = ":airplane::airplane::airplane:" + text_
+    bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
+                    parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, update.message.text)
+
+
+def shopping_promos(bot, update):
+    """ Get Latest Shopping Promos """
+    promo_list ={'Lazada':'https://www.couponese.com/store/lazada.sg/',
+                 'Amazon':'https://www.couponese.com/store/amazon.com.sg/',
+                 'Redmart':'https://www.couponese.com/store/redmart.com/',
+                 'Zalora':'https://www.couponese.com/store/zalora.sg/',
                 }
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = promo_general.promo_loop(promo_list)
@@ -548,6 +564,8 @@ def share(bot, update):
 
     version_text = """
                     Version Log
+                    \n\n <b>Version 3.4 - 30 Jul 2017</b>
+                    \n Online Shopping Promos
                     \n\n <b>Version 3.3 - 28 Jun 2017</b>
                     \n Added Share cmd
                     \n Launch Train Breakdown Notifications
@@ -596,6 +614,7 @@ def main():
     dispatch.add_handler(CommandHandler("ridepromos", taxipromos2))
     dispatch.add_handler(CommandHandler("airlinepromos", airline_promos))
     dispatch.add_handler(CommandHandler("deliverypromos", deliverypromos))
+    dispatch.add_handler(CommandHandler("shoppingpromos", shopping_promos))
     dispatch.add_handler(CommandHandler("sg_news", get_news_st))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
     # dispatch.add_handler(CommandHandler("sti", sti_level))
