@@ -129,7 +129,7 @@ def taxipromos2(bot, update):
     ad_msg += "Click on /subscribe_train@shiokbot to subscribe to Train Breakdown Alerts! Preview : https://goo.gl/1UrmL6"
 
     bot.sendMessage(update.message.chat_id,
-                    ad_msg,disable_web_page_preview=True,
+                    ad_msg, disable_web_page_preview=True,
                     parse_mode='HTML')
 
 
@@ -178,11 +178,11 @@ def deliverypromos(bot, update):
 
 def airline_promos(bot, update):
     """ Get Latest Airline Promos """
-    promo_list ={'Scoot':'https://www.couponese.com/store/flyscoot.com/',
-                 'Tigerair':'https://www.couponese.com/store/tigerair.com/',
-                 'AirAsia':'https://www.couponese.com/store/airasia.com/',
-                 'Singaporeair':'https://www.couponese.com/store/singaporeair.com/',
-                }
+    promo_list = {'Scoot':'https://www.couponese.com/store/flyscoot.com/',
+                  'Tigerair':'https://www.couponese.com/store/tigerair.com/',
+                  'AirAsia':'https://www.couponese.com/store/airasia.com/',
+                  'Singaporeair':'https://www.couponese.com/store/singaporeair.com/',
+                 }
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = promo_general.promo_loop(promo_list)
     text_ = ":airplane::airplane::airplane:" + text_
@@ -193,11 +193,11 @@ def airline_promos(bot, update):
 
 def shopping_promos(bot, update):
     """ Get Latest Shopping Promos """
-    promo_list ={'Lazada':'https://www.couponese.com/store/lazada.sg/',
-                 'Amazon':'https://www.couponese.com/store/amazon.com.sg/',
-                 'Redmart':'https://www.couponese.com/store/redmart.com/',
-                 'Zalora':'https://www.couponese.com/store/zalora.sg/',
-                }
+    promo_list = {'Lazada':'https://www.couponese.com/store/lazada.sg/',
+                  'Amazon':'https://www.couponese.com/store/amazon.com.sg/',
+                  'Redmart':'https://www.couponese.com/store/redmart.com/',
+                  'Zalora':'https://www.couponese.com/store/zalora.sg/',
+                 }
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = promo_general.promo_loop(promo_list)
     text_ = ":handbag::handbag::handbag:" + text_
@@ -237,7 +237,8 @@ def unsubscribe_train(bot, update):
 def secret_sauce(bot, update):
     text_ = "Secret HDL Sauce!"
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
-    bot.sendPhoto(update.message.chat_id, photo="https://user-images.githubusercontent.com/5037305/27761010-dbdb1560-5e86-11e7-90b8-38a4e0274d17.jpg")
+    bot.sendPhoto(update.message.chat_id,
+                  photo="https://user-images.githubusercontent.com/5037305/27761010-dbdb1560-5e86-11e7-90b8-38a4e0274d17.jpg")
 
 
 def monitor_train(bot, job):
