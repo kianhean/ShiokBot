@@ -32,9 +32,9 @@ def get_breakdowns(provider='@SMRT_Singapore'):
 
         # Only record the breakdowns/update
         if provider == '@SMRT_Singapore':
-            detect = '[EWL]' in tweet.text or '[NSL]' in tweet.text
+            detect = '[EWL' in tweet.text or '[NSL' in tweet.text or '[CCL' in tweet.text
         else:
-            detect = 'SORRY' in tweet.text.upper() and ('NEL' in tweet.text.upper() or 'DTL' in tweet.text.upper())
+            detect = ('SORRY' in tweet.text.upper() or 'ADD' in tweet.text.upper() or 'FAULT' in tweet.text.upper()) and ('DOWNTOWN' in tweet.text.upper() or 'NEL' in tweet.text.upper() or 'DTL' in tweet.text.upper())
 
         if detect:
             output = {}
