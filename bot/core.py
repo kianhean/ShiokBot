@@ -496,7 +496,6 @@ def weathernow(bot, update):
     text_bot = ['Let me look out of the window... :dash:',
                 'Why dont you look out of the window instead? :smirk:',
                 'Dont cry for me roti prataaaaa... :scream:',
-                'If there is a flood remember that fat people dont actually float :smiling_imp:',
                 'How do meteorologists say hi? With a heat wave! hahahaha'
                ]
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),

@@ -52,7 +52,7 @@ def taxi_get(send_long, send_lat):
         # Create Map
         key = str(os.environ.get('MAPQUEST'))
 
-        url = "https://beta.mapquestapi.com/staticmap/v5/map?key="+ key + "&locations=" + current_str + \
+        url = "https://www.mapquestapi.com/staticmap/v5/map?key="+ key + "&locations=" + current_str + \
             taxi_str + "&type=dark&scalebar=true|bottom&size=@2x&zoom=16&defaultMarker=circle-start-sm"
 
         return {'count_number': count_number, 'url':url}
