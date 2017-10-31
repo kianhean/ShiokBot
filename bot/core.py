@@ -333,6 +333,9 @@ def push_notification_promo(bot, update, args):
                 print("Error! Sending Message to " + str(user))
         sleep(1.2)
 
+def get_unique_list(seq):
+    # Not order preserving
+    return {}.fromkeys(seq).keys()
 
 @restricted
 def push_notification_msg(bot, update, args):
@@ -349,7 +352,7 @@ def push_notification_msg(bot, update, args):
 
     all_users = [22959774]
     all_users.append([22959774])
-    all_users = list(set(all_users))
+    all_users = get_unique_list(all_users)
 
     to_send = chunks(all_users, 10)
 
