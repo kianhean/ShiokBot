@@ -303,6 +303,57 @@ def list_users(bot, update):
 
 
 @restricted
+def push_notification_promo(bot, update, args):
+    """
+    Send Promo Push Notification!
+    Example
+    <b>SHIOKBOT3</b> | Expires - 02/11/2017 | $3 off uberX and uberPOOL
+    """
+    text_bot = ['Bringing You An Exclusive ShiokBot Promotion! :wink:',
+                ]
+    #all_users = promo_alert.get_all_users()
+    all_users = [22959774]
+    to_send = chunks(all_users, 10)
+
+    for group in to_send:
+        for user in group:
+            try:
+                bot.sendMessage(int(user),
+                                text=emojize(random.choice(text_bot), use_aliases=True),
+                                parse_mode='HTML')
+                bot.sendMessage(int(user), text=args[0], parse_mode='HTML')
+            except:
+                print("Error! Sending Message to " + str(user))
+        sleep(1.2)
+
+
+@restricted
+def push_notification_msg(bot, update, args):
+    """
+    Send Service Notification
+    Example
+    <b>Service Notification</b> \n\n Apologies for the downtime earlier!
+    """
+    #all_users = promo_alert.get_all_users()
+    #all_users.append(train_alert.get_all_users())
+    #all_users = list(set(all_users))
+
+    all_users = [22959774]
+    all_users.append([22959774])
+    all_users = list(set(all_users))
+
+    to_send = chunks(all_users, 10)
+
+    for group in to_send:
+        for user in group:
+            try:
+                bot.sendMessage(int(user), text=args[0], parse_mode='HTML')
+            except:
+                print("Error! Sending Message to " + str(user))
+        sleep(1.2)
+
+
+@restricted
 def list_users_train(bot, update):
     userlist = train_alert.get_all_users()
     msg = str(len(userlist)) + ' Users Subscribed To Train Alerts!'
@@ -628,6 +679,8 @@ def main():
     dispatch.add_handler(CommandHandler("admin_force_promo_check", force_promo_check))
     dispatch.add_handler(CommandHandler("admin_clear_db", clear_db))
     dispatch.add_handler(CommandHandler("admin_list_users", list_users))
+    dispatch.add_handler(CommandHandler("admin_push_notification_promo", push_notification_promo))
+    dispatch.add_handler(CommandHandler("admin_push_notification_msg", push_notification_msg))
     dispatch.add_handler(CommandHandler("share", share))
     dispatch.add_handler(CommandHandler("secret_sauce", secret_sauce))
     dispatch.add_handler(CommandHandler("admin_list_users_train", list_users_train))
