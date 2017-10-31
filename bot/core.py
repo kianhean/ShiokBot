@@ -309,11 +309,18 @@ def push_notification_promo(bot, update, args):
     Example
     <b>SHIOKBOT3</b> | Expires - 02/11/2017 | $3 off uberX and uberPOOL
     """
-    text_bot = ['Bringing You An Exclusive ShiokBot Promotion! :wink:',
+    text_bot = ['An Exclusive Promotion For ShiokBot Users Only! :wink:',
                 ]
+
+    # Compile Sending List
     #all_users = promo_alert.get_all_users()
     all_users = [22959774]
     to_send = chunks(all_users, 10)
+
+    # Compile Words
+    text_promo = ''
+    for word in args:
+        text_promo += word + " "
 
     for group in to_send:
         for user in group:
@@ -321,7 +328,7 @@ def push_notification_promo(bot, update, args):
                 bot.sendMessage(int(user),
                                 text=emojize(random.choice(text_bot), use_aliases=True),
                                 parse_mode='HTML')
-                bot.sendMessage(int(user), text=args[0], parse_mode='HTML')
+                bot.sendMessage(int(user), text=text_promo, parse_mode='HTML')
             except:
                 print("Error! Sending Message to " + str(user))
         sleep(1.2)
@@ -334,6 +341,8 @@ def push_notification_msg(bot, update, args):
     Example
     <b>Service Notification</b> \n\n Apologies for the downtime earlier!
     """
+
+    # Compile Sending List
     #all_users = promo_alert.get_all_users()
     #all_users.append(train_alert.get_all_users())
     #all_users = list(set(all_users))
@@ -344,10 +353,15 @@ def push_notification_msg(bot, update, args):
 
     to_send = chunks(all_users, 10)
 
+    # Compile Words
+    text_promo = ''
+    for word in args:
+        text_promo += word + " "
+
     for group in to_send:
         for user in group:
             try:
-                bot.sendMessage(int(user), text=args[0], parse_mode='HTML')
+                bot.sendMessage(int(user), text=text_promo, parse_mode='HTML')
             except:
                 print("Error! Sending Message to " + str(user))
         sleep(1.2)
