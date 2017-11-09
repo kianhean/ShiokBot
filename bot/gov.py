@@ -25,7 +25,7 @@ def get_latestmap():
         if 'Weather Radar Update' in tweet.text and 'media' in tweet.entities:
             final.append(tweet.entities['media'][0]['media_url_https'])
 
-    return final[-1]
+    return final[0]
 
 
 def connnect_gov_api(url_string):
