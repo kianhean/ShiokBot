@@ -4,6 +4,28 @@ import os
 import json
 import requests
 from haversine import haversine
+import tweepy
+
+consumer_key = str(os.environ.get('consumer_key'))
+consumer_secret = str(os.environ.get('consumer_secret'))
+access_token = str(os.environ.get('access_token'))
+access_token_secret = str(os.environ.get('access_token_secret'))
+
+
+def get_latestmap():
+    """ Get Latest Weather Map """
+    username = "@SGWeatherToday"
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    result = tweepy.API(auth).user_timeline(username, count=15)
+    final = []
+
+    for tweet in result:
+        if 'Weather Radar Update' in tweet.text and 'media' in tweet.entities:
+            final.append(tweet.entities['media'][0]['media_url_https'])
+
+    return final[-1]
 
 
 def connnect_gov_api(url_string):

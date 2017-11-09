@@ -568,8 +568,7 @@ def weathernow(bot, update):
 
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    bot.sendPhoto(update.message.chat_id,
-                  photo='http://wip.weather.gov.sg/wip/pp/rndops/web/ship/gif/rad70.gif')
+    bot.sendPhoto(update.message.chat_id, photo=gov.get_latestmap())
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
