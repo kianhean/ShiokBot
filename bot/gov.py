@@ -1,6 +1,8 @@
 """ SINGAPORE GOV API FUNCTIONS """
 
 import os
+from datetime import datetime
+from datetime import timedelta
 import json
 import requests
 from haversine import haversine
@@ -26,6 +28,30 @@ def get_latestmap():
             final.append(tweet.entities['media'][0]['media_url_https'])
 
     return final[0]
+
+
+def weather_warning_get():
+    """ Get Weather Warning from @SGWeatherToday 
+    If date posted == Todays date
+    
+    """
+    username = "@PUBsingapore"
+    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_token, access_token_secret)
+
+    result = tweepy.API(auth).user_timeline(username, count=30)
+    final = []
+
+    for tweet in result:
+        posted_time = tweet.created_at + timedelta(hours=8)
+        if 'NEA:' in tweet.text and '#sgflood' in tweet.text and posted_time.date() == datetime.today().date():
+            final.append(tweet.text)
+
+    if len(final) == 0:
+        return "No Warnings!"
+    else:
+        text_ = "<b>Heavy Rain Warning</b>\n"
+        return text_ + final[0].replace("#sgflood", "")
 
 
 def connnect_gov_api(url_string):

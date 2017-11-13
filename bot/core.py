@@ -565,6 +565,11 @@ def weathernow(bot, update):
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     final_string = gov.weathernow_get()
+    warning = gov.weather_warning_get()
+
+    if warning != "No Warnings!":
+        bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+        bot.sendMessage(update.message.chat_id, text=warning, parse_mode='HTML')
 
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
