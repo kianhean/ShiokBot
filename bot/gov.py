@@ -54,7 +54,10 @@ def weather_warning_get():
 
         final_text = ""
         for _ in final:
-            final_text += _ + "\n"
+            _date = _.split('Issued')[1].replace("hours.","").replace(":","") + "H"
+            _ = _.split('Issued')[0]
+            _ = _.replace('NEA', '[NEA@' + _date.replace(" ","") + ']')
+            final_text += _.split('Issued')[0] + "\n"
         return text_ + final_text.replace("#sgflood", "")
 
 
