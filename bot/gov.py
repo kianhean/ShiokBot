@@ -31,7 +31,7 @@ def get_latestmap():
 
 
 def weather_warning_get():
-    """ Get Weather Warning from @SGWeatherToday 
+    """ Get Weather Warning from @PUBsingapore 
     If date posted == Todays date
     
     """
@@ -50,8 +50,12 @@ def weather_warning_get():
     if len(final) == 0:
         return "No Warnings!"
     else:
-        text_ = "<b>Heavy Rain Warning</b>\n"
-        return text_ + final[0].replace("#sgflood", "")
+        text_ = "<b>Heavy Rain Warnings Today</b>\n"
+
+        final_text = ""
+        for _ in final:
+            final_text += _ + "\n"
+        return text_ + final_text.replace("#sgflood", "")
 
 
 def connnect_gov_api(url_string):
