@@ -218,7 +218,7 @@ def hotel_promos(bot, update):
                  }
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = promo_general.promo_loop(promo_list)
-    text_ = ":hotel::hotel::hotel:" + text_
+    text_ = ":office::office::office:" + text_
     bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
                     parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
