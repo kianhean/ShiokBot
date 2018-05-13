@@ -14,6 +14,15 @@ access_token = str(os.environ.get('access_token'))
 access_token_secret = str(os.environ.get('access_token_secret'))
 
 
+def get_latestmap_website():
+    """ Generate Map URL """
+    base = 'http://backend.sgweathertoday.com/output/'
+    tm = datetime.now() - timedelta(minutes=10)
+    tm -= timedelta(minutes=tm.minute % 10,
+                            seconds=tm.second,
+                            microseconds=tm.microsecond)
+    return base + tm.strftime("%Y%m%d%H%M") + ".png"
+
 def get_latestmap():
     """ Get Latest Weather Map """
 
@@ -34,7 +43,7 @@ def get_latestmap():
 def weather_warning_get():
     """ Get Weather Warning from @PUBsingapore 
     If date posted == Todays date
-    
+
     """
     username = "@PUBsingapore"
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
@@ -55,9 +64,10 @@ def weather_warning_get():
 
         final_text = ""
         for _ in final:
-            _date = _.split('Issued')[1].replace("hours.","").replace(":","") + "H"
+            _date = _.split('Issued')[1].replace(
+                "hours.", "").replace(":", "") + "H"
             _ = _.split('Issued')[0]
-            _ = _.replace('NEA', '[NEA@' + _date.replace(" ","") + ']')
+            _ = _.replace('NEA', '[NEA@' + _date.replace(" ", "") + ']')
             final_text += _.split('Issued')[0] + "\n"
         return text_ + final_text.replace("#sgflood", "")
 
@@ -73,7 +83,8 @@ def connnect_gov_api(url_string):
 
 def taxi_get(send_long, send_lat):
     """ Get Taxi Updates """
-    connnect_gov_api_r = connnect_gov_api('https://api.data.gov.sg/v1/transport/taxi-availability')
+    connnect_gov_api_r = connnect_gov_api(
+        'https://api.data.gov.sg/v1/transport/taxi-availability')
     data = json.loads(connnect_gov_api_r.text)
 
     # Create inputs
@@ -108,20 +119,21 @@ def taxi_get(send_long, send_lat):
         # Create Map
         key = str(os.environ.get('MAPQUEST'))
 
-        url = "https://www.mapquestapi.com/staticmap/v5/map?key="+ key + "&locations=" + current_str + \
+        url = "https://www.mapquestapi.com/staticmap/v5/map?key=" + key + "&locations=" + current_str + \
             taxi_str + "&type=dark&scalebar=true|bottom&size=@2x&zoom=16&defaultMarker=circle-start-sm"
 
-        return {'count_number': count_number, 'url':url}
+        return {'count_number': count_number, 'url': url}
 
     else:
 
-        return {'count_number': count_number, 'url':None}
+        return {'count_number': count_number, 'url': None}
 
 
 def traffic_get(location):
     """ Get Traffic Updates """
 
-    connnect_gov_api_r = connnect_gov_api('https://api.data.gov.sg/v1/transport/traffic-images')
+    connnect_gov_api_r = connnect_gov_api(
+        'https://api.data.gov.sg/v1/transport/traffic-images')
     data = json.loads(connnect_gov_api_r.text)
 
     if len(location) == 0:
@@ -130,9 +142,9 @@ def traffic_get(location):
         location = str(location).upper()
 
     if location == 'TUAS':
-        target_ = '4703' # Tuas
+        target_ = '4703'  # Tuas
     elif location == 'WOODLANDS':
-        target_ = '2701' # Woodlands
+        target_ = '2701'  # Woodlands
     else:
         return 'Sorry for now only understooded either Tuas or Woodlands!'
 
@@ -146,14 +158,15 @@ def traffic_get(location):
     final_string = "The " + location.title() + " Checkpoint Situation at " + \
                    timestampp + " is like that la \n\n"
 
-    final_string = final_string + '<a href="' +img_url+ '">Traffic Image!</a>'
+    final_string = final_string + '<a href="' + img_url + '">Traffic Image!</a>'
     return final_string
 
 
 def psi3hour_get():
     """ Get Latest Singapore PSI """
 
-    connnect_gov_api_r = connnect_gov_api('https://api.data.gov.sg/v1/environment/psi')
+    connnect_gov_api_r = connnect_gov_api(
+        'https://api.data.gov.sg/v1/environment/psi')
     data = json.loads(connnect_gov_api_r.text)
 
     # Load data into Dictionary and get reading
@@ -161,11 +174,12 @@ def psi3hour_get():
     timestampp = data['items'][0]['timestamp'][:19].replace("T", " ")
 
     # Create Response
-    final_string = "<b>The 24 hourly PSI Reading at " + timestampp + " is actually</b> \n\n"
+    final_string = "<b>The 24 hourly PSI Reading at " + \
+        timestampp + " is actually</b> \n\n"
 
     for key in sorted(hourly):
-        final_string = final_string + (str(key) + " " + \
-                                        str(hourly[key]) + "\n")
+        final_string = final_string + (str(key) + " " +
+                                       str(hourly[key]) + "\n")
     return final_string + "\nHotspots at our neighbours there are like that!"
 
 
@@ -182,19 +196,21 @@ def weathernow_get():
 
     # Create Response
     final_string = "In General the weather will be looking like " + forecast + \
-                    " with a high of " + str(high_) + \
-                    "°C and a low of " + str(low_) + "°C\n\n<b>Forecast Next 12 Hrs</b>\n\n"
+        " with a high of " + str(high_) + \
+        "°C and a low of " + \
+        str(low_) + "°C\n\n<b>Forecast Next 12 Hrs</b>\n\n"
 
     # Add 12 hr cast
     nowcast = data['items'][0]['periods'][0]['regions']
     for key in sorted(nowcast):
-        final_string = final_string + (str(key) + \
-                                        " - " + str(nowcast[key]) + "\n")
+        final_string = final_string + (str(key) +
+                                       " - " + str(nowcast[key]) + "\n")
     final_string = final_string + "\n<b>Forecast Tomorrow</b>\n\n"
 
     # Add 24 hr cast
     nowcast = data['items'][0]['periods'][1]['regions']
     for key in sorted(nowcast):
-        final_string = final_string + (str(key) + " - " + str(nowcast[key]) + "\n")
+        final_string = final_string + \
+            (str(key) + " - " + str(nowcast[key]) + "\n")
 
     return final_string + "\nShow you radarrrr somemore! Got colour means raining!"

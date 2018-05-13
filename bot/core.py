@@ -605,7 +605,7 @@ def weathernow(bot, update):
 
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    bot.sendPhoto(update.message.chat_id, photo=gov.get_latestmap())
+    bot.sendPhoto(update.message.chat_id, photo=gov.get_latestmap_website())
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
