@@ -111,7 +111,7 @@ def taxipromos2(bot, update):
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    text_ = "<b>:blue_large_circle:List of ComfortDelgro Promo Codes (Latest on Top)</b> \n\n"
+    text_ = "<b>:large_blue_circle:List of ComfortDelgro Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(1, smart=True)
     text_ += "\n<b>:white_check_mark:List of Grab Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(0, smart=True)
@@ -636,6 +636,8 @@ def share(bot, update):
 
     version_text = """
                     Version Log
+                    \n\n <b>Version 3.5 - 13 May 2018</b>
+                    \n Remove Uber, Add more Delivery Providers
                     \n\n <b>Version 3.4 - 30 Jul 2017</b>
                     \n Online Shopping Promos
                     \n\n <b>Version 3.3 - 28 Jun 2017</b>
