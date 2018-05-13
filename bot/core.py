@@ -59,8 +59,9 @@ def botan_track(uid, message, name):
     )
 
 """Response
-ridepromos - Help you save money give you uber/grab codes
-deliverypromos - Help you save money with uber/deliveroo codes
+ridepromos - Help you save money give you grab/comfort codes
+train_timing_changes - Updates to MRT timing due to mantainance works
+deliverypromos - Help you save money with uber/deliveroo/honestbee/foodpanda codes
 airlinepromos - Help you save money with airline codes
 shoppingpromos - Help you save money with Online Shopping codes
 share - Easily Share Shiokbot with Friends!
@@ -158,6 +159,19 @@ def call_handler(bot, update):
             parse_mode='HTML',
             reply_markup=reply_markup
         )
+
+def train_timing_changes(bot, update):
+    """ Get Latest taxipromos Smart """
+    text_bot = ['Checking for Train Schedule Changes :sunglasses:',
+               ]
+    bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
+                    parse_mode='HTML')
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+    text_ = "<b>:train2:Changes to train service hours</b> \n\n"
+    text_ += train_alert.train_operating_changes()
+    bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
+                    parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, update.message.text)
 
 
 def deliverypromos(bot, update):
@@ -689,6 +703,7 @@ def main():
     dispatch.add_handler(CommandHandler("airlinepromos", airline_promos))
     dispatch.add_handler(CommandHandler("deliverypromos", deliverypromos))
     dispatch.add_handler(CommandHandler("shoppingpromos", shopping_promos))
+    dispatch.add_handler(CommandHandler("train_timing_changes", train_timing_changes))
     dispatch.add_handler(CommandHandler("sg_news", get_news_st))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
     # dispatch.add_handler(CommandHandler("sti", sti_level))

@@ -1,7 +1,19 @@
-import tweepy
-from datetime import datetime, timedelta
-import dataset
 import os
+import re
+from datetime import datetime, timedelta
+from urllib.request import urlopen
+
+from bs4 import BeautifulSoup
+
+import dataset
+import tweepy
+
+TAG_RE = re.compile(r'<[^>]+>')
+
+
+def remove_tags(text):
+    return TAG_RE.sub('', text)
+
 
 # Set Keys
 database_url = str(os.environ.get('DATABASE_URL'))
@@ -10,6 +22,29 @@ consumer_key = str(os.environ.get('consumer_key'))
 consumer_secret = str(os.environ.get('consumer_secret'))
 access_token = str(os.environ.get('access_token'))
 access_token_secret = str(os.environ.get('access_token_secret'))
+
+
+def train_operating_changes():
+
+    try:
+        # Connect to Source
+        url = 'http://www.sgtrains.com/guide-traintiming.html'
+        data = urlopen(url)
+        soup = BeautifulSoup(data, 'html.parser')
+
+        # Find latest Result
+        container = soup.findAll("div", {"class": "preliminary"})[0]
+        text = container.findAll("div", {"class": "col-xs-12 col-md-12"})[0]
+        text = text.findAll("p")
+        final = ''
+        for para in text[1:]:
+            final += str(para).replace('<a href="', '').replace('.pdf">',
+                                                                '.pdf ').replace('&gt;', '\n\n') + "\n\n"
+        final = final[:-2]
+
+        return remove_tags(final)
+    except:
+        return "No Alterations to Train Services! Yay!"
 
 
 def get_breakdowns(provider='@SMRT_Singapore'):
@@ -34,13 +69,15 @@ def get_breakdowns(provider='@SMRT_Singapore'):
         if provider == '@SMRT_Singapore':
             detect = '[EWL' in tweet.text or '[NSL' in tweet.text or '[CCL' in tweet.text
         else:
-            detect = ('SORRY' in tweet.text.upper() or 'ADD' in tweet.text.upper() or 'FAULT' in tweet.text.upper()) and ('DOWNTOWN' in tweet.text.upper() or 'NEL' in tweet.text.upper() or 'DTL' in tweet.text.upper())
+            detect = ('SORRY' in tweet.text.upper() or 'ADD' in tweet.text.upper() or 'FAULT' in tweet.text.upper()) and (
+                'DOWNTOWN' in tweet.text.upper() or 'NEL' in tweet.text.upper() or 'DTL' in tweet.text.upper())
 
         if detect:
             output = {}
-            created_at = (tweet.created_at + timedelta(hours=8)).strftime('%Y %b %d, at %I %M %S %p')
-            output[tweet.id_str] = {'tweet':tweet.text,
-                                    'created_at':created_at}
+            created_at = (tweet.created_at + timedelta(hours=8)
+                          ).strftime('%Y %b %d, at %I %M %S %p')
+            output[tweet.id_str] = {'tweet': tweet.text,
+                                    'created_at': created_at}
             final.update(output)
 
     return final
