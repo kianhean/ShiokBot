@@ -63,6 +63,7 @@ ridepromos - Help you save money give you grab/comfort codes
 train_timing_changes - Updates to MRT timing due to mantainance works
 deliverypromos - Help you save money with uber/deliveroo/honestbee/foodpanda codes
 airlinepromos - Help you save money with airline codes
+hotelpromos - Help you save money with hotel codes
 shoppingpromos - Help you save money with Online Shopping codes
 share - Easily Share Shiokbot with Friends!
 subscribe - Subscribe to Uber Promo Alerts
@@ -200,6 +201,7 @@ def airline_promos(bot, update):
                   'Tigerair':'https://www.couponese.com/store/tigerair.com/',
                   'AirAsia':'https://www.couponese.com/store/airasia.com/',
                   'Singaporeair':'https://www.couponese.com/store/singaporeair.com/',
+                  'CheapTickers':'https://www.couponese.com/store/cheaptickets.sg/'
                  }
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = promo_general.promo_loop(promo_list)
@@ -208,6 +210,18 @@ def airline_promos(bot, update):
                     parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
 
+def hotel_promos(bot, update):
+    """ Get Latest Hotel Promos """
+    promo_list = {'Zuji':'https://www.couponese.com/store/zuji.com.sg/',
+                  'Hotels.com':'https://www.couponese.com/store/hotels.com/',
+                  'Expedia':'https://www.couponese.com/store/expedia.com.sg/'
+                 }
+    bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+    text_ = promo_general.promo_loop(promo_list)
+    text_ = ":hotel::hotel::hotel:" + text_
+    bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
+                    parse_mode='HTML')
+    botan_track(update.message.from_user.id, update.message, update.message.text)
 
 def shopping_promos(bot, update):
     """ Get Latest Shopping Promos """
@@ -652,6 +666,7 @@ def share(bot, update):
                     Version Log
                     \n\n <b>Version 3.5 - 13 May 2018</b>
                     \n Remove Uber, Add more Delivery Providers
+                    \n Added Train Schedule Changes
                     \n\n <b>Version 3.4 - 30 Jul 2017</b>
                     \n Online Shopping Promos
                     \n\n <b>Version 3.3 - 28 Jun 2017</b>
@@ -708,6 +723,7 @@ def main():
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
     # dispatch.add_handler(CommandHandler("sti", sti_level))
     dispatch.add_handler(CommandHandler("sgd", sgd_level))
+    dispatch.add_handler(CommandHandler("hotel_promos", hotel_promos))
     dispatch.add_handler(CommandHandler("sibor", sibor_level))
     dispatch.add_handler(CommandHandler("taxi_near_me", taxi_around_me))
     dispatch.add_handler(CommandHandler("subscribe", subscribe))
