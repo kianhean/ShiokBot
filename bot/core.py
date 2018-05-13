@@ -102,7 +102,7 @@ def totoresults(bot, update):
 
 def taxipromos2(bot, update):
     """ Get Latest taxipromos Smart """
-    text_bot = ['Let me go and bug Uber/Grab :sunglasses:',
+    text_bot = ['Let me go and bug Grab :sunglasses:',
                 'Wait ar... I ask my friend Google :wink: :wink:',
                 'Dont you just hate those targeted promos :weary:',
                 'If cannot work, still friend me ok? :stuck_out_tongue:',
@@ -111,7 +111,7 @@ def taxipromos2(bot, update):
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    text_ = "<b>:black_large_square:List of Uber Promo Codes (Latest on Top)</b> \n\n"
+    text_ = "<b>:blue_large_circle:List of ComfortDelgro Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(1, smart=True)
     text_ += "\n<b>:white_check_mark:List of Grab Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code(0, smart=True)
@@ -171,6 +171,10 @@ def deliverypromos(bot, update):
     text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/ubereats.com')
     text_ += "\n<b>:four_leaf_clover:List of Deliveroo Promo Codes (Latest on Top)</b> \n\n"
     text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/deliveroo.com.sg')
+    text_ += "\n<b>:honeybee:List of HonestBee Promo Codes (Latest on Top)</b> \n\n"
+    text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/honestbee.sg')
+    text_ += "\n<b>:panda_face:List of FoodPanda Promo Codes (Latest on Top)</b> \n\n"
+    text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/foodpanda.sg')
     bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
                     parse_mode='HTML')
     botan_track(update.message.from_user.id, update.message, update.message.text)
@@ -708,7 +712,8 @@ def main():
     # job_minute = Job(monitor_promo, 900)
     # j.put(job_minute, next_t=60)
 
-    j.run_repeating(monitor_promo, 600, 15)
+    # Uber Discontinued
+    #j.run_repeating(monitor_promo, 600, 15)
     j.run_repeating(monitor_train, 300, 60)
 
     # log all errors
