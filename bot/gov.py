@@ -16,6 +16,9 @@ access_token_secret = str(os.environ.get('access_token_secret'))
 
 def get_latestmap():
     """ Get Latest Weather Map """
+
+    return "http://www.nea.gov.sg/data/xml/dt/rainlocation_map.gif"
+
     username = "@SGWeatherToday"
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
