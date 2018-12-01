@@ -113,10 +113,14 @@ def taxipromos2(bot, update):
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-    text_ = "<b>:large_blue_circle:List of ComfortDelgro Promo Codes (Latest on Top)</b> \n\n"
-    text_ += promo.get_code(1, smart=True)
-    text_ += "\n<b>:white_check_mark:List of Grab Promo Codes (Latest on Top)</b> \n\n"
-    text_ += promo.get_code(0, smart=True)
+    try:
+        text_ = "<b>:large_blue_circle:List of ComfortDelgro Promo Codes (Latest on Top)</b> \n\n"
+        text_ += promo.get_code(1, smart=True)
+    try:
+        text_ += "\n<b>:white_check_mark:List of Grab Promo Codes (Latest on Top)</b> \n\n"
+        text_ += promo.get_code(0, smart=True)
+    if text_ == '':
+        text_ = 'No promo codes :('
 
     # Update Feature with Inline Keyboard
     promo_keyboard = InlineKeyboardButton(text="Update!", callback_data="update_taxi")
