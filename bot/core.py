@@ -125,9 +125,14 @@ def taxipromos2(bot, update):
     try:
         text_ = "<b>:large_blue_circle:List of ComfortDelgro Promo Codes (Latest on Top)</b> \n\n"
         text_ += promo.get_code(1, smart=True)
+    except:
+        pass
+
     try:
         text_ += "\n<b>:white_check_mark:List of Grab Promo Codes (Latest on Top)</b> \n\n"
         text_ += promo.get_code(0, smart=True)
+    except:
+        pass
 
     if text_ == '':
         text_ = 'No promo codes :('
