@@ -1,5 +1,4 @@
-﻿""" Core Bot Functions """
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
 
@@ -18,13 +17,14 @@ from bot import promo_alert
 from bot import train_alert
 from bot import promo_general
 from telegram import ReplyKeyboardMarkup, KeyboardButton, ChatAction, InlineKeyboardMarkup, InlineKeyboardButton
-from emoji import emojize # emojize(random.choice(text_bot), use_aliases=True)
+from emoji import emojize  # emojize(random.choice(text_bot), use_aliases=True)
 from functools import wraps
 from time import sleep
 import datetime
 
 
 LIST_OF_ADMINS = [22959774]
+
 
 def restricted(func):
     @wraps(func)
@@ -50,6 +50,8 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 # Enable stats
+
+
 def botan_track(uid, message, name):
     botan.track(
         token=str(os.environ.get('STATS_API')),
@@ -57,6 +59,7 @@ def botan_track(uid, message, name):
         message=message.to_dict(),
         name=name
     )
+
 
 """Response
 ridepromos - Help you save money give you grab/comfort codes
@@ -86,20 +89,25 @@ REF
 https://github.com/python-telegram-bot/python-telegram-bot/wiki/Code-snippets#post-a-photo-from-a-url
 """
 
+
 def fourdresults(bot, update):
     """ Send results from 4D """
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = draw.FourD()
-    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    bot.sendMessage(update.message.chat_id,
+                    text=final_string, parse_mode='HTML')
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def totoresults(bot, update):
     """ Send results from TOTO """
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = draw.TOTO()
-    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    bot.sendMessage(update.message.chat_id,
+                    text=final_string, parse_mode='HTML')
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def taxipromos2(bot, update):
@@ -109,27 +117,31 @@ def taxipromos2(bot, update):
                 'Dont you just hate those targeted promos :weary:',
                 'If cannot work, still friend me ok? :stuck_out_tongue:',
                 'If the discount works remember share share ok :smirk:',
-               ]
+                ]
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+
     try:
         text_ = "<b>:large_blue_circle:List of ComfortDelgro Promo Codes (Latest on Top)</b> \n\n"
         text_ += promo.get_code(1, smart=True)
     try:
         text_ += "\n<b>:white_check_mark:List of Grab Promo Codes (Latest on Top)</b> \n\n"
         text_ += promo.get_code(0, smart=True)
+
     if text_ == '':
         text_ = 'No promo codes :('
 
     # Update Feature with Inline Keyboard
-    promo_keyboard = InlineKeyboardButton(text="Update!", callback_data="update_taxi")
+    promo_keyboard = InlineKeyboardButton(
+        text="Update!", callback_data="update_taxi")
     custom_keyboard = [[promo_keyboard]]
     reply_markup = InlineKeyboardMarkup(custom_keyboard)
 
     bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
                     parse_mode='HTML', reply_markup=reply_markup)
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
     ad_msg = "Click on /subscribe@shiokbot to subscribe to Uber Promo Codes! Be notified instantly!\n"
     ad_msg += "Click on /subscribe_train@shiokbot to subscribe to Train Breakdown Alerts! Preview : https://goo.gl/1UrmL6"
@@ -150,10 +162,12 @@ def call_handler(bot, update):
         text_ += promo.get_code(1, smart=True)
         text_ += "\n<b>:white_check_mark:List of Grab Promo Codes (Latest on Top)</b> \n\n"
         text_ += promo.get_code(0, smart=True)
-        text_ += "\n :repeat:Last Update: " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        text_ += "\n :repeat:Last Update: " + \
+            datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         # Update Feature with Inline Keyboard
-        promo_keyboard = InlineKeyboardButton(text="Update!", callback_data="update_taxi")
+        promo_keyboard = InlineKeyboardButton(
+            text="Update!", callback_data="update_taxi")
         custom_keyboard = [[promo_keyboard]]
         reply_markup = InlineKeyboardMarkup(custom_keyboard)
 
@@ -165,10 +179,11 @@ def call_handler(bot, update):
             reply_markup=reply_markup
         )
 
+
 def train_timing_changes(bot, update):
     """ Get Latest taxipromos Smart """
     text_bot = ['Checking for Train Schedule Changes :sunglasses:',
-               ]
+                ]
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
@@ -176,98 +191,113 @@ def train_timing_changes(bot, update):
     text_ += train_alert.train_operating_changes()
     bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
                     parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def deliverypromos(bot, update):
     """ Get Latest taxipromos Smart """
     text_bot = ['Let me go and bug Uber/Deliveroo :sunglasses:',
-               ]
+                ]
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = "<b>:black_large_square:List of UberEats Promo Codes (Latest on Top)</b> \n\n"
-    text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/ubereats.com')
+    text_ += promo.get_code_normal(
+        'https://www.cheapcheaplah.com/deals/ubereats.com')
     text_ += "\n<b>:four_leaf_clover:List of Deliveroo Promo Codes (Latest on Top)</b> \n\n"
-    text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/deliveroo.com.sg')
+    text_ += promo.get_code_normal(
+        'https://www.cheapcheaplah.com/deals/deliveroo.com.sg')
     text_ += "\n<b>:honeybee:List of HonestBee Promo Codes (Latest on Top)</b> \n\n"
-    text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/honestbee.sg')
+    text_ += promo.get_code_normal(
+        'https://www.cheapcheaplah.com/deals/honestbee.sg')
     text_ += "\n<b>:panda_face:List of FoodPanda Promo Codes (Latest on Top)</b> \n\n"
-    text_ += promo.get_code_normal('https://www.cheapcheaplah.com/deals/foodpanda.sg')
+    text_ += promo.get_code_normal(
+        'https://www.cheapcheaplah.com/deals/foodpanda.sg')
     bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
                     parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def airline_promos(bot, update):
     """ Get Latest Airline Promos """
-    promo_list = {'Scoot':'https://www.couponese.com/store/flyscoot.com/',
-                  'Tigerair':'https://www.couponese.com/store/tigerair.com/',
-                  'AirAsia':'https://www.couponese.com/store/airasia.com/',
-                  'Singaporeair':'https://www.couponese.com/store/singaporeair.com/',
-                  'CheapTickers':'https://www.couponese.com/store/cheaptickets.sg/'
-                 }
+    promo_list = {'Scoot': 'https://www.couponese.com/store/flyscoot.com/',
+                  'Tigerair': 'https://www.couponese.com/store/tigerair.com/',
+                  'AirAsia': 'https://www.couponese.com/store/airasia.com/',
+                  'Singaporeair': 'https://www.couponese.com/store/singaporeair.com/',
+                  'CheapTickers': 'https://www.couponese.com/store/cheaptickets.sg/'
+                  }
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = promo_general.promo_loop(promo_list)
     text_ = ":airplane::airplane::airplane:" + text_
     bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
                     parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
+
 
 def hotel_promos(bot, update):
     """ Get Latest Hotel Promos """
-    promo_list = {'Zuji':'https://www.couponese.com/store/zuji.com.sg/',
-                  'Hotels.com':'https://www.couponese.com/store/hotels.com/',
-                  'Expedia':'https://www.couponese.com/store/expedia.com.sg/'
-                 }
+    promo_list = {'Zuji': 'https://www.couponese.com/store/zuji.com.sg/',
+                  'Hotels.com': 'https://www.couponese.com/store/hotels.com/',
+                  'Expedia': 'https://www.couponese.com/store/expedia.com.sg/'
+                  }
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = promo_general.promo_loop(promo_list)
     text_ = ":office::office::office:" + text_
     bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
                     parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
+
 
 def shopping_promos(bot, update):
     """ Get Latest Shopping Promos """
-    promo_list = {'Lazada':'https://www.couponese.com/store/lazada.sg/',
-                  'Amazon':'https://www.couponese.com/store/amazon.com.sg/',
-                  'Redmart':'https://www.couponese.com/store/redmart.com/',
-                  'Zalora':'https://www.couponese.com/store/zalora.sg/',
-                 }
+    promo_list = {'Lazada': 'https://www.couponese.com/store/lazada.sg/',
+                  'Amazon': 'https://www.couponese.com/store/amazon.com.sg/',
+                  'Redmart': 'https://www.couponese.com/store/redmart.com/',
+                  'Zalora': 'https://www.couponese.com/store/zalora.sg/',
+                  }
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     text_ = promo_general.promo_loop(promo_list)
     text_ = ":handbag::handbag::handbag:" + text_
     bot.sendMessage(update.message.chat_id, text=emojize(text_, use_aliases=True),
                     parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def subscribe(bot, update):
     """ Subscribe Latest taxipromos Smart """
     text_ = promo_alert.subscribe(str(update.message.chat_id))
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def unsubscribe(bot, update):
     """ Unsub Latest taxipromos Smart """
     text_ = promo_alert.unsubscribe(str(update.message.chat_id))
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def subscribe_train(bot, update):
     """ Subscribe Latest train alerts """
     text_ = train_alert.subscribe(str(update.message.chat_id))
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def unsubscribe_train(bot, update):
     """ Unsub Latest train alerts """
     text_ = train_alert.unsubscribe(str(update.message.chat_id))
     bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def secret_sauce(bot, update):
@@ -308,7 +338,7 @@ def monitor_promo(bot, job):
                     'I found this promo code while I was in my ActiveWear! :stuck_out_tongue:',
                     'Quick apply the code! Later run out dont cry :sunglasses:',
                     'Breaking News Brought to you by ShiokBot!',
-                   ]
+                    ]
         all_users = promo_alert.get_all_users()
         to_send = chunks(all_users, 10)
 
@@ -316,7 +346,8 @@ def monitor_promo(bot, job):
             for user in group:
                 try:
                     bot.sendMessage(int(user),
-                                    text=emojize(random.choice(text_bot), use_aliases=True),
+                                    text=emojize(random.choice(
+                                        text_bot), use_aliases=True),
                                     parse_mode='HTML')
                     bot.sendMessage(int(user), text=msg, parse_mode='HTML')
                 except:
@@ -327,7 +358,8 @@ def monitor_promo(bot, job):
 @restricted
 def clear_db(bot, update):
     train_alert.clear_db()
-    bot.sendMessage(22959774, text='Train Database Cleared!', parse_mode='HTML')
+    bot.sendMessage(22959774, text='Train Database Cleared!',
+                    parse_mode='HTML')
 
 
 @restricted
@@ -362,12 +394,14 @@ def push_notification_promo(bot, update, args):
         for user in group:
             try:
                 bot.sendMessage(int(user),
-                                text=emojize(random.choice(text_bot), use_aliases=True),
+                                text=emojize(random.choice(
+                                    text_bot), use_aliases=True),
                                 parse_mode='HTML')
                 bot.sendMessage(int(user), text=text_promo, parse_mode='HTML')
             except:
                 print("Error! Sending Message to " + str(user))
         sleep(1.2)
+
 
 @restricted
 def push_notification_msg(bot, update, args):
@@ -379,7 +413,7 @@ def push_notification_msg(bot, update, args):
 
     # Compile Sending List
     #all_users = promo_alert.get_all_users()
-    #all_users.append(train_alert.get_all_users())
+    # all_users.append(train_alert.get_all_users())
     #all_users = list(set(all_users))
 
     all_users = [22959774]
@@ -434,7 +468,7 @@ def taxi_around_me(bot, update):
                 'Get ready to run :running:',
                 'I find where they hiding now :eyes: :eyes:',
                 'Usually if i want to go somewhere i let my fingers do the walking :v:'
-               ]
+                ]
 
     if chat_type == 'private':
 
@@ -448,7 +482,8 @@ def taxi_around_me(bot, update):
             success_status = True
         except:
             # If have not sent the message
-            location_keyboard = KeyboardButton(text="/taxi_near_me", request_location=True)
+            location_keyboard = KeyboardButton(
+                text="/taxi_near_me", request_location=True)
             custom_keyboard = [[location_keyboard]]
             reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True,
                                                selective=True)
@@ -457,30 +492,37 @@ def taxi_around_me(bot, update):
 
         if success_status:
             bot.sendMessage(update.message.chat_id,
-                            text=emojize(random.choice(text_bot), use_aliases=True),
+                            text=emojize(random.choice(
+                                text_bot), use_aliases=True),
                             parse_mode='HTML')
-            bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+            bot.sendChatAction(update.message.chat_id,
+                               action=ChatAction.TYPING)
 
             taxi = gov.taxi_get(send_long, send_lat)
             text_ = "There are a total of " + str(taxi['count_number']) + \
-            " Available Taxis (not uber/grab) in a 200M radius Around you!"
-            bot.sendMessage(update.message.chat_id, text=text_, parse_mode='HTML')
+                " Available Taxis (not uber/grab) in a 200M radius Around you!"
+            bot.sendMessage(update.message.chat_id,
+                            text=text_, parse_mode='HTML')
 
             if taxi['count_number'] > 0:
-                bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
+                bot.sendChatAction(update.message.chat_id,
+                                   action=ChatAction.TYPING)
                 bot.sendPhoto(update.message.chat_id, photo=taxi['url'])
                 bot.sendMessage(update.message.chat_id, text='Run my child, run...',
                                 parse_mode='HTML')
             else:
                 bot.sendMessage(update.message.chat_id, text='No taxi!?! Why u at ulu place?',
                                 parse_mode='HTML')
-            botan_track(update.message.from_user.id, update.message, update.message.text)
+            botan_track(update.message.from_user.id,
+                        update.message, update.message.text)
 
     else:
         # If in group chat... send PM
-        location_keyboard = KeyboardButton(text="/taxi_near_me", request_location=True)
+        location_keyboard = KeyboardButton(
+            text="/taxi_near_me", request_location=True)
         custom_keyboard = [[location_keyboard]]
-        reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True, selective=True)
+        reply_markup = ReplyKeyboardMarkup(
+            custom_keyboard, one_time_keyboard=True, selective=True)
         pm_try = False
 
         try:
@@ -502,8 +544,10 @@ def taxi_around_me(bot, update):
 
         if pm_try:
             message_ = senderusername + \
-            ", I sent you a love note. Location can only be shared in private"
-            bot.sendMessage(update.message.chat_id, text=message_, parse_mode='HTML')
+                ", I sent you a love note. Location can only be shared in private"
+            bot.sendMessage(update.message.chat_id,
+                            text=message_, parse_mode='HTML')
+
 
 def traffic(bot, update, args):
     """ Get Traffic Updates """
@@ -511,16 +555,20 @@ def traffic(bot, update, args):
     if len(args) == 0:
         final_string = 'Please enter either traffic Woodlands or traffic Tuas'
         custom_keyboard = [['/traffic Tuas', '/traffic Woodlands']]
-        reply_markup = ReplyKeyboardMarkup(custom_keyboard, one_time_keyboard=True, selective=True)
-        bot.sendMessage(update.message.chat_id, final_string, reply_markup=reply_markup)
+        reply_markup = ReplyKeyboardMarkup(
+            custom_keyboard, one_time_keyboard=True, selective=True)
+        bot.sendMessage(update.message.chat_id, final_string,
+                        reply_markup=reply_markup)
 
     else:
         bot.sendMessage(update.message.chat_id, text='I go turn on my spycam, please wait',
                         parse_mode='HTML')
         bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
         final_string = gov.traffic_get(args[0])
-        bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
-        botan_track(update.message.from_user.id, update.message, update.message.text)
+        bot.sendMessage(update.message.chat_id,
+                        text=final_string, parse_mode='HTML')
+        botan_track(update.message.from_user.id,
+                    update.message, update.message.text)
 
 
 def psi3hour(bot, update):
@@ -529,14 +577,17 @@ def psi3hour(bot, update):
                 'Sometimes I wear my N95 mask as a fashion statement :sunglasses:',
                 'Unlike you, i am not affected by Haze :alien:',
                 'Air smells the freshes when hosted in the :cloud:'
-               ]
+                ]
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = gov.psi3hour_get()
-    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
-    bot.sendPhoto(update.message.chat_id, photo='http://wip.weather.gov.sg/wip/pp/gif/rghz.gif')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    bot.sendMessage(update.message.chat_id,
+                    text=final_string, parse_mode='HTML')
+    bot.sendPhoto(update.message.chat_id,
+                  photo='http://wip.weather.gov.sg/wip/pp/gif/rghz.gif')
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def get_news_st(bot, update):
@@ -544,24 +595,27 @@ def get_news_st(bot, update):
     text_bot = ['Fake news is only fake because you are real :smiling_imp:',
                 'Let me tell you a story!',
                 'You read, I parse :smirk:'
-               ]
+                ]
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = news.get_news_st()
     bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML',
                     disable_web_page_preview=True)
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def sti_level(bot, update):
     """ Get Latest STI Level """
     final_string = "<b>Straits Times Index Level</b>\nThis is the index today..."
-    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    bot.sendMessage(update.message.chat_id,
+                    text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     bot.sendPhoto(update.message.chat_id,
                   photo='https://chart.finance.yahoo.com/t?s=%5eSTI&lang=en-SG&region=SG&width=300&height=180')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def sgd_level(bot, update):
@@ -570,14 +624,16 @@ def sgd_level(bot, update):
                 'The one with the shortest queue is the best :scream:',
                 'If only everyone displays FX rates as clearly as me :smirk:',
                 'Bots usually use Bitcoin, dealing with humans is boringgg'
-               ]
+                ]
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = finance.get_fx()
     final_string += "\nYay can Travel liao!"
-    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    bot.sendMessage(update.message.chat_id,
+                    text=final_string, parse_mode='HTML')
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def sibor_level(bot, update):
@@ -587,8 +643,10 @@ def sibor_level(bot, update):
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     final_string = finance.get_sibor()
     final_string += "\nWa Why So High Now!"
-    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    bot.sendMessage(update.message.chat_id,
+                    text=final_string, parse_mode='HTML')
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def weathernow(bot, update):
@@ -597,7 +655,7 @@ def weathernow(bot, update):
                 'Why dont you look out of the window instead? :smirk:',
                 'Dont cry for me roti prataaaaa... :scream:',
                 'How do meteorologists say hi? With a heat wave! hahahaha'
-               ]
+                ]
     bot.sendMessage(update.message.chat_id, text=emojize(random.choice(text_bot), use_aliases=True),
                     parse_mode='HTML')
     final_string = gov.weathernow_get()
@@ -605,12 +663,15 @@ def weathernow(bot, update):
 
     if warning != "No Warnings!":
         bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
-        bot.sendMessage(update.message.chat_id, text=warning, parse_mode='HTML')
+        bot.sendMessage(update.message.chat_id,
+                        text=warning, parse_mode='HTML')
 
-    bot.sendMessage(update.message.chat_id, text=final_string, parse_mode='HTML')
+    bot.sendMessage(update.message.chat_id,
+                    text=final_string, parse_mode='HTML')
     bot.sendChatAction(update.message.chat_id, action=ChatAction.TYPING)
     bot.sendPhoto(update.message.chat_id, photo=gov.get_latestmap_website())
-    botan_track(update.message.from_user.id, update.message, update.message.text)
+    botan_track(update.message.from_user.id,
+                update.message, update.message.text)
 
 
 def start(bot, update):
@@ -691,7 +752,7 @@ def share(bot, update):
                  """
     bot.sendMessage(update.message.chat_id,
                     text=share_text, parse_mode='HTML')
-    #bot.sendMessage(update.message.chat_id,
+    # bot.sendMessage(update.message.chat_id,
     #                text=version_text, parse_mode='HTML')
 
 
@@ -722,7 +783,8 @@ def main():
     dispatch.add_handler(CommandHandler("airlinepromos", airline_promos))
     dispatch.add_handler(CommandHandler("deliverypromos", deliverypromos))
     dispatch.add_handler(CommandHandler("shoppingpromos", shopping_promos))
-    dispatch.add_handler(CommandHandler("train_timing_changes", train_timing_changes))
+    dispatch.add_handler(CommandHandler(
+        "train_timing_changes", train_timing_changes))
     dispatch.add_handler(CommandHandler("sg_news", get_news_st))
     dispatch.add_handler(CommandHandler("traffic", traffic, pass_args=True))
     # dispatch.add_handler(CommandHandler("sti", sti_level))
@@ -733,15 +795,20 @@ def main():
     dispatch.add_handler(CommandHandler("subscribe", subscribe))
     dispatch.add_handler(CommandHandler("unsubscribe", unsubscribe))
     dispatch.add_handler(CommandHandler("subscribe_train", subscribe_train))
-    dispatch.add_handler(CommandHandler("unsubscribe_train", unsubscribe_train))
-    dispatch.add_handler(CommandHandler("admin_force_promo_check", force_promo_check))
+    dispatch.add_handler(CommandHandler(
+        "unsubscribe_train", unsubscribe_train))
+    dispatch.add_handler(CommandHandler(
+        "admin_force_promo_check", force_promo_check))
     dispatch.add_handler(CommandHandler("admin_clear_db", clear_db))
     dispatch.add_handler(CommandHandler("admin_list_users", list_users))
-    dispatch.add_handler(CommandHandler("admin_push_notification_promo", push_notification_promo, pass_args=True))
-    dispatch.add_handler(CommandHandler("admin_push_notification_msg", push_notification_msg, pass_args=True))
+    dispatch.add_handler(CommandHandler(
+        "admin_push_notification_promo", push_notification_promo, pass_args=True))
+    dispatch.add_handler(CommandHandler(
+        "admin_push_notification_msg", push_notification_msg, pass_args=True))
     dispatch.add_handler(CommandHandler("share", share))
     dispatch.add_handler(CommandHandler("secret_sauce", secret_sauce))
-    dispatch.add_handler(CommandHandler("admin_list_users_train", list_users_train))
+    dispatch.add_handler(CommandHandler(
+        "admin_list_users_train", list_users_train))
     dispatch.add_handler(MessageHandler(Filters.location, taxi_around_me))
     dispatch.add_handler(CallbackQueryHandler(call_handler))
 
@@ -767,13 +834,14 @@ def main():
     updater.idle()
     """
 
-    #PROD
+    # PROD
     port_number = int(os.environ.get('PORT', '5000'))
     updater.start_webhook(listen="0.0.0.0",
                           port=port_number,
                           url_path=telegram)
     updater.bot.setWebhook("https://shiokbot.herokuapp.com/" + telegram)
     updater.idle()
+
 
 if __name__ == '__main__':
     main()
